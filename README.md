@@ -1,3 +1,3 @@
 # react-gdhi3d
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/react-gdhi3d)
+A simple Calendar app based on Js and reactJs
