@@ -4,10 +4,10 @@ body {
 .container {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(24, 60px);
+  grid-template-rows: repeat(26, 60px);
 }
 
-.week-strip-container {
+/* .week-strip-container {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   justify-content: center;
@@ -15,24 +15,27 @@ body {
   border: solid 0.5px gray;
   grid-column: 2 / 9;
   text-align: center;
+} */
+
+.tool-bar {
+  grid-column: 1/9;
+  border: solid 0.5px gray;
 }
 
 .hour-strip-container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(24, 1fr);
+  /* grid-template-rows: repeat(24, 60px); */
   justify-content: center;
   align-items: center;
-  border: solid 0.5px gray;
   grid-column: 1 / 2;
-  grid-row: 2/24;
+  grid-row: 3/27;
   text-align: center;
 }
 
 .calendar-elements-container {
-  border: solid 0.5px gray;
   grid-column: 2 / 9;
-  grid-row: 2/24;
+  grid-row: 2/27;
 }
 
 .week-heading {
@@ -40,14 +43,50 @@ body {
 }
 
 .hour-heading {
+  height: 60px;
   border-bottom: solid 0.5px gray;
+  border-right: solid 0.5px gray;
+}
+
+.hour-strip-container > span:first-child {
+  border-top: solid 0.5px gray;
 }
 
 .calendar-elements-container {
   display: grid;
+  grid-template-columns: repeat(7, 1fr);
 }
 
 .day-heading {
+  height: 60px;
+  text-align: center;
   font-weight: bolder;
   display: block;
+  border-bottom: solid 0.5px gray;
+  border-right: solid 0.5px gray;
+}
+
+.hour-item {
+  height: 60px;
+  border-bottom: solid 0.5px gray;
+  border-right: solid 0.5px gray;
+}
+
+.previous-icon,
+.next-icon {
+  padding: 0.5rem;
+  font-size: 32px;
+}
+
+.previous-icon:hover {
+  background-color: aliceblue;
+  border-radius: 24px;
+  cursor: pointer;
+}
+
+.next-icon:hover {
+  background-color: aliceblue;
+  border-radius: 24px;
+  cursor: pointer;
+
 }

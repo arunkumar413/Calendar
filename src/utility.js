@@ -47,9 +47,9 @@ export const Year = [
 ];
 
 export const events = [
-  { title: "A test event", date: "2022-01-04", isAllDay: false },
-  { title: "A test event", date: "2022-01-05", isAllDay: false },
-  { title: "A test event", date: "2022-01-05", isAllDay: true },
+  { title: "A test event", date: "2022-01-01T01:48:00.000Z", isAllDay: false },
+  { title: "A test event", date: "2022-01-01T02:48:00.000Z", isAllDay: false },
+  { title: "A test event", date: "2022-01-01T06:48:00.000Z", isAllDay: true },
 ];
 
 export const noAllDayEvents = events.filter(function (item) {
@@ -57,16 +57,19 @@ export const noAllDayEvents = events.filter(function (item) {
 });
 
 function getEvents(year, month, date, hour) {
+  let realDate = date + 1;
+  let realMonth = month + 1;
   let dateObject = new Date(`${year}-${month + 1}-${date + 1}`);
   let isoDate = dateObject.toISOString();
 
   let matchedEvents = noAllDayEvents.filter(function (item) {
     return (
       new Date(item.date).getHours() === hour &&
-      new Date(item.date).getDate === date
+      new Date(item.date).getDate === realDate &&
+      new Date(item.date).getFullYear === year &&
+      new Date(item.date).getMonth === realMonth + 1
     );
   });
-  debugger;
 
   const eventElements = matchedEvents.map(function (item, index) {
     return (
@@ -75,6 +78,7 @@ function getEvents(year, month, date, hour) {
       </span>
     );
   });
+  debugger;
 
   return eventElements;
 }
@@ -87,10 +91,23 @@ function getDay(year, month, day) {
   return splitDate[0];
 }
 
+export function get12HourFormat(hour) {
+  if (hour === 0) {
+    return "12 AM";
+  } else if (hour < 12) {
+    return `${hour} AM`;
+  } else if (hour === 12) {
+    return "12 PM";
+  } else if (hour > 12) {
+    return `${hour - 12} PM`;
+  }
+}
+
 function generateHourElements(year, month, date) {
   return Array.from(Array(24).keys()).map(function (hour, index) {
     return (
       <div key={index.toString()} className="hour-item">
+        {hour + 1}
         {getEvents(year, month, date, hour)}
       </div>
     );
@@ -99,11 +116,12 @@ function generateHourElements(year, month, date) {
 
 export const janElements = Jan.map(function (item, index) {
   return (
-    <div key={index.toString()} className="month-elements">
-      <span className="day-heading">{getDay(currentYear, 1, item)} </span>{" "}
-      <span className="date"> {item + 1} </span>
+    <span key={index.toString()} className="month-elements">
+      <span className="day-heading">
+        {getDay(currentYear, 1, item)} <br /> {item + 1}{" "}
+      </span>{" "}
       {generateHourElements(currentYear, 0, item)}
-    </div>
+    </span>
   );
 });
 
@@ -114,6 +132,30 @@ export const yearElements = Year.map(function (item, index) {
 function getDate(year, month, day) {
   let date = new Date(`${year}-${month}-${day}`);
   return date.toISOString();
+}
+
+export function getSelectedMonth(selection) {
+  if (
+    selection >= monthIndexes.jan.start &&
+    selection <= monthIndexes.jan.end
+  ) {
+    return "Janurary";
+  } else if (
+    selection >= monthIndexes.feb.start &&
+    selection <= monthIndexes.feb.end
+  ) {
+    return "February";
+  } else if (
+    selection >= monthIndexes.march.start &&
+    selection <= monthIndexes.march.end
+  ) {
+    return "March";
+  } else if (
+    selection >= monthIndexes.april.start &&
+    selection <= monthIndexes.april.end
+  ) {
+    return "April";
+  }
 }
 
 export const testElements = Year.map(function (item, index) {
