@@ -1,67 +1,53 @@
 body {
   font-family: sans-serif;
 }
-
-.day {
-  width: 100px;
-  height: 60px;
-  border-bottom: solid 0.5px gray;
-  text-align: center;
-}
-
-/* .container {
+.container {
   display: grid;
-  grid-template-columns: 100px 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  justify-content: center;
-  align-items: center;
-} */
-
-.hour-container {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  grid-template-columns: 1fr;
-}
-
-.hour {
-  width: 100px;
-  height: 60px;
-  text-align: center;
-  border-bottom: solid 0.5px gray;
-  border-right: solid 0.5px gray;
-  vertical-align: middle;
-}
-
-.hour span {
-  text-align: center;
-}
-
-.jan-container {
-  margin-left: 100px;
-  display: grid;
-  grid-template-columns: repeat(31, 100px);
-  justify-content: center;
-  align-items: center;
-}
-
-.month-elements {
-  border: solid 0.5px gray;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(24, 60px);
 }
 
 .week-strip-container {
-  margin-left: 100px;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   justify-content: center;
   align-items: center;
+  border: solid 0.5px gray;
+  grid-column: 2 / 9;
   text-align: center;
 }
 
-.week-strip-container span {
+.hour-strip-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(24, 1fr);
+  justify-content: center;
+  align-items: center;
   border: solid 0.5px gray;
-  font-weight: bolder;
+  grid-column: 1 / 2;
+  grid-row: 2/24;
+  text-align: center;
 }
 
-.hour:first-child {
-  border-top: solid 0.5px gray;
+.calendar-elements-container {
+  border: solid 0.5px gray;
+  grid-column: 2 / 9;
+  grid-row: 2/24;
+}
+
+.week-heading {
+  border-right: solid 0.5px gray;
+}
+
+.hour-heading {
+  border-bottom: solid 0.5px gray;
+}
+
+.calendar-elements-container {
+  display: grid;
+}
+
+.day-heading {
+  font-weight: bolder;
+  display: block;
 }
