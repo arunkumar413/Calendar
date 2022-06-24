@@ -22,6 +22,22 @@ export default function App() {
     value: "",
     monthValue: 0,
   });
+  const [view, setView] = useState({ label: "Week", value: 1 });
+
+  const viewOptions = [
+    { label: "Day", value: 0 },
+    { label: "Week", value: 1 },
+    { label: "Month", value: 2 },
+  ];
+
+  function handleViewChange(item) {
+    setView({
+      ...view,
+      label: item.label,
+      value: item.value,
+      monthValue: item.monthValue,
+    });
+  }
 
   useEffect(function () {
     var m = new Date().getMonth();
@@ -103,19 +119,28 @@ export default function App() {
 
   const toolbarElements = (
     <div className="toolbar">
+      {/* <span className="selected-month"> {getSelectedMonth(selected)} </span> */}
+
+      <Select
+        className="select-month"
+        value={selectedMonth}
+        onChange={handleMonthChange}
+        options={monthSelectOptions}
+      />
+
+      <Select
+        className="select-view"
+        value={view}
+        onChange={handleViewChange}
+        options={viewOptions}
+      />
+
       <span
         onClick={handleWeekDecrement}
         className="material-symbols-outlined previous-icon"
       >
         arrow_back_ios_new
       </span>
-      {/* <span className="selected-month"> {getSelectedMonth(selected)} </span> */}
-
-      <Select
-        value={selectedMonth}
-        onChange={handleMonthChange}
-        options={monthSelectOptions}
-      />
 
       <span
         onClick={handleWeekIncrement}

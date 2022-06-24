@@ -43,9 +43,10 @@ body {
 }
 
 .hour-heading {
-  height: 60px;
+  min-height: 60px;
   border-bottom: solid 0.5px gray;
   border-right: solid 0.5px gray;
+  color: #0908097d;
 }
 
 .hour-strip-container > span:first-child {
@@ -58,16 +59,18 @@ body {
 }
 
 .day-heading {
+  font-size: larger;
   height: 60px;
   text-align: center;
   font-weight: bolder;
   display: block;
   border-bottom: solid 0.5px gray;
   border-right: solid 0.5px gray;
+  color: #0908097d;
 }
 
 .hour-item {
-  height: 60px;
+  min-height: 60px;
   border-bottom: solid 0.5px gray;
   border-right: solid 0.5px gray;
 }
@@ -78,15 +81,18 @@ body {
   font-size: 32px;
 }
 
-.previous-icon {
+.select-month {
+  grid-column: 5/6;
+}
+
+.select-view {
   grid-column: 6/7;
   text-align: center;
 }
 
-.selected-month {
+.previous-icon {
   grid-column: 7/8;
-  font-family: sans-serif;
-  font-weight: bolder;
+  text-align: center;
 }
 
 .next-icon {
@@ -117,4 +123,21 @@ body {
   grid-column: 1/9;
   width: 100%;
   border-bottom: solid 0.5px gray;
+}
+
+/* .events-container {
+  display: block;
+} */
+
+.event {
+  display: block;
+  margin-left: 3px;
+  margin-right: 3px;
+  margin-bottom: 1px;
+  text-align: center;
+  background-color: #005ce6;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  border: none;
 }
