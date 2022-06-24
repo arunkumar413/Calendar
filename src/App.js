@@ -11,6 +11,7 @@ import {
   currentMonth,
   monthSelectOptions,
   yearElements1,
+  YearElements,
 } from "./utility";
 import Select from "react-select";
 
@@ -91,7 +92,14 @@ export default function App() {
     }
   );
 
-  let selectedElements = yearElements1.slice(selected, selected + 7);
+  useEffect(function () {
+    console.log(selectedMonth.monthValue);
+  }, []);
+
+  let selectedElements = YearElements[selectedMonth.monthValue].slice(
+    selected,
+    selected + 7
+  );
 
   const toolbarElements = (
     <div className="toolbar">

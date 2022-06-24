@@ -1,4 +1,4 @@
-export const Jan = Array.from(Array(31).keys()); //0-30
+export const Jan = Array.from(Array(31).keys()); //0-30  //month start and end indexes
 export const Feb = Array.from(Array(28).keys()); // 31-58
 export const LeapFeb = Array.from(Array(29).keys()); //59-89
 export const Mar = Array.from(Array(31).keys()); //90-119
@@ -81,9 +81,9 @@ function getEvents(year, month, date, hour) {
   let matchedEvents = noAllDayEvents.filter(function (item) {
     return (
       new Date(item.date).getHours() === hour &&
-      new Date(item.date).getDate === realDate &&
-      new Date(item.date).getFullYear === year &&
-      new Date(item.date).getMonth === realMonth + 1
+      new Date(item.date).getDate() === realDate &&
+      new Date(item.date).getFullYear() === year &&
+      new Date(item.date).getMonth() === realMonth + 1
     );
   });
 
@@ -99,6 +99,7 @@ function getEvents(year, month, date, hour) {
 }
 
 function getDay(year, month, day) {
+  debugger;
   let date = new Date(`${year}-${month}-${day + 1}`);
   let dateString = date.toDateString();
   let splitDate = dateString.split(" ");
@@ -143,6 +144,60 @@ export const febElements = Feb.map(function (item, index) {
   return (
     <span key={index.toString()} className="month-elements">
       <span className="day-heading">
+        {getDay(currentYear, 2, item)} <br /> {item + 1}{" "}
+      </span>{" "}
+      {generateHourElements(currentYear, 0, item)}
+    </span>
+  );
+});
+
+export const marElements = Mar.map(function (item, index) {
+  return (
+    <span key={index.toString()} className="month-elements">
+      <span className="day-heading">
+        {getDay(currentYear, 3, item)} <br /> {item + 1}{" "}
+      </span>{" "}
+      {generateHourElements(currentYear, 0, item)}
+    </span>
+  );
+});
+
+export const aprElements = Apr.map(function (item, index) {
+  return (
+    <span key={index.toString()} className="month-elements">
+      <span className="day-heading">
+        {getDay(currentYear, 4, item)} <br /> {item + 1}{" "}
+      </span>{" "}
+      {generateHourElements(currentYear, 0, item)}
+    </span>
+  );
+});
+
+export const mayElements = May.map(function (item, index) {
+  return (
+    <span key={index.toString()} className="month-elements">
+      <span className="day-heading">
+        {getDay(currentYear, 5, item)} <br /> {item + 1}{" "}
+      </span>{" "}
+      {generateHourElements(currentYear, 0, item)}
+    </span>
+  );
+});
+
+export const junElements = Jun.map(function (item, index) {
+  return (
+    <span key={index.toString()} className="month-elements">
+      <span className="day-heading">
+        {getDay(currentYear, 6, item)} <br /> {item + 1}{" "}
+      </span>{" "}
+      {generateHourElements(currentYear, 0, item)}
+    </span>
+  );
+});
+export const julElements = Jul.map(function (item, index) {
+  return (
+    <span key={index.toString()} className="month-elements">
+      <span className="day-heading">
         {getDay(currentYear, 1, item)} <br /> {item + 1}{" "}
       </span>{" "}
       {generateHourElements(currentYear, 0, item)}
@@ -150,11 +205,18 @@ export const febElements = Feb.map(function (item, index) {
   );
 });
 
-export const yearElements1 = janElements.concat(febElements);
+export const YearElements = [
+  janElements,
+  febElements,
+  marElements,
+  aprElements,
+  mayElements,
+  junElements,
+  julElements,
+];
+debugger;
 
-export const yearElements = Year.map(function (item, index) {
-  return <span> {item} </span>;
-});
+export const yearElements1 = janElements;
 
 function getDate(year, month, day) {
   let date = new Date(`${year}-${month}-${day}`);
