@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Calendar/static/css/main.c44d3e2b.css",
+    "main.js": "/Calendar/static/js/main.409d9e91.js",
+    "static/media/arrow_forward_ios_black_24dp.svg": "/Calendar/static/media/arrow_forward_ios_black_24dp.0af3fae61a26558bb93a598159faaf54.svg",
+    "index.html": "/Calendar/index.html",
+    "static/media/arrow_back_ios_black_24dp.svg": "/Calendar/static/media/arrow_back_ios_black_24dp.80892b2d39a03a41507be6256ff4f497.svg",
+    "static/media/add_black_24dp.svg": "/Calendar/static/media/add_black_24dp.9b100c6b3141c8f0c6a5b0d5ecfb544a.svg",
+    "main.c44d3e2b.css.map": "/Calendar/static/css/main.c44d3e2b.css.map",
+    "main.409d9e91.js.map": "/Calendar/static/js/main.409d9e91.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c44d3e2b.css",
+    "static/js/main.409d9e91.js"
+  ]
+}
