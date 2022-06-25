@@ -64,6 +64,7 @@ export const monthSelectOptions = [
 
 export const events = [
   { title: "A test event", date: "2022-06-01T00:00:00.000Z", isAllDay: false },
+  { title: "A test event", date: "2022-01-01T00:00:00.000Z", isAllDay: false },
 
   { title: "A test event", date: "2022-06-02T00:00:00.000Z", isAllDay: false },
   { title: "A test event", date: "2022-06-01T00:00:00.000Z", isAllDay: false },
