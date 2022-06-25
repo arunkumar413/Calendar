@@ -85,11 +85,6 @@ function getEvents(year, month, date, hour) {
   let isoDate = dateObject.toISOString();
 
   const matchedEvents = noAllDayEvents.filter(function (item) {
-    console.log(new Date(item.date).getHours(), "hour");
-    console.log(new Date(item.date).getDate(), "date");
-    console.log(new Date(item.date).getMonth(), "month");
-    console.log(new Date(item.date).getFullYear(), "year");
-
     return (
       new Date(item.date).getHours() === hour &&
       new Date(item.date).getDate() === realDate &&
@@ -216,13 +211,66 @@ export const julElements = Jul.map(function (item, index) {
   return (
     <span key={index.toString()} className="month-elements">
       <span className="day-heading">
-        {getDay(currentYear, 1, item)} <br /> {item + 1}{" "}
+        {getDay(currentYear, 7, item)} <br /> {item + 1}{" "}
       </span>{" "}
       {generateHourElements(currentYear, 7, item)}
     </span>
   );
 });
 
+export const augElements = Aug.map(function (item, index) {
+  return (
+    <span key={index.toString()} className="month-elements">
+      <span className="day-heading">
+        {getDay(currentYear, 8, item)} <br /> {item + 1}{" "}
+      </span>{" "}
+      {generateHourElements(currentYear, 8, item)}
+    </span>
+  );
+});
+export const sepElements = Sep.map(function (item, index) {
+  return (
+    <span key={index.toString()} className="month-elements">
+      <span className="day-heading">
+        {getDay(currentYear, 9, item)} <br /> {item + 1}{" "}
+      </span>{" "}
+      {generateHourElements(currentYear, 9, item)}
+    </span>
+  );
+});
+
+export const octElements = Oct.map(function (item, index) {
+  return (
+    <span key={index.toString()} className="month-elements">
+      <span className="day-heading">
+        {getDay(currentYear, 10, item)} <br /> {item + 1}{" "}
+      </span>{" "}
+      {generateHourElements(currentYear, 10, item)}
+    </span>
+  );
+});
+
+export const novElements = Nov.map(function (item, index) {
+  return (
+    <span key={index.toString()} className="month-elements">
+      <span className="day-heading">
+        {getDay(currentYear, 11, item)} <br /> {item + 1}{" "}
+      </span>{" "}
+      {generateHourElements(currentYear, 11, item)}
+    </span>
+  );
+});
+
+export const decElements = Dec.map(function (item, index) {
+  return (
+    <span key={index.toString()} className="month-elements">
+      <span className="day-heading">
+        {getDay(currentYear, 12, item)} <br /> {item + 1}{" "}
+      </span>{" "}
+      {generateHourElements(currentYear, 12, item)}
+    </span>
+  );
+});
 export const YearElements = [
   janElements,
   febElements,
@@ -231,6 +279,11 @@ export const YearElements = [
   mayElements,
   junElements,
   julElements,
+  augElements,
+  sepElements,
+  octElements,
+  novElements,
+  decElements,
 ];
 
 export const yearElements1 = janElements;
@@ -263,115 +316,3 @@ export function getSelectedMonth(selection) {
     return "April";
   }
 }
-
-// export const testElements = Year.map(function (item, index) {
-//   if (index >= monthIndexes.jan.start && index <= monthIndexes.jan.end) {
-//     return (
-//       <div className="day-item">
-//         <span> {getDay(currentYear, 1, item + 1)} </span>
-//         <div> {getDate(currentYear, 1, item + 1)} </div>{" "}
-//         {Array.from(Array(10).keys())}
-//       </div>
-//     );
-//   } else if (index >= monthIndexes.feb.start && index <= monthIndexes.feb.end) {
-//     return (
-//       <div>
-//         {" "}
-//         <span> {getDay(currentYear, 2, item + 1)} </span>
-//         <div> {getDate(currentYear, 2, item + 1)} </div>
-//       </div>
-//     );
-//   } else if (
-//     index >= monthIndexes.march.start &&
-//     index <= monthIndexes.march.end
-//   ) {
-//     return (
-//       <div>
-//         {" "}
-//         <span> {getDay(currentYear, 3, item + 1)} </span>
-//         <div> {getDate(currentYear, 3, item + 1)} </div>{" "}
-//       </div>
-//     );
-//   } else if (
-//     index >= monthIndexes.april.start &&
-//     index <= monthIndexes.april.end
-//   ) {
-//     return (
-//       <div>
-//         {" "}
-//         <span> {getDay(currentYear, 4, item + 1)} </span>
-//         <div> {getDate(currentYear, 4, item + 1)} </div>{" "}
-//       </div>
-//     );
-//   } else if (index >= monthIndexes.may.start && index <= monthIndexes.may.end) {
-//     return (
-//       <div>
-//         {" "}
-//         <span> {getDay(currentYear, 5, item + 1)} </span>
-//         <div> {getDate(currentYear, 5, item + 1)} </div>
-//       </div>
-//     );
-//   } else if (
-//     index >= monthIndexes.june.start &&
-//     index <= monthIndexes.june.end
-//   ) {
-//     return (
-//       <div>
-//         {" "}
-//         <span> {getDay(currentYear, 6, item + 1)} </span>
-//         <div> {getDate(currentYear, 6, item + 1)} </div>{" "}
-//       </div>
-//     );
-//   } else if (
-//     index >= monthIndexes.july.start &&
-//     index <= monthIndexes.july.end
-//   ) {
-//     return (
-//       <div>
-//         {" "}
-//         <span> {getDay(currentYear, 7, item + 1)} </span>
-//         <div> {getDate(currentYear, 7, item + 1)}</div>{" "}
-//       </div>
-//     );
-//   } else if (index >= monthIndexes.aug.start && index <= monthIndexes.aug.end) {
-//     return (
-//       <div>
-//         {" "}
-//         <span> {getDay(currentYear, 8, item + 1)} </span>
-//         <div> {getDate(currentYear, 8, item + 1)}</div>{" "}
-//       </div>
-//     );
-//   } else if (index >= monthIndexes.sep.start && index <= monthIndexes.sep.end) {
-//     return (
-//       <div>
-//         {" "}
-//         <span> {getDay(currentYear, 9, item + 1)} </span>
-//         <div> {getDate(currentYear, 9, item + 1)} </div>{" "}
-//       </div>
-//     );
-//   } else if (index >= monthIndexes.oct.start && index <= monthIndexes.oct.end) {
-//     return (
-//       <div>
-//         {" "}
-//         <span> {getDay(currentYear, 10, item + 1)} </span>
-//         <div> {getDate(currentYear, 10, item + 1)} </div>{" "}
-//       </div>
-//     );
-//   } else if (index >= monthIndexes.nov.start && index <= monthIndexes.nov.end) {
-//     return (
-//       <div>
-//         {" "}
-//         <span> {getDay(currentYear, 11, item + 1)} </span>
-//         <div> {getDate(currentYear, 11, item + 1)} </div>{" "}
-//       </div>
-//     );
-//   } else if (index >= monthIndexes.dec.start && index <= monthIndexes.dec.end) {
-//     return (
-//       <div>
-//         {" "}
-//         <span> {getDay(currentYear, 12, item + 1)} </span>
-//         <div> {getDate(currentYear, 12, item + 1)}</div>{" "}
-//       </div>
-//     );
-//   }
-// });

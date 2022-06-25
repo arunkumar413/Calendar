@@ -3,7 +3,8 @@ body {
 }
 .container {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  /* grid-template-columns: repeat(8, 1fr); */
+  grid-template-columns: 4rem repeat(7, 1fr);
   grid-template-rows: repeat(26, 60px);
 }
 
@@ -76,28 +77,32 @@ body {
 }
 
 .previous-icon,
-.next-icon {
+.next-icon,
+.add-new-event {
   padding: 0.5rem;
   font-size: 32px;
 }
 
 .select-month {
-  grid-column: 5/6;
+  grid-column: 4/5;
 }
 
 .select-view {
-  grid-column: 6/7;
+  grid-column: 5/6;
   text-align: center;
 }
 
 .previous-icon {
-  grid-column: 7/8;
+  grid-column: 6/7;
   text-align: center;
 }
 
 .next-icon {
-  grid-column: 8/9;
+  grid-column: 7/8;
   text-align: center;
+}
+.add-new-event {
+  grid-column: 8/9;
 }
 
 .previous-icon:hover {
@@ -112,11 +117,18 @@ body {
   cursor: pointer;
 }
 
+.add-new-event:hover {
+  background-color: aliceblue;
+  border-radius: 24px;
+  cursor: pointer;
+}
+
 .toolbar {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   justify-content: flex-end;
   align-items: center;
+  text-align: center;
 }
 
 .tool-bar-container {

@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
+import { ReactComponent as AddEventIcon } from "../src/icons/add_black_24dp.svg";
+import { ReactComponent as NextIcon } from "../src/icons/arrow_forward_ios_black_24dp.svg";
+import { ReactComponent as PreviousIcon } from "../src/icons/arrow_back_ios_black_24dp.svg";
 import {
   currentYear,
   janElements,
@@ -22,6 +25,8 @@ export default function App() {
     value: "",
     monthValue: 0,
   });
+
+  const [isNexIconClickable, setNextIconClickable] = useState(true);
   const [view, setView] = useState({ label: "Week", value: 1 });
 
   const viewOptions = [
@@ -61,14 +66,41 @@ export default function App() {
       value: item.value,
       monthValue: item.monthValue,
     });
+    setSelected(0);
   }
 
   function handleWeekIncrement() {
-    setSelected(selected + 7);
+    if (selected + 7 <= YearElements[selectedMonth.monthValue].length) {
+      setSelected(selected + 7);
+    } else if (selected === 28) {
+      let currMonth = selectedMonth.monthValue + 1;
+      setSlectedMonth({
+        ...selectedMonth,
+        label: monthSelectOptions[currMonth].label,
+        value: monthSelectOptions[currMonth].value,
+        monthValue: monthSelectOptions[currMonth].monthValue,
+      });
+      setSelected(0);
+    }
   }
 
   function handleWeekDecrement() {
-    if (selected !== 0) setSelected(selected - 7);
+    if (selected !== 0) {
+      setSelected(selected - 7);
+    } else if (selected === 0) {
+      let currMonth = selectedMonth.monthValue - 1;
+      setSlectedMonth({
+        ...selectedMonth,
+        label: monthSelectOptions[currMonth].label,
+        value: monthSelectOptions[currMonth].value,
+        monthValue: monthSelectOptions[currMonth].monthValue,
+      });
+      setSelected(28);
+    }
+  }
+
+  function addNewEvent() {
+    console.log("Add new event");
   }
 
   const elements = Year.map(function (item, index) {
@@ -108,10 +140,6 @@ export default function App() {
     }
   );
 
-  useEffect(function () {
-    console.log(selectedMonth.monthValue);
-  }, []);
-
   let selectedElements = YearElements[selectedMonth.monthValue].slice(
     selected,
     selected + 7
@@ -135,19 +163,29 @@ export default function App() {
         options={viewOptions}
       />
 
-      <span
+      {/* <span
         onClick={handleWeekDecrement}
         className="material-symbols-outlined previous-icon"
       >
         arrow_back_ios_new
-      </span>
+      </span> */}
 
-      <span
+      <div className="previous-icon">
+        <PreviousIcon onClick={handleWeekDecrement} />
+      </div>
+      {/* <span
         onClick={handleWeekIncrement}
         className="material-symbols-outlined next-icon"
       >
         arrow_forward_ios
-      </span>
+      </span> */}
+      <div className="next-icon">
+        <NextIcon onClick={handleWeekIncrement} />
+      </div>
+
+      <div className="add-new-event">
+        <AddEventIcon onClick={addNewEvent} />
+      </div>
     </div>
   );
 
