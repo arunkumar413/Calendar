@@ -1,3 +1,5 @@
+import { atom, selector, useRecoilState, useSetRecoilState } from "recoil";
+
 export const Jan = Array.from(Array(31).keys()); //0-30  //month start and end indexes
 export const Feb = Array.from(Array(28).keys()); // 31-58
 export const LeapFeb = Array.from(Array(29).keys()); //59-89
@@ -75,8 +77,11 @@ export const noAllDayEvents = events.filter(function (item) {
   return item.isAllDay === false;
 });
 
+export var clickedItem = null;
+
 function handleClickOnEvent(evt, item) {
-  // showModal(true);
+  localStorage.setItem("event", JSON.stringify(item));
+  clickedItem = item;
 }
 
 function getEvents(year, month, date, hour) {
@@ -316,4 +321,8 @@ export function getSelectedMonth(selection) {
   ) {
     return "April";
   }
+}
+
+export function getClickedItem() {
+  return clickedItem;
 }

@@ -153,3 +153,8 @@ body {
   font-size: 12px;
   border: none;
 }
+
+.event-modal {
+  position: fixed;
+  right: -5rem;
+}

@@ -1,4 +1,11 @@
 import React, { useEffect, useState } from "react";
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
 import "./style.css";
 import { ReactComponent as AddEventIcon } from "../src/icons/add_black_24dp.svg";
 import { ReactComponent as NextIcon } from "../src/icons/arrow_forward_ios_black_24dp.svg";
@@ -17,6 +24,7 @@ import {
   YearElements,
 } from "./utility";
 import Select from "react-select";
+import { EventModal } from "./components/EventModal";
 
 export default function App() {
   const [selected, setSelected] = useState(0);
@@ -57,6 +65,13 @@ export default function App() {
       value: option[0].value,
       monthValue: option[0].monthValue,
     });
+  }, []);
+
+  useEffect(function () {
+    localStorage.setItem(
+      "event",
+      JSON.stringify({ title: "null", date: "null", isAllDay: null })
+    );
   }, []);
 
   function handleMonthChange(item) {
@@ -101,6 +116,15 @@ export default function App() {
 
   function addNewEvent() {
     console.log("Add new event");
+  }
+
+  function handleEventChange(item) {
+    setClickedItem({
+      ...clickedItem,
+      title: item.name,
+      date: item.date,
+      isAllDay: item.isAllDay,
+    });
   }
 
   const elements = Year.map(function (item, index) {
@@ -190,10 +214,15 @@ export default function App() {
   );
 
   return (
-    <div className="container">
-      <div className="tool-bar-container">{toolbarElements} </div>
-      <div className="hour-strip-container"> {hourElements} </div>
-      <div className="calendar-elements-container">{selectedElements} </div>
-    </div>
+    <RecoilRoot>
+      <div>
+        <div className="container">
+          <div className="tool-bar-container">{toolbarElements} </div>
+          <div className="hour-strip-container"> {hourElements} </div>
+          <div className="calendar-elements-container">{selectedElements} </div>
+        </div>
+        <EventModal />
+      </div>
+    </RecoilRoot>
   );
 }
