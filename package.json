@@ -2,7 +2,7 @@
   "name": "react",
   "version": "0.0.0",
   "private": true,
-  "homepage": "https://arunkumar413.github.io/calendar-demo-page",
+  "homepage": "https://arunkumar413.github.io/Calendar",
   "dependencies": {
     "@mui/icons-material": "^5.8.4",
     "bootstrap-icons": "^1.8.3",

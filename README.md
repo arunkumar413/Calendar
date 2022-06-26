@@ -2,6 +2,8 @@
 
 A simple Calendar app based on Js and reactJs. This app is part of larger collection of apps and tools that are being planned to build an ecosystem.
 
+You can view the Demo here: https://arunkumar413.github.io/Calendar/
+
 ![Calendar screenshot](./src/screenshots/calendar.png)
 
 ## Features:
