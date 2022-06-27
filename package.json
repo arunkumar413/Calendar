@@ -8,7 +8,8 @@
     "bootstrap-icons": "^1.8.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-select": "^5.3.2"
+    "react-select": "^5.3.2",
+    "recoil": "^0.7.4"
   },
   "scripts": {
     "predeploy": "npm run build",

@@ -1,4 +1,11 @@
 import React, { useEffect, useState } from "react";
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
 import "./style.css";
 import { ReactComponent as AddEventIcon } from "../src/icons/add_black_24dp.svg";
 import { ReactComponent as NextIcon } from "../src/icons/arrow_forward_ios_black_24dp.svg";
@@ -15,11 +22,19 @@ import {
   monthSelectOptions,
   yearElements1,
   YearElements,
+  completeYear,
+  resolveMonth,
+  monthStrings,
+  getStartMonth,
 } from "./utility";
 import Select from "react-select";
+import { EventModal } from "./components/EventModal";
 
 export default function App() {
   const [selected, setSelected] = useState(0);
+  const [selectedWeekEndIndex, setSelectedWeekEndIndex] = useState(7);
+  const [selectedWeekStartIndex, setSelectedWeekStartIndex] = useState(0);
+  const [monthRange, setMonthRange] = useState("");
   const [selectedMonth, setSlectedMonth] = useState({
     label: "",
     value: "",
@@ -28,6 +43,75 @@ export default function App() {
 
   const [isNexIconClickable, setNextIconClickable] = useState(true);
   const [view, setView] = useState({ label: "Week", value: 1 });
+  const [clickedEvent, setClickedEvent] = useState({
+    title: "",
+    date: "",
+    isAllDay: false,
+    guestsAttending: [],
+    link: "",
+    description: "",
+    guestsInvited: [],
+    location: "",
+  });
+  const [modalClass, setModalClass] = useState("closed");
+
+  const [events, setEvents] = useState([
+    {
+      title: "A test event",
+      date: "2022-06-01T00:00:00.000Z",
+      isAllDay: false,
+      guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
+      link: "http://google.com",
+      description: "An event to remember",
+      guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+      location: "New York",
+    },
+    {
+      title: "A test event",
+      date: "2022-01-01T00:00:00.000Z",
+      isAllDay: false,
+      guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
+      link: "http://google.com",
+      description: "An event to remember",
+      guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+      location: "New York",
+    },
+
+    {
+      title: "A test event",
+      date: "2022-06-02T00:00:00.000Z",
+      isAllDay: false,
+      guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
+      link: "http://google.com",
+      description: "An event to remember",
+      guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+      location: "New York",
+    },
+    {
+      title: "A test event",
+      date: "2022-06-01T00:00:00.000Z",
+      isAllDay: false,
+      guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
+      link: "http://google.com",
+      description: "An event to remember",
+      guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+      location: "New York",
+    },
+    {
+      title: "A test event",
+      date: "2022-06-01T00:00:00.000Z",
+      isAllDay: true,
+      guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
+      link: "http://google.com",
+      description: "An event to remember",
+      guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+      location: "New York",
+    },
+  ]);
+
+  const noAllDayEvents = events.filter(function (item) {
+    return item.isAllDay === false;
+  });
 
   const viewOptions = [
     { label: "Day", value: 0 },
@@ -59,6 +143,13 @@ export default function App() {
     });
   }, []);
 
+  useEffect(function () {
+    localStorage.setItem(
+      "event",
+      JSON.stringify({ title: "null", date: "null", isAllDay: null })
+    );
+  }, []);
+
   function handleMonthChange(item) {
     setSlectedMonth({
       ...selectedMonth,
@@ -70,37 +161,77 @@ export default function App() {
   }
 
   function handleWeekIncrement() {
-    if (selected + 7 <= YearElements[selectedMonth.monthValue].length) {
-      setSelected(selected + 7);
-    } else if (selected === 28) {
-      let currMonth = selectedMonth.monthValue + 1;
-      setSlectedMonth({
-        ...selectedMonth,
-        label: monthSelectOptions[currMonth].label,
-        value: monthSelectOptions[currMonth].value,
-        monthValue: monthSelectOptions[currMonth].monthValue,
-      });
-      setSelected(0);
+    // if (selected + 7 <= YearElements[selectedMonth.monthValue].length) {
+    //   setSelected(selected + 7);
+    // } else if (selected === 28) {
+    //   let currMonth = selectedMonth.monthValue + 1;
+    //   setSlectedMonth({
+    //     ...selectedMonth,
+    //     label: monthSelectOptions[currMonth].label,
+    //     value: monthSelectOptions[currMonth].value,
+    //     monthValue: monthSelectOptions[currMonth].monthValue,
+    //   });
+
+    if (selectedWeekEndIndex >= 7) {
+      setSelectedWeekEndIndex(selectedWeekEndIndex + 7);
     }
   }
 
+  useEffect(
+    function () {
+      setSelectedWeekStartIndex(selectedWeekEndIndex - 7);
+    },
+    [selectedWeekEndIndex]
+  );
+
+  useEffect(
+    function () {
+      let month1 = getStartMonth(selectedWeekStartIndex);
+      let month2 = getStartMonth(selectedWeekEndIndex);
+
+      if (month1 === month2) {
+        setMonthRange(month1);
+      } else {
+        setMonthRange(month1 + "-" + month2);
+      }
+    },
+    [selectedWeekEndIndex, selectedWeekStartIndex]
+  );
+
   function handleWeekDecrement() {
-    if (selected !== 0) {
-      setSelected(selected - 7);
-    } else if (selected === 0) {
-      let currMonth = selectedMonth.monthValue - 1;
-      setSlectedMonth({
-        ...selectedMonth,
-        label: monthSelectOptions[currMonth].label,
-        value: monthSelectOptions[currMonth].value,
-        monthValue: monthSelectOptions[currMonth].monthValue,
-      });
-      setSelected(28);
+    // if (selected !== 0) {
+    //   setSelected(selected - 7);
+    // } else if (selected === 0) {
+    //   let currMonth = selectedMonth.monthValue - 1;
+    //   setSlectedMonth({
+    //     ...selectedMonth,
+    //     label: monthSelectOptions[currMonth].label,
+    //     value: monthSelectOptions[currMonth].value,
+    //     monthValue: monthSelectOptions[currMonth].monthValue,
+    //   });
+    //   setSelected(28);
+    // }
+
+    if (selectedWeekEndIndex > 7) {
+      setSelectedWeekEndIndex(selectedWeekEndIndex - 7);
     }
   }
 
   function addNewEvent() {
     console.log("Add new event");
+  }
+
+  function handleEventChange(item) {
+    setClickedItem({
+      ...clickedItem,
+      title: item.name,
+      date: item.date,
+      isAllDay: item.isAllDay,
+    });
+  }
+
+  function handleModalClose() {
+    setModalClass("closed");
   }
 
   const elements = Year.map(function (item, index) {
@@ -145,16 +276,33 @@ export default function App() {
     selected + 7
   );
 
+  function handleClickOnEvent(evt, item) {
+    setClickedEvent({
+      ...clickedEvent,
+      title: item.title,
+      date: item.date,
+      link: item.link,
+      isAllDay: item.isAllDay,
+      guestsInvited: item.guestsInvited,
+      guestsAttending: item.guestsAttending,
+      location: item.location,
+      description: item.description,
+    });
+    setModalClass("opened");
+  }
+
   const toolbarElements = (
     <div className="toolbar">
-      {/* <span className="selected-month"> {getSelectedMonth(selected)} </span> */}
-
-      <Select
-        className="select-month"
-        value={selectedMonth}
-        onChange={handleMonthChange}
-        options={monthSelectOptions}
-      />
+      {view.value === 2 ? (
+        <Select
+          className="select-month"
+          value={selectedMonth}
+          onChange={handleMonthChange}
+          options={monthSelectOptions}
+        />
+      ) : (
+        <div className="select-month month-range ">{monthRange}</div>
+      )}
 
       <Select
         className="select-view"
@@ -163,24 +311,15 @@ export default function App() {
         options={viewOptions}
       />
 
-      {/* <span
-        onClick={handleWeekDecrement}
-        className="material-symbols-outlined previous-icon"
-      >
-        arrow_back_ios_new
-      </span> */}
-
       <div className="previous-icon">
-        <PreviousIcon onClick={handleWeekDecrement} />
+        <PreviousIcon
+          className="decrement-icon"
+          onClick={handleWeekDecrement}
+        />
       </div>
-      {/* <span
-        onClick={handleWeekIncrement}
-        className="material-symbols-outlined next-icon"
-      >
-        arrow_forward_ios
-      </span> */}
+
       <div className="next-icon">
-        <NextIcon onClick={handleWeekIncrement} />
+        <NextIcon className="increment-icon" onClick={handleWeekIncrement} />
       </div>
 
       <div className="add-new-event">
@@ -189,11 +328,105 @@ export default function App() {
     </div>
   );
 
+  function getEvents(year, month, date, hour) {
+    let realDate = date + 1;
+    let realMonth = month + 1;
+    let dateObject = new Date(`${year}-${month}-${realDate}`);
+    let isoDate = dateObject.toISOString();
+
+    const matchedEvents = noAllDayEvents.filter(function (item) {
+      return (
+        new Date(item.date).getHours() === hour &&
+        new Date(item.date).getDate() === realDate &&
+        new Date(item.date).getFullYear() === year &&
+        new Date(item.date).getMonth() + 1 === month
+      );
+    });
+
+    if (matchedEvents && matchedEvents.length) {
+      const eventElements = matchedEvents.map(function (item, index) {
+        return (
+          <span
+            onClick={(evt) => handleClickOnEvent(evt, item)}
+            key={index.toString()}
+            className="event"
+          >
+            {item.title}
+          </span>
+        );
+      });
+      return eventElements;
+    }
+  }
+
+  function getDay2(year, dayNumber, index) {
+    let month = resolveMonth(index).num;
+    let date = new Date(`${year}-${month}-${dayNumber + 1}`);
+    let dateString = date.toDateString();
+    let splitDate = dateString.split(" ");
+    return splitDate[0];
+  }
+
+  function generateHourElements2(year, item, index) {
+    let month = resolveMonth(index).num;
+    return Array.from(Array(24).keys()).map(function (hour, index) {
+      return (
+        <div key={index.toString()} className="hour-item">
+          {/* {hour + 1} */}
+
+          <span className="events-container">
+            {getEvents(year, month, item, hour)}
+          </span>
+        </div>
+      );
+    });
+  }
+
+  const YearElements3 = completeYear.map(function (item, index) {
+    return (
+      <span key={index.toString()} className="month-elements">
+        <span className="day-heading">
+          {getDay2(2022, item, index)} <br /> {item + 1}{" "}
+          <span className="month-super-script">
+            {" "}
+            {monthStrings[resolveMonth(index)]}{" "}
+          </span>
+        </span>{" "}
+        {generateHourElements2(2022, item, index)}
+      </span>
+    );
+  });
+
+  function getSevenElements() {
+    return YearElements.slice(0, 6);
+  }
+
   return (
-    <div className="container">
-      <div className="tool-bar-container">{toolbarElements} </div>
-      <div className="hour-strip-container"> {hourElements} </div>
-      <div className="calendar-elements-container">{selectedElements} </div>
-    </div>
+    <RecoilRoot>
+      {/* <div>
+        <div className="container">
+          <div className="tool-bar-container">{toolbarElements} </div>
+          <div className="hour-strip-container"> {hourElements} </div>
+          <div className="calendar-elements-container">{selectedElements} </div>
+        </div>
+        <EventModal />
+      </div> */}
+
+      <div>
+        <div className="container">
+          <div className="tool-bar-container">{toolbarElements} </div>
+          <div className="hour-strip-container"> {hourElements} </div>
+          <div className="calendar-elements-container">
+            {/* {getSevenElements()}{" "} */}
+            {YearElements3.slice(selectedWeekStartIndex, selectedWeekEndIndex)}
+          </div>
+        </div>
+        <EventModal
+          event={clickedEvent}
+          displayModal={modalClass}
+          onModalClose={handleModalClose}
+        />
+      </div>
+    </RecoilRoot>
   );
 }

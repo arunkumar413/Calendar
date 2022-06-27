@@ -1,3 +1,5 @@
+import { atom, selector, useRecoilState, useSetRecoilState } from "recoil";
+
 export const Jan = Array.from(Array(31).keys()); //0-30  //month start and end indexes
 export const Feb = Array.from(Array(28).keys()); // 31-58
 export const LeapFeb = Array.from(Array(29).keys()); //59-89
@@ -11,6 +13,62 @@ export const Sep = Array.from(Array(30).keys()); //273-303
 export const Oct = Array.from(Array(31).keys()); //304-333
 export const Nov = Array.from(Array(30).keys()); //334-364
 export const Dec = Array.from(Array(31).keys());
+
+export const completeYear = [
+  ...Jan,
+  ...Feb,
+  ...Mar,
+  ...Apr,
+  ...May,
+  ...Jun,
+  ...Jul,
+  ...Aug,
+  ...Sep,
+  ...Oct,
+  ...Nov,
+  ...Dec,
+];
+
+export const monthStrings = [
+  "",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+const events = [
+  {
+    title: "A test event",
+    date: "2022-06-01T00:00:00.000Z",
+    isAllDay: false,
+  },
+  {
+    title: "A test event",
+    date: "2022-01-01T00:00:00.000Z",
+    isAllDay: false,
+  },
+
+  {
+    title: "A test event",
+    date: "2022-06-02T00:00:00.000Z",
+    isAllDay: false,
+  },
+  {
+    title: "A test event",
+    date: "2022-06-01T00:00:00.000Z",
+    isAllDay: false,
+  },
+  { title: "A test event", date: "2022-06-01T00:00:00.000Z", isAllDay: true },
+];
 
 export const monthIndexes = {
   jan: { start: 0, end: 30 },
@@ -26,6 +84,42 @@ export const monthIndexes = {
   nov: { start: 304, end: 333 },
   dec: { start: 334, end: 364 },
 };
+
+export function getStartMonth(start, end) {
+  return resolveMonth(start).string;
+}
+
+export function resolveMonth(item) {
+  if (item >= 0 && item <= 30) {
+    return { num: 1, string: "January" };
+  } else if (item >= 31 && item <= 58) {
+    return { num: 2, string: "February" };
+  } else if (item >= 59 && item <= 89) {
+    return { num: 3, string: "March" };
+  } else if (item >= 90 && item <= 119) {
+    return { num: 4, string: "April" };
+  } else if (item >= 120 && item <= 150) {
+    return { num: 5, string: "May" };
+  } else if (item >= 151 && item <= 180) {
+    return { num: 6, string: "June" };
+  } else if (item >= 181 && item <= 211) {
+    return { num: 7, string: "July" };
+  } else if (item >= 212 && item <= 242) {
+    return { num: 8, string: "August" };
+  } else if (item >= 243 && item <= 272) {
+    return { num: 9, string: "September" };
+  } else if (item >= 273 && item <= 303) {
+    return { num: 10, string: "October" };
+  } else if (item >= 304 && item <= 333) {
+    return { num: 11, string: "November" };
+  } else if (item >= 334 && item <= 364) {
+    return { num: 12, string: "December" };
+  }
+}
+
+export function getWeekMonths() {
+  // a week might fall into two months. This will return the those months
+}
 
 export const currentYear = new Date().getFullYear();
 export const isLeapYear = new Date(currentYear, 1, 29).getDate() === 29;
@@ -62,21 +156,12 @@ export const monthSelectOptions = [
   { value: "December", label: "December", monthValue: 11 },
 ];
 
-export const events = [
-  { title: "A test event", date: "2022-06-01T00:00:00.000Z", isAllDay: false },
-  { title: "A test event", date: "2022-01-01T00:00:00.000Z", isAllDay: false },
-
-  { title: "A test event", date: "2022-06-02T00:00:00.000Z", isAllDay: false },
-  { title: "A test event", date: "2022-06-01T00:00:00.000Z", isAllDay: false },
-  { title: "A test event", date: "2022-06-01T00:00:00.000Z", isAllDay: true },
-];
-
 export const noAllDayEvents = events.filter(function (item) {
   return item.isAllDay === false;
 });
 
 function handleClickOnEvent(evt, item) {
-  // showModal(true);
+  localStorage.setItem("event", JSON.stringify(item));
 }
 
 function getEvents(year, month, date, hour) {
@@ -317,3 +402,41 @@ export function getSelectedMonth(selection) {
     return "April";
   }
 }
+
+export function getClickedItem() {
+  return clickedItem;
+}
+
+function getDay2(year, dayNumber, index) {
+  let month = resolveMonth(index).num;
+  let date = new Date(`${year}-${month}-${dayNumber + 1}`);
+  let dateString = date.toDateString();
+  let splitDate = dateString.split(" ");
+  return splitDate[0];
+}
+
+function generateHourElements2(year, item, index) {
+  let month = resolveMonth(index).num;
+  return Array.from(Array(24).keys()).map(function (hour, index) {
+    return (
+      <div key={index.toString()} className="hour-item">
+        {/* {hour + 1} */}
+
+        <span className="events-container">
+          {getEvents(year, month, item, hour)}
+        </span>
+      </div>
+    );
+  });
+}
+
+export const YearElements3 = completeYear.map(function (item, index) {
+  return (
+    <span key={index.toString()} className="month-elements">
+      <span className="day-heading">
+        {getDay2(2022, item, index)} <br /> {item + 1}{" "}
+      </span>{" "}
+      {generateHourElements2(2022, item, index)}
+    </span>
+  );
+});
