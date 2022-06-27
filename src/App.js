@@ -47,9 +47,13 @@ export default function App() {
     title: "",
     date: "",
     isAllDay: false,
+    guestsAttending: [],
+    link: "",
+    description: "",
+    guestsInvited: [],
+    location: "",
   });
-  const [modalClass,setModalClass]= useState('closed')
-
+  const [modalClass, setModalClass] = useState("closed");
 
   const [events, setEvents] = useState([
     {
@@ -60,6 +64,7 @@ export default function App() {
       link: "http://google.com",
       description: "An event to remember",
       guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+      location: "New York",
     },
     {
       title: "A test event",
@@ -69,6 +74,7 @@ export default function App() {
       link: "http://google.com",
       description: "An event to remember",
       guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+      location: "New York",
     },
 
     {
@@ -79,6 +85,7 @@ export default function App() {
       link: "http://google.com",
       description: "An event to remember",
       guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+      location: "New York",
     },
     {
       title: "A test event",
@@ -88,6 +95,7 @@ export default function App() {
       link: "http://google.com",
       description: "An event to remember",
       guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+      location: "New York",
     },
     {
       title: "A test event",
@@ -97,6 +105,7 @@ export default function App() {
       link: "http://google.com",
       description: "An event to remember",
       guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+      location: "New York",
     },
   ]);
 
@@ -203,7 +212,7 @@ export default function App() {
     //   setSelected(28);
     // }
 
-    if (selectedWeekEndIndex >= 7) {
+    if (selectedWeekEndIndex > 7) {
       setSelectedWeekEndIndex(selectedWeekEndIndex - 7);
     }
   }
@@ -219,6 +228,10 @@ export default function App() {
       date: item.date,
       isAllDay: item.isAllDay,
     });
+  }
+
+  function handleModalClose() {
+    setModalClass("closed");
   }
 
   const elements = Year.map(function (item, index) {
@@ -268,11 +281,14 @@ export default function App() {
       ...clickedEvent,
       title: item.title,
       date: item.date,
+      link: item.link,
       isAllDay: item.isAllDay,
       guestsInvited: item.guestsInvited,
       guestsAttending: item.guestsAttending,
+      location: item.location,
+      description: item.description,
     });
-    setModalClass('opened')
+    setModalClass("opened");
   }
 
   const toolbarElements = (
@@ -296,11 +312,14 @@ export default function App() {
       />
 
       <div className="previous-icon">
-        <PreviousIcon onClick={handleWeekDecrement} />
+        <PreviousIcon
+          className="decrement-icon"
+          onClick={handleWeekDecrement}
+        />
       </div>
 
       <div className="next-icon">
-        <NextIcon onClick={handleWeekIncrement} />
+        <NextIcon className="increment-icon" onClick={handleWeekIncrement} />
       </div>
 
       <div className="add-new-event">
@@ -402,7 +421,11 @@ export default function App() {
             {YearElements3.slice(selectedWeekStartIndex, selectedWeekEndIndex)}
           </div>
         </div>
-        <EventModal event={clickedEvent} displayModal={modalClass} />
+        <EventModal
+          event={clickedEvent}
+          displayModal={modalClass}
+          onModalClose={handleModalClose}
+        />
       </div>
     </RecoilRoot>
   );

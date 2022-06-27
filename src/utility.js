@@ -70,8 +70,6 @@ const events = [
   { title: "A test event", date: "2022-06-01T00:00:00.000Z", isAllDay: true },
 ];
 
-console.log(completeYear);
-
 export const monthIndexes = {
   jan: { start: 0, end: 30 },
   feb: { start: 31, end: 58 },
@@ -93,29 +91,29 @@ export function getStartMonth(start, end) {
 
 export function resolveMonth(item) {
   if (item >= 0 && item <= 30) {
-    return { num: 1, string: "Jan" };
+    return { num: 1, string: "January" };
   } else if (item >= 31 && item <= 58) {
-    return { num: 2, string: "Feb" };
+    return { num: 2, string: "February" };
   } else if (item >= 59 && item <= 89) {
-    return { num: 3, string: "Mar" };
+    return { num: 3, string: "March" };
   } else if (item >= 90 && item <= 119) {
-    return { num: 4, string: "Apr" };
+    return { num: 4, string: "April" };
   } else if (item >= 120 && item <= 150) {
     return { num: 5, string: "May" };
   } else if (item >= 151 && item <= 180) {
-    return { num: 6, string: "Jun" };
+    return { num: 6, string: "June" };
   } else if (item >= 181 && item <= 211) {
-    return { num: 7, string: "Jul" };
+    return { num: 7, string: "July" };
   } else if (item >= 212 && item <= 242) {
-    return { num: 8, string: "Aug" };
+    return { num: 8, string: "August" };
   } else if (item >= 243 && item <= 272) {
-    return { num: 9, string: "Sep" };
+    return { num: 9, string: "September" };
   } else if (item >= 273 && item <= 303) {
-    return { num: 10, string: "Oct" };
+    return { num: 10, string: "October" };
   } else if (item >= 304 && item <= 333) {
-    return { num: 11, string: "Nov" };
+    return { num: 11, string: "November" };
   } else if (item >= 334 && item <= 364) {
-    return { num: 12, string: "Dec" };
+    return { num: 12, string: "December" };
   }
 }
 
@@ -442,5 +440,3 @@ export const YearElements3 = completeYear.map(function (item, index) {
     </span>
   );
 });
-
-console.log(YearElements3[0]);

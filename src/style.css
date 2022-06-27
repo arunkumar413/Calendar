@@ -95,6 +95,7 @@ body {
 .previous-icon {
   grid-column: 6/7;
   text-align: center;
+  cursor: pointer;
 }
 
 .next-icon {
@@ -115,6 +116,17 @@ body {
   background-color: aliceblue;
   border-radius: 24px;
   cursor: pointer;
+}
+
+.decrement-icon,
+.increment-icon {
+  cursor: pointer;
+}
+
+.decrement-icon:hover,
+.increment-icon:hover {
+  cursor: pointer;
+  fill: blue;
 }
 
 .add-new-event:hover {
@@ -179,12 +191,46 @@ body {
 }
 
 .event-modal-header-heading {
-  grid-column: 2/4;
 }
 
 .event-modal-header-close-icon {
-  grid-column: 4/5;
   text-align: right;
+  width: 24px;
+  border-radius: 20px;
+  padding: 1rem;
+}
+.event-modal-header-close-icon:hover {
+  color: red;
+  background-color: #f0808042;
+  cursor: pointer;
+}
+
+.event-modal-content {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.event-modal-description {
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+  height: 5rem;
+}
+
+.event-modal-confirmed {
+  color: green;
+  font-weight: bolder;
+}
+
+.event-modal-guests-invited {
+  color: blue;
+}
+
+.event-modal-guests-invited:hover {
+  cursor: pointer;
 }
 
 .month-super-script {
@@ -193,6 +239,8 @@ body {
 
 .month-range {
   font-weight: bolder;
+  font-size: 1.2rem;
+  color: #0908097d;
 }
 
 .closed {
