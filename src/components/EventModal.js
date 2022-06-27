@@ -24,7 +24,7 @@ export function EventModal(props) {
   return (
     <div className={`event-modal ${props.displayModal} `}>
       <div className="event-modal-header">
-        <h5 className="event-modal-header-heading"> Event Details </h5>
+        <p className="event-modal-header-heading"> Event Details </p>
 
         <span className="material-symbols-outlined">delete</span>
         <span className="material-symbols-outlined">edit</span>
