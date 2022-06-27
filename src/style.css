@@ -155,10 +155,28 @@ body {
 }
 
 .event-modal {
+  border: solid 1px gray;
   position: fixed;
-  right: -5rem;
+  left: 50%;
+  top:20%;
+  height: 600px;
+  max-height:100%;
+  width:40%;
+  max-width:100%;
 }
 
 .month-super-script {
   font-size: 0.8rem;
+}
+
+.month-range {
+  font-weight: bolder;
+}
+
+.closed{
+  display:none
+}
+
+.opened{
+  display:block
 }

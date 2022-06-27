@@ -88,9 +88,7 @@ export const monthIndexes = {
 };
 
 export function getStartMonth(start, end) {
-  let month = resolveMonth(start).string;
-
-  return month;
+  return resolveMonth(start).string;
 }
 
 export function resolveMonth(item) {
@@ -421,6 +419,7 @@ function getDay2(year, dayNumber, index) {
 
 function generateHourElements2(year, item, index) {
   let month = resolveMonth(index).num;
+  debugger;
   return Array.from(Array(24).keys()).map(function (hour, index) {
     return (
       <div key={index.toString()} className="hour-item">

@@ -25,6 +25,7 @@ import {
   completeYear,
   resolveMonth,
   monthStrings,
+  getStartMonth,
 } from "./utility";
 import Select from "react-select";
 import { EventModal } from "./components/EventModal";
@@ -33,6 +34,7 @@ export default function App() {
   const [selected, setSelected] = useState(0);
   const [selectedWeekEndIndex, setSelectedWeekEndIndex] = useState(7);
   const [selectedWeekStartIndex, setSelectedWeekStartIndex] = useState(0);
+  const [monthRange, setMonthRange] = useState("");
   const [selectedMonth, setSlectedMonth] = useState({
     label: "",
     value: "",
@@ -41,30 +43,61 @@ export default function App() {
 
   const [isNexIconClickable, setNextIconClickable] = useState(true);
   const [view, setView] = useState({ label: "Week", value: 1 });
+  const [clickedEvent, setClickedEvent] = useState({
+    title: "",
+    date: "",
+    isAllDay: false,
+  });
+  const [modalClass,setModalClass]= useState('closed')
+
 
   const [events, setEvents] = useState([
     {
       title: "A test event",
       date: "2022-06-01T00:00:00.000Z",
       isAllDay: false,
+      guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
+      link: "http://google.com",
+      description: "An event to remember",
+      guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
     },
     {
       title: "A test event",
       date: "2022-01-01T00:00:00.000Z",
       isAllDay: false,
+      guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
+      link: "http://google.com",
+      description: "An event to remember",
+      guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
     },
 
     {
       title: "A test event",
       date: "2022-06-02T00:00:00.000Z",
       isAllDay: false,
+      guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
+      link: "http://google.com",
+      description: "An event to remember",
+      guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
     },
     {
       title: "A test event",
       date: "2022-06-01T00:00:00.000Z",
       isAllDay: false,
+      guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
+      link: "http://google.com",
+      description: "An event to remember",
+      guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
     },
-    { title: "A test event", date: "2022-06-01T00:00:00.000Z", isAllDay: true },
+    {
+      title: "A test event",
+      date: "2022-06-01T00:00:00.000Z",
+      isAllDay: true,
+      guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
+      link: "http://google.com",
+      description: "An event to remember",
+      guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+    },
   ]);
 
   const noAllDayEvents = events.filter(function (item) {
@@ -142,9 +175,19 @@ export default function App() {
     [selectedWeekEndIndex]
   );
 
-  useEffect(function () {
-    currentMonth;
-  }, []);
+  useEffect(
+    function () {
+      let month1 = getStartMonth(selectedWeekStartIndex);
+      let month2 = getStartMonth(selectedWeekEndIndex);
+
+      if (month1 === month2) {
+        setMonthRange(month1);
+      } else {
+        setMonthRange(month1 + "-" + month2);
+      }
+    },
+    [selectedWeekEndIndex, selectedWeekStartIndex]
+  );
 
   function handleWeekDecrement() {
     // if (selected !== 0) {
@@ -220,14 +263,30 @@ export default function App() {
     selected + 7
   );
 
+  function handleClickOnEvent(evt, item) {
+    setClickedEvent({
+      ...clickedEvent,
+      title: item.title,
+      date: item.date,
+      isAllDay: item.isAllDay,
+      guestsInvited: item.guestsInvited,
+      guestsAttending: item.guestsAttending,
+    });
+    setModalClass('opened')
+  }
+
   const toolbarElements = (
     <div className="toolbar">
-      <Select
-        className="select-month"
-        value={selectedMonth}
-        onChange={handleMonthChange}
-        options={monthSelectOptions}
-      />
+      {view.value === 2 ? (
+        <Select
+          className="select-month"
+          value={selectedMonth}
+          onChange={handleMonthChange}
+          options={monthSelectOptions}
+        />
+      ) : (
+        <div className="select-month month-range ">{monthRange}</div>
+      )}
 
       <Select
         className="select-view"
@@ -251,6 +310,7 @@ export default function App() {
   );
 
   function getEvents(year, month, date, hour) {
+    debugger;
     let realDate = date + 1;
     let realMonth = month + 1;
     let dateObject = new Date(`${year}-${month}-${realDate}`);
@@ -282,7 +342,7 @@ export default function App() {
   }
 
   function getDay2(year, dayNumber, index) {
-    let month = resolveMonth(index);
+    let month = resolveMonth(index).num;
     let date = new Date(`${year}-${month}-${dayNumber + 1}`);
     let dateString = date.toDateString();
     let splitDate = dateString.split(" ");
@@ -290,7 +350,7 @@ export default function App() {
   }
 
   function generateHourElements2(year, item, index) {
-    let month = resolveMonth(index);
+    let month = resolveMonth(index).num;
     return Array.from(Array(24).keys()).map(function (hour, index) {
       return (
         <div key={index.toString()} className="hour-item">
@@ -325,16 +385,14 @@ export default function App() {
 
   return (
     <RecoilRoot>
-      <div>
+      {/* <div>
         <div className="container">
           <div className="tool-bar-container">{toolbarElements} </div>
           <div className="hour-strip-container"> {hourElements} </div>
           <div className="calendar-elements-container">{selectedElements} </div>
         </div>
         <EventModal />
-      </div>
-
-      <div style={{ height: 300 }}> </div>
+      </div> */}
 
       <div>
         <div className="container">
@@ -345,7 +403,7 @@ export default function App() {
             {YearElements3.slice(selectedWeekStartIndex, selectedWeekEndIndex)}
           </div>
         </div>
-        <EventModal />
+        <EventModal event={clickedEvent} displayModal={modalClass} />
       </div>
     </RecoilRoot>
   );
