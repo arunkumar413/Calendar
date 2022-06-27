@@ -22,12 +22,17 @@ import {
   monthSelectOptions,
   yearElements1,
   YearElements,
+  completeYear,
+  resolveMonth,
+  monthStrings,
 } from "./utility";
 import Select from "react-select";
 import { EventModal } from "./components/EventModal";
 
 export default function App() {
   const [selected, setSelected] = useState(0);
+  const [selectedWeekEndIndex, setSelectedWeekEndIndex] = useState(7);
+  const [selectedWeekStartIndex, setSelectedWeekStartIndex] = useState(0);
   const [selectedMonth, setSlectedMonth] = useState({
     label: "",
     value: "",
@@ -36,6 +41,35 @@ export default function App() {
 
   const [isNexIconClickable, setNextIconClickable] = useState(true);
   const [view, setView] = useState({ label: "Week", value: 1 });
+
+  const [events, setEvents] = useState([
+    {
+      title: "A test event",
+      date: "2022-06-01T00:00:00.000Z",
+      isAllDay: false,
+    },
+    {
+      title: "A test event",
+      date: "2022-01-01T00:00:00.000Z",
+      isAllDay: false,
+    },
+
+    {
+      title: "A test event",
+      date: "2022-06-02T00:00:00.000Z",
+      isAllDay: false,
+    },
+    {
+      title: "A test event",
+      date: "2022-06-01T00:00:00.000Z",
+      isAllDay: false,
+    },
+    { title: "A test event", date: "2022-06-01T00:00:00.000Z", isAllDay: true },
+  ]);
+
+  const noAllDayEvents = events.filter(function (item) {
+    return item.isAllDay === false;
+  });
 
   const viewOptions = [
     { label: "Day", value: 0 },
@@ -85,32 +119,49 @@ export default function App() {
   }
 
   function handleWeekIncrement() {
-    if (selected + 7 <= YearElements[selectedMonth.monthValue].length) {
-      setSelected(selected + 7);
-    } else if (selected === 28) {
-      let currMonth = selectedMonth.monthValue + 1;
-      setSlectedMonth({
-        ...selectedMonth,
-        label: monthSelectOptions[currMonth].label,
-        value: monthSelectOptions[currMonth].value,
-        monthValue: monthSelectOptions[currMonth].monthValue,
-      });
-      setSelected(0);
+    // if (selected + 7 <= YearElements[selectedMonth.monthValue].length) {
+    //   setSelected(selected + 7);
+    // } else if (selected === 28) {
+    //   let currMonth = selectedMonth.monthValue + 1;
+    //   setSlectedMonth({
+    //     ...selectedMonth,
+    //     label: monthSelectOptions[currMonth].label,
+    //     value: monthSelectOptions[currMonth].value,
+    //     monthValue: monthSelectOptions[currMonth].monthValue,
+    //   });
+
+    if (selectedWeekEndIndex >= 7) {
+      setSelectedWeekEndIndex(selectedWeekEndIndex + 7);
     }
   }
 
+  useEffect(
+    function () {
+      setSelectedWeekStartIndex(selectedWeekEndIndex - 7);
+    },
+    [selectedWeekEndIndex]
+  );
+
+  useEffect(function () {
+    currentMonth;
+  }, []);
+
   function handleWeekDecrement() {
-    if (selected !== 0) {
-      setSelected(selected - 7);
-    } else if (selected === 0) {
-      let currMonth = selectedMonth.monthValue - 1;
-      setSlectedMonth({
-        ...selectedMonth,
-        label: monthSelectOptions[currMonth].label,
-        value: monthSelectOptions[currMonth].value,
-        monthValue: monthSelectOptions[currMonth].monthValue,
-      });
-      setSelected(28);
+    // if (selected !== 0) {
+    //   setSelected(selected - 7);
+    // } else if (selected === 0) {
+    //   let currMonth = selectedMonth.monthValue - 1;
+    //   setSlectedMonth({
+    //     ...selectedMonth,
+    //     label: monthSelectOptions[currMonth].label,
+    //     value: monthSelectOptions[currMonth].value,
+    //     monthValue: monthSelectOptions[currMonth].monthValue,
+    //   });
+    //   setSelected(28);
+    // }
+
+    if (selectedWeekEndIndex >= 7) {
+      setSelectedWeekEndIndex(selectedWeekEndIndex - 7);
     }
   }
 
@@ -171,8 +222,6 @@ export default function App() {
 
   const toolbarElements = (
     <div className="toolbar">
-      {/* <span className="selected-month"> {getSelectedMonth(selected)} </span> */}
-
       <Select
         className="select-month"
         value={selectedMonth}
@@ -187,22 +236,10 @@ export default function App() {
         options={viewOptions}
       />
 
-      {/* <span
-        onClick={handleWeekDecrement}
-        className="material-symbols-outlined previous-icon"
-      >
-        arrow_back_ios_new
-      </span> */}
-
       <div className="previous-icon">
         <PreviousIcon onClick={handleWeekDecrement} />
       </div>
-      {/* <span
-        onClick={handleWeekIncrement}
-        className="material-symbols-outlined next-icon"
-      >
-        arrow_forward_ios
-      </span> */}
+
       <div className="next-icon">
         <NextIcon onClick={handleWeekIncrement} />
       </div>
@@ -213,6 +250,79 @@ export default function App() {
     </div>
   );
 
+  function getEvents(year, month, date, hour) {
+    let realDate = date + 1;
+    let realMonth = month + 1;
+    let dateObject = new Date(`${year}-${month}-${realDate}`);
+    let isoDate = dateObject.toISOString();
+
+    const matchedEvents = noAllDayEvents.filter(function (item) {
+      return (
+        new Date(item.date).getHours() === hour &&
+        new Date(item.date).getDate() === realDate &&
+        new Date(item.date).getFullYear() === year &&
+        new Date(item.date).getMonth() + 1 === month
+      );
+    });
+
+    if (matchedEvents && matchedEvents.length) {
+      const eventElements = matchedEvents.map(function (item, index) {
+        return (
+          <span
+            onClick={(evt) => handleClickOnEvent(evt, item)}
+            key={index.toString()}
+            className="event"
+          >
+            {item.title}
+          </span>
+        );
+      });
+      return eventElements;
+    }
+  }
+
+  function getDay2(year, dayNumber, index) {
+    let month = resolveMonth(index);
+    let date = new Date(`${year}-${month}-${dayNumber + 1}`);
+    let dateString = date.toDateString();
+    let splitDate = dateString.split(" ");
+    return splitDate[0];
+  }
+
+  function generateHourElements2(year, item, index) {
+    let month = resolveMonth(index);
+    return Array.from(Array(24).keys()).map(function (hour, index) {
+      return (
+        <div key={index.toString()} className="hour-item">
+          {/* {hour + 1} */}
+
+          <span className="events-container">
+            {getEvents(year, month, item, hour)}
+          </span>
+        </div>
+      );
+    });
+  }
+
+  const YearElements3 = completeYear.map(function (item, index) {
+    return (
+      <span key={index.toString()} className="month-elements">
+        <span className="day-heading">
+          {getDay2(2022, item, index)} <br /> {item + 1}{" "}
+          <span className="month-super-script">
+            {" "}
+            {monthStrings[resolveMonth(index)]}{" "}
+          </span>
+        </span>{" "}
+        {generateHourElements2(2022, item, index)}
+      </span>
+    );
+  });
+
+  function getSevenElements() {
+    return YearElements.slice(0, 6);
+  }
+
   return (
     <RecoilRoot>
       <div>
@@ -220,6 +330,20 @@ export default function App() {
           <div className="tool-bar-container">{toolbarElements} </div>
           <div className="hour-strip-container"> {hourElements} </div>
           <div className="calendar-elements-container">{selectedElements} </div>
+        </div>
+        <EventModal />
+      </div>
+
+      <div style={{ height: 300 }}> </div>
+
+      <div>
+        <div className="container">
+          <div className="tool-bar-container">{toolbarElements} </div>
+          <div className="hour-strip-container"> {hourElements} </div>
+          <div className="calendar-elements-container">
+            {/* {getSevenElements()}{" "} */}
+            {YearElements3.slice(selectedWeekStartIndex, selectedWeekEndIndex)}
+          </div>
         </div>
         <EventModal />
       </div>

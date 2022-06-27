@@ -14,6 +14,64 @@ export const Oct = Array.from(Array(31).keys()); //304-333
 export const Nov = Array.from(Array(30).keys()); //334-364
 export const Dec = Array.from(Array(31).keys());
 
+export const completeYear = [
+  ...Jan,
+  ...Feb,
+  ...Mar,
+  ...Apr,
+  ...May,
+  ...Jun,
+  ...Jul,
+  ...Aug,
+  ...Sep,
+  ...Oct,
+  ...Nov,
+  ...Dec,
+];
+
+export const monthStrings = [
+  "",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+const events = [
+  {
+    title: "A test event",
+    date: "2022-06-01T00:00:00.000Z",
+    isAllDay: false,
+  },
+  {
+    title: "A test event",
+    date: "2022-01-01T00:00:00.000Z",
+    isAllDay: false,
+  },
+
+  {
+    title: "A test event",
+    date: "2022-06-02T00:00:00.000Z",
+    isAllDay: false,
+  },
+  {
+    title: "A test event",
+    date: "2022-06-01T00:00:00.000Z",
+    isAllDay: false,
+  },
+  { title: "A test event", date: "2022-06-01T00:00:00.000Z", isAllDay: true },
+];
+
+console.log(completeYear);
+
 export const monthIndexes = {
   jan: { start: 0, end: 30 },
   feb: { start: 31, end: 58 },
@@ -28,6 +86,44 @@ export const monthIndexes = {
   nov: { start: 304, end: 333 },
   dec: { start: 334, end: 364 },
 };
+
+export function getStartMonth(start, end) {
+  let month = resolveMonth(start).string;
+
+  return month;
+}
+
+export function resolveMonth(item) {
+  if (item >= 0 && item <= 30) {
+    return { num: 1, string: "Jan" };
+  } else if (item >= 31 && item <= 58) {
+    return { num: 2, string: "Feb" };
+  } else if (item >= 59 && item <= 89) {
+    return { num: 3, string: "Mar" };
+  } else if (item >= 90 && item <= 119) {
+    return { num: 4, string: "Apr" };
+  } else if (item >= 120 && item <= 150) {
+    return { num: 5, string: "May" };
+  } else if (item >= 151 && item <= 180) {
+    return { num: 6, string: "Jun" };
+  } else if (item >= 181 && item <= 211) {
+    return { num: 7, string: "Jul" };
+  } else if (item >= 212 && item <= 242) {
+    return { num: 8, string: "Aug" };
+  } else if (item >= 243 && item <= 272) {
+    return { num: 9, string: "Sep" };
+  } else if (item >= 273 && item <= 303) {
+    return { num: 10, string: "Oct" };
+  } else if (item >= 304 && item <= 333) {
+    return { num: 11, string: "Nov" };
+  } else if (item >= 334 && item <= 364) {
+    return { num: 12, string: "Dec" };
+  }
+}
+
+export function getWeekMonths() {
+  // a week might fall into two months. This will return the those months
+}
 
 export const currentYear = new Date().getFullYear();
 export const isLeapYear = new Date(currentYear, 1, 29).getDate() === 29;
@@ -64,24 +160,12 @@ export const monthSelectOptions = [
   { value: "December", label: "December", monthValue: 11 },
 ];
 
-export const events = [
-  { title: "A test event", date: "2022-06-01T00:00:00.000Z", isAllDay: false },
-  { title: "A test event", date: "2022-01-01T00:00:00.000Z", isAllDay: false },
-
-  { title: "A test event", date: "2022-06-02T00:00:00.000Z", isAllDay: false },
-  { title: "A test event", date: "2022-06-01T00:00:00.000Z", isAllDay: false },
-  { title: "A test event", date: "2022-06-01T00:00:00.000Z", isAllDay: true },
-];
-
 export const noAllDayEvents = events.filter(function (item) {
   return item.isAllDay === false;
 });
 
-export var clickedItem = null;
-
 function handleClickOnEvent(evt, item) {
   localStorage.setItem("event", JSON.stringify(item));
-  clickedItem = item;
 }
 
 function getEvents(year, month, date, hour) {
@@ -326,3 +410,39 @@ export function getSelectedMonth(selection) {
 export function getClickedItem() {
   return clickedItem;
 }
+
+function getDay2(year, dayNumber, index) {
+  let month = resolveMonth(index).num;
+  let date = new Date(`${year}-${month}-${dayNumber + 1}`);
+  let dateString = date.toDateString();
+  let splitDate = dateString.split(" ");
+  return splitDate[0];
+}
+
+function generateHourElements2(year, item, index) {
+  let month = resolveMonth(index).num;
+  return Array.from(Array(24).keys()).map(function (hour, index) {
+    return (
+      <div key={index.toString()} className="hour-item">
+        {/* {hour + 1} */}
+
+        <span className="events-container">
+          {getEvents(year, month, item, hour)}
+        </span>
+      </div>
+    );
+  });
+}
+
+export const YearElements3 = completeYear.map(function (item, index) {
+  return (
+    <span key={index.toString()} className="month-elements">
+      <span className="day-heading">
+        {getDay2(2022, item, index)} <br /> {item + 1}{" "}
+      </span>{" "}
+      {generateHourElements2(2022, item, index)}
+    </span>
+  );
+});
+
+console.log(YearElements3[0]);
