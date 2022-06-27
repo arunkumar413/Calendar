@@ -155,14 +155,36 @@ body {
 }
 
 .event-modal {
-  border: solid 1px gray;
+  padding: 1rem;
   position: fixed;
   left: 50%;
-  top:20%;
+  top: 20%;
   height: 600px;
-  max-height:100%;
-  width:40%;
-  max-width:100%;
+  max-height: 100%;
+  width: 40%;
+  max-width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.event-modal-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  border-bottom: solid 0.5px gainsboro;
+  text-align: center;
+  gap: 2rem;
+}
+
+.event-modal-header-heading {
+  grid-column: 2/4;
+}
+
+.event-modal-header-close-icon {
+  grid-column: 4/5;
+  text-align: right;
 }
 
 .month-super-script {
@@ -173,10 +195,10 @@ body {
   font-weight: bolder;
 }
 
-.closed{
-  display:none
+.closed {
+  display: none;
 }
 
-.opened{
-  display:block
+.opened {
+  display: block;
 }

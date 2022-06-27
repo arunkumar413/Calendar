@@ -310,7 +310,6 @@ export default function App() {
   );
 
   function getEvents(year, month, date, hour) {
-    debugger;
     let realDate = date + 1;
     let realMonth = month + 1;
     let dateObject = new Date(`${year}-${month}-${realDate}`);
