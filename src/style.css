@@ -250,3 +250,106 @@ body {
 .opened {
   display: block;
 }
+
+.edit-event-modal {
+  padding: 1rem;
+  position: fixed;
+  left: 50%;
+  top: 20%;
+  height: 600px;
+  max-height: 100%;
+  width: 40%;
+  max-width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.edit-event-modal-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  justify-content: flex-end;
+  align-items: flex-start;
+  text-align: right;
+}
+
+.edit-event-modal-content {
+}
+.edit-event-modal-footer {
+}
+
+.edit-event-modal-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.edit-event-modal-header-close-icon {
+  padding: 1rem;
+  width: 24px;
+  height: 24px;
+  grid-column: 4/5;
+  border-radius: 50%;
+}
+
+.edit-event-modal-header-close-icon:hover {
+  background-color: #ff000030;
+  color: red;
+  cursor: pointer;
+}
+
+.edit-event-modal-footer {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+input {
+  padding: 0.5rem;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-size: 1.2rem;
+}
+
+input:focus {
+  border-bottom: solid 2px blue;
+  outline: none;
+}
+
+.event-date-time > input {
+  width: 40%;
+  margin-right: 1rem;
+}
+
+textarea {
+  padding: 0.5rem;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-size: 1.2rem;
+  border-bottom: solid 1px gray;
+}
+
+textarea:focus {
+  border-bottom: solid 2px blue;
+  outline: none;
+}
+
+button {
+  border: none;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+.success {
+  background-color: green;
+  color: white;
+}
+
+.secondary {
+  background-color: cornflowerblue;
+  color: white;
+}

@@ -29,6 +29,7 @@ import {
 } from "./utility";
 import Select from "react-select";
 import { EventModal } from "./components/EventModal";
+import { EditEventModal } from "./components/EditEventModal";
 
 export default function App() {
   const [selected, setSelected] = useState(0);
@@ -54,6 +55,7 @@ export default function App() {
     location: "",
   });
   const [modalClass, setModalClass] = useState("closed");
+  const [editModalClass, setEditModalClass] = useState("closed");
 
   const [events, setEvents] = useState([
     {
@@ -401,6 +403,14 @@ export default function App() {
     return YearElements.slice(0, 6);
   }
 
+  function handleOpenEditModal() {
+    setEditModalClass("opened");
+  }
+
+  function handleCloseEditModal() {
+    setEditModalClass("closed");
+  }
+
   return (
     <RecoilRoot>
       {/* <div>
@@ -425,6 +435,14 @@ export default function App() {
           event={clickedEvent}
           displayModal={modalClass}
           onModalClose={handleModalClose}
+          onEditModalOpen={handleOpenEditModal}
+        />
+        <EditEventModal
+          value={editModalClass}
+          displayEditModal={editModalClass}
+          onOpenEditModal={handleOpenEditModal}
+          onCloseEditModal={handleCloseEditModal}
+          event={clickedEvent}
         />
       </div>
     </RecoilRoot>
