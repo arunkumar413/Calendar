@@ -2,7 +2,10 @@ import react, { useState, useEffect } from "react";
 
 export function EditEventModal(props) {
   const [event, setEvent] = useState(props.event);
-  const [guest, setGuest] = useState("");
+  const [email, setEmail] = useState("");
+  const [eventHour, setEventHour] = useState("");
+  const [eventDate, setEventDate] = useState("2022-05-13T22:30");
+  const [eventTime, setEventTime] = useState("");
 
   useEffect(
     function () {
@@ -12,10 +15,31 @@ export function EditEventModal(props) {
   );
 
   function handleChangeEventDetails(evt) {
-    setEvent(function () {
+    // if (evt.target.name === "date") {
+    //   setEventDate(evt.target.value);
+    // } else if (evt.target.name === "time") {
+    //   setEventTime(evt.target.value);
+    // }
+    setEvent(function (prevState) {
       return { ...event, [evt.target.name]: evt.target.value };
     });
   }
+
+  useEffect(
+    function () {
+      function useRegex(input) {
+        let regex = /\d\d\d\d-[a-zA-Z]+-\d\d/i;
+        return regex.test(input);
+      }
+
+      useRegex(eventDate);
+
+      setEvent(function () {
+        return { ...event, ["date"]: eventDate };
+      });
+    },
+    [eventDate, eventTime]
+  );
 
   function handleCloseEditModal() {
     props.onCloseEditModal();
@@ -23,17 +47,42 @@ export function EditEventModal(props) {
 
   function handleNewGuest() {
     setEvent(function (prevState) {
-      debugger;
-      let newState = { ...prevState };
-      let arr = [...newState.guestsInvited];
-      arr.push(guest);
-      newState.invitedGuests = arr;
-      return newState;
+      return {
+        ...prevState,
+        guestsInvited: [...prevState.guestsInvited, email],
+      };
     });
+    setEmail("");
   }
 
   function handleGuestInputChange(evt) {
-    setGuest(evt.target.value);
+    setEmail(evt.target.value);
+  }
+
+  function handleKeyPress(evt) {
+    if (evt.key === "Enter") {
+      setEvent(function (prevState) {
+        return {
+          ...prevState,
+          guestsInvited: [...prevState.guestsInvited, email],
+        };
+      });
+      setEmail("");
+    }
+  }
+
+  function handleRemoveGuest(evt, item) {
+    setEvent(function (prevState) {
+      return {
+        ...prevState,
+        guestsInvited: prevState.guestsInvited.filter(function (
+          prevItem,
+          index
+        ) {
+          return item !== prevItem;
+        }),
+      };
+    });
   }
 
   return (
@@ -46,7 +95,7 @@ export function EditEventModal(props) {
         <div className="">
           <span
             onClick={handleCloseEditModal}
-            class="material-symbols-outlined edit-event-modal-header-close-icon"
+            className="material-symbols-outlined edit-event-modal-header-close-icon"
           >
             close
           </span>
@@ -61,20 +110,38 @@ export function EditEventModal(props) {
           type="text"
           onChange={handleChangeEventDetails}
         />
+        <div className="event-date-time">
+          <input
+            onChange={handleChangeEventDetails}
+            type="datetime-local"
+            name="date"
+          />
+          <span style={{ fontSize: "0.8rem" }}>
+            {" "}
+            {new Date(event.date).toLocaleString(undefined, {
+              weekday: "short",
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+              hour12: true,
+              hour: "numeric",
+              minute: "numeric",
+              timeZoneName: "short",
+            })}{" "}
+          </span>
 
-        <div className="event-date-time" style={{ padding: "1rem" }}>
-          <input
-            name="date-time"
-            type="date-time"
+          {/* <input
+            name="date"
+            type="text"
             placeholder="Enter the date"
-            onChange={handleChangeEventDetails}
+            onBlur={handleChangeEventDetails}
           />
           <input
-            name="date-time"
-            type="date-time"
+            name="time"
+            type="text"
             placeholder="Enter the time"
-            onChange={handleChangeEventDetails}
-          />
+            onBlur={handleChangeEventDetails}
+          /> */}
         </div>
         <input
           value={event.location}
@@ -85,7 +152,7 @@ export function EditEventModal(props) {
         />
         <input
           value={event.link}
-          name="lin"
+          name="link"
           type="url"
           placeholder="Link"
           onChange={handleChangeEventDetails}
@@ -98,11 +165,12 @@ export function EditEventModal(props) {
           }}
         >
           <input
-            name="guest"
-            value={event.invitedGuests}
-            type="text"
+            name="email"
+            value={email}
+            type="email"
             placeholder="Add a guest"
             onChange={handleGuestInputChange}
+            onKeyDown={handleKeyPress}
           />
           <span
             onClick={handleNewGuest}
@@ -112,10 +180,29 @@ export function EditEventModal(props) {
             add
           </span>
         </div>
+        <span style={{ fontSize: "0.8rem", fontStyle: "italic" }}>
+          {event.guestsInvited.map(function (item, index) {
+            return (
+              <span key={index.toString()}>
+                {" "}
+                {item}{" "}
+                <span
+                  onClick={(evt) => handleRemoveGuest(evt, item)}
+                  className="material-symbols-outlined close-icon"
+                >
+                  close
+                </span>{" "}
+              </span>
+            );
+          })}
+        </span>
+
         <textarea
+          rows={5}
           name="description"
           value={event.description}
           placeholder="Description of the event"
+          onChange={handleChangeEventDetails}
         ></textarea>
       </div>
 

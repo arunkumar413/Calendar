@@ -321,7 +321,6 @@ input:focus {
 }
 
 .event-date-time > input {
-  width: 40%;
   margin-right: 1rem;
 }
 
@@ -330,12 +329,15 @@ textarea {
   border-top: none;
   border-left: none;
   border-right: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
   border-bottom: solid 1px gray;
+  box-shadow: rgb(0 0 0 / 5%) 0px 0px 0px 1px,
+    rgb(209 213 219) 0px 0px 0px 1px inset;
+  border-radius: 1rem;
 }
 
 textarea:focus {
-  border-bottom: solid 2px blue;
+  border: solid 0.5px blue;
   outline: none;
 }
 
@@ -352,4 +354,11 @@ button {
 .secondary {
   background-color: cornflowerblue;
   color: white;
+}
+
+.close-icon:hover {
+  color: red;
+  background-color: #f0808042;
+  cursor: pointer;
+  border-radius: 50%;
 }

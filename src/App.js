@@ -219,9 +219,7 @@ export default function App() {
     }
   }
 
-  function addNewEvent() {
-    console.log("Add new event");
-  }
+  function addNewEvent() {}
 
   function handleEventChange(item) {
     setClickedItem({
