@@ -30,6 +30,7 @@ import {
 import Select from "react-select";
 import { EventModal } from "./components/EventModal";
 import { EditEventModal } from "./components/EditEventModal";
+import { AddNewEvent } from "./components/AddNewEvent";
 
 export default function App() {
   const [selected, setSelected] = useState(0);
@@ -56,6 +57,7 @@ export default function App() {
   });
   const [modalClass, setModalClass] = useState("closed");
   const [editModalClass, setEditModalClass] = useState("closed");
+  const [addModalClass, setAddModalClass] = useState("closed");
 
   const [events, setEvents] = useState([
     {
@@ -219,7 +221,9 @@ export default function App() {
     }
   }
 
-  function addNewEvent() {}
+  function addNewEvent() {
+    setAddModalClass(addModalClass === "closed" ? "opened" : "closed");
+  }
 
   function handleEventChange(item) {
     setClickedItem({
@@ -409,6 +413,14 @@ export default function App() {
     setEditModalClass("closed");
   }
 
+  function handleAddNewModal() {
+    setAddModalClass("opened");
+  }
+
+  function handleCloseNewEventModal() {
+    setAddModalClass("closed");
+  }
+
   return (
     <RecoilRoot>
       {/* <div>
@@ -440,6 +452,13 @@ export default function App() {
           displayEditModal={editModalClass}
           onOpenEditModal={handleOpenEditModal}
           onCloseEditModal={handleCloseEditModal}
+          event={clickedEvent}
+        />
+        <AddNewEvent
+          value={addModalClass}
+          displayEditModal={addModalClass}
+          onOpenEditModal={handleAddNewModal}
+          onCloseEditModal={handleCloseNewEventModal}
           event={clickedEvent}
         />
       </div>

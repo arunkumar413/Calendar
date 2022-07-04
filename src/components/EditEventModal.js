@@ -85,6 +85,13 @@ export function EditEventModal(props) {
     });
   }
 
+  function handleSaveEvent() {
+    // call to backed to save the event
+    console.log(event);
+    console.log("saved event");
+    props.onCloseEditModal();
+  }
+
   return (
     <div className={`edit-event-modal ${props.value}`}>
       <div className="edit-event-modal-header">
@@ -208,7 +215,10 @@ export function EditEventModal(props) {
 
       <div className="edit-event-modal-footer">
         <button className="secondary"> Cancel </button>
-        <button className="success"> Save </button>
+        <button onClick={handleSaveEvent} className="success">
+          {" "}
+          Save{" "}
+        </button>
       </div>
     </div>
   );

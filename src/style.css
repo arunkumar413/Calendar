@@ -307,6 +307,47 @@ body {
   gap: 1rem;
 }
 
+.add-event-modal {
+  padding: 1rem;
+  position: fixed;
+  left: 50%;
+  top: 20%;
+  height: 600px;
+  max-height: 100%;
+  width: 40%;
+  max-width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.add-event-modal .add-event-modal-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  direction: rtl;
+  justify-content: flex-end;
+  align-items: center;
+  border-bottom: solid 0.5px gainsboro;
+  margin-bottom: 1rem;
+}
+
+.add-event-modal-content {
+}
+
+.content-item {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+}
+
+.form-input {
+  padding: 0.5rem;
+  text-align: left;
+  font-size: 1.2rem;
+}
+
 input {
   padding: 0.5rem;
   border-top: none;
