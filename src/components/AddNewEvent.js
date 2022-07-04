@@ -9,19 +9,35 @@ export function AddNewEvent(props) {
 
   const EditModeContent = (
     <div className="content-items">
-      <span class="material-symbols-outlined">title</span>{" "}
-      <input type="date-time-local" />{" "}
-      <span class="material-symbols-outlined">event</span>{" "}
-      <input type="date-time-local" />
+      <div className="content-item">
+        <span class="material-symbols-outlined">title</span>{" "}
+        <input type="date-time-local" />{" "}
+      </div>
+      <div className="content-item">
+        <span class="material-symbols-outlined">event</span>{" "}
+        <input type="date-time-local" />
+      </div>
+      <div className="content-item">
+        <span class="material-symbols-outlined">pin_drop</span>{" "}
+        <input type="text" />
+      </div>
     </div>
   );
 
   const viewModeContent = (
     <div className="content-items">
-      <span class="material-symbols-outlined">title</span>{" "}
-      <span className="form-input"> Test </span>
-      <span class="material-symbols-outlined">event</span>{" "}
-      <span className="form-input"> Date </span>
+      <div className="content-item">
+        <span class="material-symbols-outlined">title</span>{" "}
+        <span className="form-input"> Test </span>
+      </div>
+      <div className="content-item">
+        <span class="material-symbols-outlined">event</span>{" "}
+        <span className="form-input"> Date </span>
+      </div>
+      <div className="content-item">
+        <span class="material-symbols-outlined">pin_drop</span>{" "}
+        <span className="form-input"> Location </span>
+      </div>
     </div>
   );
   return (

@@ -334,26 +334,34 @@ body {
 .add-event-modal-content {
 }
 
+/* .content-items {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  vertical-align: middle;
+} */
+
 .content-item {
   display: grid;
   grid-template-columns: 3rem 1fr;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  text-align: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .form-input {
-  padding: 0.5rem;
   text-align: left;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 input {
-  padding: 0.5rem;
   border-top: none;
   border-left: none;
   border-right: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 input:focus {
