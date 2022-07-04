@@ -345,11 +345,15 @@ body {
 
 .content-item {
   display: grid;
-  grid-template-columns: 3rem 1fr;
+  grid-template-columns: 3rem 1fr 1fr;
   justify-content: center;
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
+}
+
+.content-item .date {
+  grid-column: 2/3;
 }
 
 .form-input {
