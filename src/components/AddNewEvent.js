@@ -31,8 +31,6 @@ export function AddNewEvent(props) {
     setGuestInput("");
   }
 
-  useEffect(function () {}, []);
-
   function handleKeyDown(evt) {
     if (evt.key === "Enter") {
       setEvent(function (prevState) {
@@ -44,6 +42,15 @@ export function AddNewEvent(props) {
       setGuestInput("");
     }
   }
+
+  const invitedGuestItems = event.guestsInvited.map(function (item, index) {
+    return (
+      <span className="guest-item" key={index.toString()}>
+        <span>{item}</span>
+        <span class="material-symbols-outlined close-icon">close</span>
+      </span>
+    );
+  });
 
   const EditModeContent = (
     <div className="content-items">
@@ -81,6 +88,7 @@ export function AddNewEvent(props) {
         <span onClick={addNewGuest} class="material-symbols-outlined">
           add
         </span>{" "}
+        <div className="guest-container">{invitedGuestItems}</div>
       </div>
     </div>
   );
