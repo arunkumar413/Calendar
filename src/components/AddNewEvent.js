@@ -3,11 +3,12 @@ import react, { useState, useEffect } from "react";
 export function AddNewEvent(props) {
   const [event, setEvent] = useState({
     title: "An event to remember",
+    date: new Date().toISOString(),
     description: "description of the event",
     location: "New York",
     link: "http://test.com",
-    guestsInvited: [],
-    guestsAttending: [],
+    guestsInvited: ["arunkumar413@gmail.com"],
+    guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
   });
   const [isEditModeOn, setEditMode] = useState(false);
   const [guestInput, setGuestInput] = useState("");
@@ -16,7 +17,11 @@ export function AddNewEvent(props) {
     setEditMode(isEditModeOn ? false : true);
   }
 
-  function handleFormInput(evt) {}
+  function handleFormInput(evt) {
+    setEvent(function (prevState) {
+      return { ...prevState, [evt.target.name]: evt.target.value };
+    });
+  }
   function handleGuestChange(evt) {
     setGuestInput(evt.target.value);
   }
@@ -47,34 +52,80 @@ export function AddNewEvent(props) {
     return (
       <span className="guest-item" key={index.toString()}>
         <span>{item}</span>
-        <span class="material-symbols-outlined close-icon">close</span>
+        <span
+          onClick={(evt) => handleRemoveGuest(evt, item)}
+          class="material-symbols-outlined close-icon"
+        >
+          close
+        </span>
       </span>
     );
   });
+
+  function handleRemoveGuest(evt, item) {
+    setEvent(function (prevState) {
+      return {
+        ...prevState,
+        guestsInvited: prevState.guestsInvited.filter(function (
+          prevItem,
+          index
+        ) {
+          return item !== prevItem;
+        }),
+      };
+    });
+  }
 
   const EditModeContent = (
     <div className="content-items">
       <div className="content-item">
         <span class="material-symbols-outlined">title</span>{" "}
-        <input name="title" onChange={handleFormInput} type="text" />{" "}
+        <input
+          value={event.title}
+          name="title"
+          onChange={handleFormInput}
+          type="text"
+        />{" "}
       </div>
       <div className="content-item">
         <span class="material-symbols-outlined">event</span>{" "}
         <input
+          value={event.date}
           name="date"
           onChange={handleFormInput}
           className="edit-date"
           type="datetime-local"
         />
-        <span className="form-input"> date </span>
+        <span className="form-input">
+          {new Date(event.date).toLocaleString(undefined, {
+            weekday: "short",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour12: true,
+            hour: "numeric",
+            minute: "numeric",
+            timeZoneName: "short",
+          })}{" "}
+        </span>
       </div>
       <div className="content-item">
         <span class="material-symbols-outlined">pin_drop</span>{" "}
-        <input onChange={handleFormInput} name="location" type="text" />
+        <input
+          value={event.location}
+          onChange={handleFormInput}
+          name="location"
+          type="text"
+        />
       </div>
       <div className="content-item">
         <span class="material-symbols-outlined">link</span>{" "}
-        <input onChange={handleFormInput} name="link" type="text" />
+        <input
+          value={event.link}
+          onChange={handleFormInput}
+          name="link"
+          type="text"
+        />
       </div>
       <div className="content-item">
         <span class="material-symbols-outlined">person_add</span>{" "}
@@ -97,19 +148,49 @@ export function AddNewEvent(props) {
     <div className="content-items">
       <div className="content-item">
         <span class="material-symbols-outlined">title</span>{" "}
-        <span className="form-input"> Test </span>
+        <span className="form-input"> {event.title} </span>
       </div>
       <div className="content-item">
         <span class="material-symbols-outlined">event</span>{" "}
-        <span className="form-input"> Date </span>
+        <span className="form-input">
+          {" "}
+          {new Date(event.date).toLocaleString(undefined, {
+            weekday: "short",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour12: true,
+            hour: "numeric",
+            minute: "numeric",
+            timeZoneName: "short",
+          })}{" "}
+        </span>
       </div>
       <div className="content-item">
         <span class="material-symbols-outlined">pin_drop</span>{" "}
-        <span className="form-input"> Location </span>
+        <span className="form-input"> {event.location} </span>
       </div>
       <div className="content-item">
         <span class="material-symbols-outlined">link</span>{" "}
-        <span className="form-input"> Link </span>
+        <span className="form-input"> {event.link} </span>
+      </div>
+      <div className="content-item">
+        <span class="material-symbols-outlined">attach_email</span>{" "}
+        <span className="form-input">
+          {" "}
+          {event.guestsInvited.map(function (item, index) {
+            return item + ",";
+          })}{" "}
+        </span>
+      </div>
+
+      <div className="content-item">
+        <span class="material-symbols-outlined">groups</span>{" "}
+        <span className="form-input">
+          {event.guestsAttending.map(function (item, index) {
+            return item + ",";
+          })}{" "}
+        </span>
       </div>
     </div>
   );

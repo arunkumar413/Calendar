@@ -356,8 +356,14 @@ body {
   grid-column: 2/3;
 }
 
+.content-items {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
 .guest-container {
-  grid-column: 1/4;
+  grid-column: 2/4;
 }
 
 .guest-item {
