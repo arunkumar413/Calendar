@@ -76,6 +76,8 @@ export function AddNewEvent(props) {
     });
   }
 
+  function handleSaveForm() {}
+
   const EditModeContent = (
     <div className="content-items">
       <div className="content-item">
@@ -140,6 +142,23 @@ export function AddNewEvent(props) {
           add
         </span>{" "}
         <div className="guest-container">{invitedGuestItems}</div>
+      </div>
+
+      <div
+        style={{
+          width: "100%",
+          display: "grid",
+          gridTemplateColumns: "repeat(3,1fr)",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+          gap: "0.5rem",
+        }}
+      >
+        <button>Cancel</button>
+        <button className="success" onClick={handleSaveForm}>
+          {" "}
+          Save{" "}
+        </button>
       </div>
     </div>
   );
@@ -208,6 +227,11 @@ export function AddNewEvent(props) {
             close
           </span>
         </div>
+
+        <div>
+          <span class="material-symbols-outlined">save</span>
+        </div>
+
         <div>
           {isEditModeOn === true ? (
             <span

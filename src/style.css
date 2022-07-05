@@ -357,6 +357,10 @@ body {
     rgb(209, 213, 219) 0px 0px 0px 1px inset;
 }
 
+.save {
+  grid-column: 2/4;
+}
+
 .content-item .date {
   grid-column: 2/3;
 }
