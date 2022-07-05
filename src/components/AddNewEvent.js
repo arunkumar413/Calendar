@@ -96,7 +96,7 @@ export function AddNewEvent(props) {
           className="edit-date"
           type="datetime-local"
         />
-        <span className="form-input">
+        <span className="form-input date-human-readable">
           {new Date(event.date).toLocaleString(undefined, {
             weekday: "short",
             year: "numeric",
@@ -203,7 +203,7 @@ export function AddNewEvent(props) {
           {" "}
           <span
             onClick={props.onCloseEditModal}
-            className="material-symbols-outlined close-icon icon"
+            className="material-symbols-outlined close-icon icon rotate-center"
           >
             close
           </span>
@@ -212,7 +212,7 @@ export function AddNewEvent(props) {
           {isEditModeOn === true ? (
             <span
               onClick={toggleEditMode}
-              className="material-symbols-outlined icon icon-primary-hover"
+              className="material-symbols-outlined icon icon-primary-hover rotate-center"
             >
               visibility
             </span>
