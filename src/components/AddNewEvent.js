@@ -1,4 +1,5 @@
 import react, { useState, useEffect } from "react";
+import "animate.css";
 
 export function AddNewEvent(props) {
   const [event, setEvent] = useState({
@@ -143,23 +144,6 @@ export function AddNewEvent(props) {
         </span>{" "}
         <div className="guest-container">{invitedGuestItems}</div>
       </div>
-
-      <div
-        style={{
-          width: "100%",
-          display: "grid",
-          gridTemplateColumns: "repeat(3,1fr)",
-          justifyContent: "space-evenly",
-          alignItems: "center",
-          gap: "0.5rem",
-        }}
-      >
-        <button>Cancel</button>
-        <button className="success" onClick={handleSaveForm}>
-          {" "}
-          Save{" "}
-        </button>
-      </div>
     </div>
   );
 
@@ -222,7 +206,7 @@ export function AddNewEvent(props) {
           {" "}
           <span
             onClick={props.onCloseEditModal}
-            className="material-symbols-outlined close-icon icon rotate-center"
+            className="material-symbols-outlined close-icon icon "
           >
             close
           </span>
@@ -230,7 +214,7 @@ export function AddNewEvent(props) {
 
         <div>
           {isEditModeOn && (
-            <span class="material-symbols-outlined icon icon-primary-hover">
+            <span class="material-symbols-outlined icon icon-primary-hover animate__animated animate__rotateOut">
               save
             </span>
           )}
