@@ -79,6 +79,16 @@ export function AddNewEvent(props) {
 
   function handleSaveForm() {}
 
+  useEffect(function () {
+    let inputs = document.querySelectorAll("input");
+    inputs.forEach(function (item) {
+      item.addEventListener("focus", function (evt) {
+        debugger;
+        evt.target.classList.add("hvr-underline-from-center");
+      });
+    });
+  }, []);
+
   const EditModeContent = (
     <div className="content-items">
       <div className="content-item">
