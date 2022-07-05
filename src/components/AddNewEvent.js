@@ -79,15 +79,17 @@ export function AddNewEvent(props) {
 
   function handleSaveForm() {}
 
-  useEffect(function () {
-    let inputs = document.querySelectorAll("input");
-    inputs.forEach(function (item) {
-      item.addEventListener("focus", function (evt) {
-        debugger;
-        evt.target.classList.add("hvr-underline-from-center");
+  useEffect(
+    function () {
+      let inputs = document.querySelectorAll("input");
+      inputs.forEach(function (item) {
+        item.addEventListener("focus", function (evt) {
+          evt.target.classList.add("hvr-underline-from-center");
+        });
       });
-    });
-  }, []);
+    },
+    [isEditModeOn]
+  );
 
   const EditModeContent = (
     <div className="content-items">
