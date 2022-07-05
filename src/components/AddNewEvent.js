@@ -229,7 +229,11 @@ export function AddNewEvent(props) {
         </div>
 
         <div>
-          <span class="material-symbols-outlined">save</span>
+          {isEditModeOn && (
+            <span class="material-symbols-outlined icon icon-primary-hover">
+              save
+            </span>
+          )}
         </div>
 
         <div>

@@ -323,7 +323,7 @@ body {
 
 .add-event-modal .add-event-modal-header {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   direction: rtl;
   justify-content: flex-end;
   align-items: center;
