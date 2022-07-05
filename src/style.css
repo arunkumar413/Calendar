@@ -433,3 +433,17 @@ button {
   cursor: pointer;
   border-radius: 50%;
 }
+
+.icon {
+  color: gray;
+}
+
+.icon-primary-hover {
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+
+.icon-primary-hover:hover {
+  background-color: aliceblue;
+  color: blue;
+}

@@ -3,7 +3,7 @@ import react, { useState, useEffect } from "react";
 export function AddNewEvent(props) {
   const [event, setEvent] = useState({
     title: "An event to remember",
-    date: new Date().toISOString(),
+    date: "1986-01-28T11:38",
     description: "description of the event",
     location: "New York",
     link: "http://test.com",
@@ -79,7 +79,7 @@ export function AddNewEvent(props) {
   const EditModeContent = (
     <div className="content-items">
       <div className="content-item">
-        <span class="material-symbols-outlined">title</span>{" "}
+        <span className="material-symbols-outlined icon">title</span>{" "}
         <input
           value={event.title}
           name="title"
@@ -88,7 +88,7 @@ export function AddNewEvent(props) {
         />{" "}
       </div>
       <div className="content-item">
-        <span class="material-symbols-outlined">event</span>{" "}
+        <span className="material-symbols-outlined icon">event</span>{" "}
         <input
           value={event.date}
           name="date"
@@ -110,7 +110,7 @@ export function AddNewEvent(props) {
         </span>
       </div>
       <div className="content-item">
-        <span class="material-symbols-outlined">pin_drop</span>{" "}
+        <span className="material-symbols-outlined icon">pin_drop</span>{" "}
         <input
           value={event.location}
           onChange={handleFormInput}
@@ -119,7 +119,7 @@ export function AddNewEvent(props) {
         />
       </div>
       <div className="content-item">
-        <span class="material-symbols-outlined">link</span>{" "}
+        <span className="material-symbols-outlined icon">link</span>{" "}
         <input
           value={event.link}
           onChange={handleFormInput}
@@ -128,7 +128,7 @@ export function AddNewEvent(props) {
         />
       </div>
       <div className="content-item">
-        <span class="material-symbols-outlined">person_add</span>{" "}
+        <span className="material-symbols-outlined icon">person_add</span>{" "}
         <input
           value={guestInput}
           onKeyDown={handleKeyDown}
@@ -136,7 +136,7 @@ export function AddNewEvent(props) {
           name="addGuest"
           type="email"
         />
-        <span onClick={addNewGuest} class="material-symbols-outlined">
+        <span onClick={addNewGuest} className="material-symbols-outlined icon">
           add
         </span>{" "}
         <div className="guest-container">{invitedGuestItems}</div>
@@ -147,11 +147,11 @@ export function AddNewEvent(props) {
   const viewModeContent = (
     <div className="content-items">
       <div className="content-item">
-        <span class="material-symbols-outlined">title</span>{" "}
+        <span className="material-symbols-outlined icon">title</span>{" "}
         <span className="form-input"> {event.title} </span>
       </div>
       <div className="content-item">
-        <span class="material-symbols-outlined">event</span>{" "}
+        <span className="material-symbols-outlined icon">event</span>{" "}
         <span className="form-input">
           {" "}
           {new Date(event.date).toLocaleString(undefined, {
@@ -167,15 +167,17 @@ export function AddNewEvent(props) {
         </span>
       </div>
       <div className="content-item">
-        <span class="material-symbols-outlined">pin_drop</span>{" "}
+        <span className="material-symbols-outlined link icon">pin_drop</span>{" "}
         <span className="form-input"> {event.location} </span>
       </div>
       <div className="content-item">
-        <span class="material-symbols-outlined">link</span>{" "}
+        <span className="material-symbols-outlined link icon">link</span>{" "}
         <span className="form-input"> {event.link} </span>
       </div>
       <div className="content-item">
-        <span class="material-symbols-outlined">attach_email</span>{" "}
+        <span className="material-symbols-outlined link icon">
+          attach_email
+        </span>{" "}
         <span className="form-input">
           {" "}
           {event.guestsInvited.map(function (item, index) {
@@ -185,7 +187,7 @@ export function AddNewEvent(props) {
       </div>
 
       <div className="content-item">
-        <span class="material-symbols-outlined">groups</span>{" "}
+        <span className="material-symbols-outlined link icon">groups</span>{" "}
         <span className="form-input">
           {event.guestsAttending.map(function (item, index) {
             return item + ",";
@@ -201,15 +203,27 @@ export function AddNewEvent(props) {
           {" "}
           <span
             onClick={props.onCloseEditModal}
-            class="material-symbols-outlined close-icon"
+            className="material-symbols-outlined close-icon icon"
           >
             close
-          </span>{" "}
+          </span>
         </div>
         <div>
-          <span onClick={toggleEditMode} class="material-symbols-outlined">
-            edit
-          </span>
+          {isEditModeOn === true ? (
+            <span
+              onClick={toggleEditMode}
+              className="material-symbols-outlined icon icon-primary-hover"
+            >
+              visibility
+            </span>
+          ) : (
+            <span
+              onClick={toggleEditMode}
+              className="material-symbols-outlined icon icon-primary-hover"
+            >
+              edit
+            </span>
+          )}
         </div>
         <h5> Add new Event</h5>
       </div>
