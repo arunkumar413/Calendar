@@ -55,7 +55,7 @@ export function AddNewEvent(props) {
         <span>{item}</span>
         <span
           onClick={(evt) => handleRemoveGuest(evt, item)}
-          class="material-symbols-outlined close-icon"
+          className="material-symbols-outlined close-icon"
         >
           close
         </span>
@@ -214,7 +214,7 @@ export function AddNewEvent(props) {
 
         <div>
           {isEditModeOn && (
-            <span class="material-symbols-outlined icon icon-primary-hover animate__animated animate__rotateOut">
+            <span className="material-symbols-outlined icon icon-primary-hover animate__animated animate__rotateIn">
               save
             </span>
           )}
@@ -224,7 +224,7 @@ export function AddNewEvent(props) {
           {isEditModeOn === true ? (
             <span
               onClick={toggleEditMode}
-              className="material-symbols-outlined icon icon-primary-hover rotate-center"
+              className="material-symbols-outlined icon icon-primary-hover animate__animated animate__rotateIn"
             >
               visibility
             </span>
