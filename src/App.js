@@ -47,7 +47,7 @@ export default function App() {
   const [view, setView] = useState({ label: "Week", value: 1 });
   const [clickedEvent, setClickedEvent] = useState({
     title: "",
-    date: "",
+    date: new Date().toISOString(),
     isAllDay: false,
     guestsAttending: [],
     link: "",

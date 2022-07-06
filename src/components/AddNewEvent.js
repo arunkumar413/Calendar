@@ -11,7 +11,7 @@ export function AddNewEvent(props) {
     guestsInvited: ["arunkumar413@gmail.com"],
     guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
   });
-  const [isEditModeOn, setEditMode] = useState(false);
+  const [isEditModeOn, setEditMode] = useState(true);
   const [guestInput, setGuestInput] = useState("");
 
   const [dateLocal, setDateLocal] = useState("");
@@ -26,7 +26,6 @@ export function AddNewEvent(props) {
         minute: "2-digit",
         hour12: false,
       });
-      debugger;
 
       let parts = formatter.formatToParts(new Date(event.date));
       let year = parts.filter(function (item) {
@@ -61,7 +60,6 @@ export function AddNewEvent(props) {
       setDateLocal(
         `${year[0].value}-${month[0].value}-${date[0].value}T${hour[0].value}:${minute[0].value}`
       );
-      debugger;
     },
     [props, event]
   );
@@ -144,7 +142,8 @@ export function AddNewEvent(props) {
 
   function handleSaveForm() {
     props.setEvents(function (prevState) {
-      return { ...prevState, event };
+      debugger;
+      return [...prevState, event];
     });
   }
 
@@ -154,6 +153,7 @@ export function AddNewEvent(props) {
         <span className="material-symbols-outlined icon">title</span>{" "}
         <input
           value={event.title}
+          placeholder="Name of the event"
           name="title"
           onChange={handleFormInput}
           type="text"
@@ -184,6 +184,7 @@ export function AddNewEvent(props) {
       <div className="content-item">
         <span className="material-symbols-outlined icon">pin_drop</span>{" "}
         <input
+          placeholder="Location of the event"
           value={event.location}
           onChange={handleFormInput}
           name="location"
@@ -193,6 +194,7 @@ export function AddNewEvent(props) {
       <div className="content-item">
         <span className="material-symbols-outlined icon">link</span>{" "}
         <input
+          placeholder="Link if any"
           value={event.link}
           onChange={handleFormInput}
           name="link"
@@ -202,6 +204,7 @@ export function AddNewEvent(props) {
       <div className="content-item">
         <span className="material-symbols-outlined icon">person_add</span>{" "}
         <input
+          placeholder="Add a guest email"
           value={guestInput}
           onKeyDown={handleKeyDown}
           onChange={handleGuestChange}
@@ -269,7 +272,7 @@ export function AddNewEvent(props) {
     </div>
   );
   return (
-    <div className={`add-event-modal opened`}>
+    <div className={`add-event-modal ${props.value}`}>
       <div className="add-event-modal-header">
         <div>
           {" "}
