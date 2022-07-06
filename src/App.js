@@ -238,6 +238,12 @@ export default function App() {
     setModalClass("closed");
   }
 
+  function appendNewEvent() {
+    setEvents(function (prevState) {
+      return { ...prevState, newEvent };
+    });
+  }
+
   const elements = Year.map(function (item, index) {
     return (
       <span key={index.toString()} className="day">
@@ -455,6 +461,8 @@ export default function App() {
           event={clickedEvent}
         />
         <AddNewEvent
+          setEvents={setEvents}
+          events={events}
           value={addModalClass}
           displayEditModal={addModalClass}
           onOpenEditModal={handleAddNewModal}

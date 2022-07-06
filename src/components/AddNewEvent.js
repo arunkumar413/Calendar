@@ -4,7 +4,7 @@ import "animate.css";
 export function AddNewEvent(props) {
   const [event, setEvent] = useState({
     title: "An event to remember",
-    date: "1986-01-28T11:38",
+    date: new Date().toISOString(),
     description: "description of the event",
     location: "New York",
     link: "http://test.com",
@@ -14,14 +14,73 @@ export function AddNewEvent(props) {
   const [isEditModeOn, setEditMode] = useState(false);
   const [guestInput, setGuestInput] = useState("");
 
+  const [dateLocal, setDateLocal] = useState("");
+
+  useEffect(
+    function () {
+      let formatter = new Intl.DateTimeFormat(undefined, {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+      debugger;
+
+      let parts = formatter.formatToParts(new Date(event.date));
+      let year = parts.filter(function (item) {
+        if (item.type === "year") {
+          return item.value;
+        }
+      });
+      let month = parts.filter(function (item) {
+        if (item.type === "month") {
+          return item.value;
+        }
+      });
+
+      let date = parts.filter(function (item) {
+        if (item.type === "day") {
+          return item.value;
+        }
+      });
+
+      let hour = parts.filter(function (item) {
+        if (item.type === "hour") {
+          return item.value;
+        }
+      });
+
+      let minute = parts.filter(function (item) {
+        if (item.type === "minute") {
+          return item.value;
+        }
+      });
+
+      setDateLocal(`${year}-${month}-${date}T${hour}:${minute}`);
+      debugger;
+    },
+    [props, event]
+  );
+
   function toggleEditMode() {
     setEditMode(isEditModeOn ? false : true);
   }
 
   function handleFormInput(evt) {
-    setEvent(function (prevState) {
-      return { ...prevState, [evt.target.name]: evt.target.value };
-    });
+    if (evt.target.name === "date") {
+      setEvent(function (prevState) {
+        return {
+          ...prevState,
+          [evt.target.name]: new Date(evt.target.value).toISOString(),
+        };
+      });
+    } else {
+      setEvent(function (prevState) {
+        return { ...prevState, [evt.target.name]: evt.target.value };
+      });
+    }
   }
   function handleGuestChange(evt) {
     setGuestInput(evt.target.value);
@@ -77,19 +136,11 @@ export function AddNewEvent(props) {
     });
   }
 
-  function handleSaveForm() {}
-
-  useEffect(
-    function () {
-      let inputs = document.querySelectorAll("input");
-      inputs.forEach(function (item) {
-        item.addEventListener("focus", function (evt) {
-          evt.target.classList.add("hvr-underline-from-center");
-        });
-      });
-    },
-    [isEditModeOn]
-  );
+  function handleSaveForm() {
+    props.setEvents(function (prevState) {
+      return { ...prevState, event };
+    });
+  }
 
   const EditModeContent = (
     <div className="content-items">
@@ -105,7 +156,7 @@ export function AddNewEvent(props) {
       <div className="content-item">
         <span className="material-symbols-outlined icon">event</span>{" "}
         <input
-          value={event.date}
+          value={dateLocal}
           name="date"
           onChange={handleFormInput}
           className="edit-date"
@@ -226,7 +277,10 @@ export function AddNewEvent(props) {
 
         <div>
           {isEditModeOn && (
-            <span className="material-symbols-outlined icon icon-primary-hover animate__animated animate__rotateIn">
+            <span
+              onClick={handleSaveForm}
+              className="material-symbols-outlined icon icon-primary-hover animate__animated animate__rotateIn"
+            >
               save
             </span>
           )}
