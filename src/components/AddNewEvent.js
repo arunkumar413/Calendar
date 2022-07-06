@@ -58,11 +58,17 @@ export function AddNewEvent(props) {
         }
       });
 
-      setDateLocal(`${year}-${month}-${date}T${hour}:${minute}`);
+      setDateLocal(
+        `${year[0].value}-${month[0].value}-${date[0].value}T${hour[0].value}:${minute[0].value}`
+      );
       debugger;
     },
     [props, event]
   );
+
+  useEffect(function () {
+    setEvent(props.event);
+  }, []);
 
   function toggleEditMode() {
     setEditMode(isEditModeOn ? false : true);
