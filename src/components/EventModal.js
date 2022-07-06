@@ -21,13 +21,25 @@ export function EventModal(props) {
     return <span key={index.toString()}>{item}, </span>;
   });
 
+  function handleOpenEditEvent() {
+    props.onModalClose();
+    props.onEditModalOpen();
+  }
+
   return (
     <div className={`event-modal ${props.displayModal} `}>
       <div className="event-modal-header">
         <p className="event-modal-header-heading"> Event Details </p>
 
         <span className="material-symbols-outlined">delete</span>
-        <span className="material-symbols-outlined">edit</span>
+
+        
+        <span
+          onClick={handleOpenEditEvent}
+          className="material-symbols-outlined"
+        >
+          edit
+        </span>
 
         <div>
           <span

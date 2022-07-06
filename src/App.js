@@ -29,6 +29,8 @@ import {
 } from "./utility";
 import Select from "react-select";
 import { EventModal } from "./components/EventModal";
+import { EditEventModal } from "./components/EditEventModal";
+import { AddNewEvent } from "./components/AddNewEvent";
 
 export default function App() {
   const [selected, setSelected] = useState(0);
@@ -45,7 +47,7 @@ export default function App() {
   const [view, setView] = useState({ label: "Week", value: 1 });
   const [clickedEvent, setClickedEvent] = useState({
     title: "",
-    date: "",
+    date: new Date().toISOString(),
     isAllDay: false,
     guestsAttending: [],
     link: "",
@@ -54,6 +56,8 @@ export default function App() {
     location: "",
   });
   const [modalClass, setModalClass] = useState("closed");
+  const [editModalClass, setEditModalClass] = useState("closed");
+  const [addModalClass, setAddModalClass] = useState("closed");
 
   const [events, setEvents] = useState([
     {
@@ -218,7 +222,7 @@ export default function App() {
   }
 
   function addNewEvent() {
-    console.log("Add new event");
+    setAddModalClass(addModalClass === "closed" ? "opened" : "closed");
   }
 
   function handleEventChange(item) {
@@ -232,6 +236,12 @@ export default function App() {
 
   function handleModalClose() {
     setModalClass("closed");
+  }
+
+  function appendNewEvent() {
+    setEvents(function (prevState) {
+      return { ...prevState, newEvent };
+    });
   }
 
   const elements = Year.map(function (item, index) {
@@ -401,6 +411,22 @@ export default function App() {
     return YearElements.slice(0, 6);
   }
 
+  function handleOpenEditModal() {
+    setEditModalClass("opened");
+  }
+
+  function handleCloseEditModal() {
+    setEditModalClass("closed");
+  }
+
+  function handleAddNewModal() {
+    setAddModalClass("opened");
+  }
+
+  function handleCloseNewEventModal() {
+    setAddModalClass("closed");
+  }
+
   return (
     <RecoilRoot>
       {/* <div>
@@ -425,6 +451,23 @@ export default function App() {
           event={clickedEvent}
           displayModal={modalClass}
           onModalClose={handleModalClose}
+          onEditModalOpen={handleOpenEditModal}
+        />
+        <EditEventModal
+          value={editModalClass}
+          displayEditModal={editModalClass}
+          onOpenEditModal={handleOpenEditModal}
+          onCloseEditModal={handleCloseEditModal}
+          event={clickedEvent}
+        />
+        <AddNewEvent
+          setEvents={setEvents}
+          events={events}
+          value={addModalClass}
+          displayEditModal={addModalClass}
+          onOpenEditModal={handleAddNewModal}
+          onCloseEditModal={handleCloseNewEventModal}
+          event={clickedEvent}
         />
       </div>
     </RecoilRoot>
