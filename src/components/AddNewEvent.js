@@ -141,10 +141,12 @@ export function AddNewEvent(props) {
   }
 
   function handleSaveForm() {
-    props.setEvents(function (prevState) {
-      debugger;
-      return [...prevState, event];
-    });
+    if (event.title !== "" && event.location !== "") {
+      props.setEvents(function (prevState) {
+        debugger;
+        return [...prevState, event];
+      });
+    }
   }
 
   const EditModeContent = (
