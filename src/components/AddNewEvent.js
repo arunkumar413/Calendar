@@ -64,9 +64,12 @@ export function AddNewEvent(props) {
     [props, event]
   );
 
-  useEffect(function () {
-    setEvent(props.event);
-  }, []);
+  useEffect(
+    function () {
+      setEvent(props.event);
+    },
+    [props]
+  );
 
   function toggleEditMode() {
     setEditMode(isEditModeOn ? false : true);
@@ -143,7 +146,6 @@ export function AddNewEvent(props) {
   function handleSaveForm() {
     if (event.title !== "" && event.location !== "") {
       props.setEvents(function (prevState) {
-        debugger;
         return [...prevState, event];
       });
     }
@@ -229,7 +231,7 @@ export function AddNewEvent(props) {
       </div>
       <div className="content-item">
         <span className="material-symbols-outlined icon">event</span>{" "}
-        <span className="form-input">
+        <span className="form-input" style={{ fontSize: "0.8rem" }}>
           {" "}
           {new Date(event.date).toLocaleString(undefined, {
             weekday: "short",
@@ -314,7 +316,7 @@ export function AddNewEvent(props) {
             </span>
           )}
         </div>
-        <h5> Add new Event</h5>
+        <h5> Event details</h5>
       </div>
 
       <div className="add-event-modal-content">

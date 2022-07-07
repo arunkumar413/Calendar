@@ -223,6 +223,16 @@ export default function App() {
 
   function addNewEvent() {
     setAddModalClass(addModalClass === "closed" ? "opened" : "closed");
+    setClickedEvent({
+      title: "",
+      date: new Date().toISOString(),
+      isAllDay: false,
+      guestsAttending: [],
+      link: "",
+      description: "",
+      guestsInvited: [],
+      location: "",
+    });
   }
 
   function handleEventChange(item) {
@@ -298,7 +308,8 @@ export default function App() {
       location: item.location,
       description: item.description,
     });
-    setModalClass("opened");
+    // setModalClass("opened");
+    setAddModalClass("opened");
   }
 
   const toolbarElements = (
