@@ -58,6 +58,13 @@ export default function App() {
   const [modalClass, setModalClass] = useState("closed");
   const [editModalClass, setEditModalClass] = useState("closed");
   const [addModalClass, setAddModalClass] = useState("closed");
+  const [todayIndex, setTodayIndex] = useState(100);
+  const [weekIndexes, setWeekIndexes] = useState([
+    0, 7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84, 91, 98, 105, 112, 119,
+    126, 133, 140, 147, 154, 161, 168, 175, 182, 189, 196, 203, 210, 217, 224,
+    231, 238, 245, 252, 259, 266, 273, 280, 287, 294, 301, 308, 315, 322, 329,
+    336, 343, 350, 357, 364,
+  ]);
 
   const [events, setEvents] = useState([
     {
@@ -187,6 +194,25 @@ export default function App() {
     },
     [selectedWeekEndIndex]
   );
+
+  useEffect(function () {
+    let date = new Date();
+    let index = Math.floor(
+      (date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24
+    );
+
+    let e = Array.from(Array(365).keys());
+
+    let ele = [];
+
+    for (let i = 0; i <= 365; i += 7) {
+      if (i >= index) {
+        ele.push(i);
+      }
+    }
+    let item = ele[0];
+    setSelectedWeekEndIndex(item);
+  }, []);
 
   useEffect(
     function () {
@@ -383,6 +409,8 @@ export default function App() {
   function getDay2(year, dayNumber, index) {
     let month = resolveMonth(index).num;
     let date = new Date(`${year}-${month}-${dayNumber + 1}`);
+    let today = new Date();
+
     let dateString = date.toDateString();
     let splitDate = dateString.split(" ");
     return splitDate[0];
