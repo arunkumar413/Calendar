@@ -78,6 +78,8 @@ body {
 
 .full-day-event {
   font-size: 0.6rem;
+  color: #005ce6;
+  cursor: pointer;
 }
 
 .hour-item {

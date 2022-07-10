@@ -69,7 +69,7 @@ export default function App() {
   const [events, setEvents] = useState([
     {
       title: "full day event 1",
-      date: "2022-01-01T00:00:00.000Z",
+      date: "2022-07-11T00:00:00.000Z",
       isAllDay: true,
       guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
       link: "http://google.com",
