@@ -70,6 +70,11 @@ body {
   color: #0908097d;
 }
 
+.today {
+  color: green;
+  background-color: #0080000f;
+}
+
 .hour-item {
   min-height: 60px;
   border-bottom: solid 1px lightgrey;

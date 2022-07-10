@@ -431,10 +431,25 @@ export default function App() {
     });
   }
 
+  function addDateClass(year, dayNum, index) {
+    let month = resolveMonth(index).num;
+    let date = new Date(`${year}-${month}-${dayNum + 1}`);
+    let today = new Date();
+    if (
+      today.getFullYear() === date.getFullYear() &&
+      today.getMonth() === date.getMonth() &&
+      today.getDate() === date.getDate()
+    ) {
+      return date.toISOString() + " today";
+    } else {
+      return date.toISOString();
+    }
+  }
+
   const YearElements3 = completeYear.map(function (item, index) {
     return (
       <span key={index.toString()} className="month-elements">
-        <span className="day-heading">
+        <span className={`day-heading ${addDateClass(2022, item, index)}`}>
           {getDay2(2022, item, index)} <br /> {item + 1}{" "}
           <span className="month-super-script">
             {" "}
