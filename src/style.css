@@ -32,6 +32,7 @@ body {
   grid-column: 1 / 2;
   grid-row: 3/27;
   text-align: center;
+  margin-top: 40px;
 }
 
 .calendar-elements-container {
@@ -51,7 +52,7 @@ body {
 }
 
 .hour-strip-container > span:first-child {
-  border-top: solid 0.5px gray;
+  border-top: solid 1px lightgrey;
 }
 
 .calendar-elements-container {
@@ -61,7 +62,7 @@ body {
 
 .day-heading {
   font-size: larger;
-  height: 60px;
+  height: 100px;
   text-align: center;
   font-weight: bolder;
   display: block;
@@ -73,6 +74,10 @@ body {
 .today {
   color: green;
   background-color: #0080000f;
+}
+
+.full-day-event {
+  font-size: 0.6rem;
 }
 
 .hour-item {
