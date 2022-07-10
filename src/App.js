@@ -69,8 +69,48 @@ export default function App() {
   const [events, setEvents] = useState([
     {
       title: "A test event",
+      date: "2022-01-01T00:00:00.000Z",
+      isAllDay: true,
+      guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
+      link: "http://google.com",
+      description: "An event to remember",
+      guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+      location: "New York",
+    },
+    {
+      title: "A test event",
+      date: "2022-06-01T00:00:00.000Z",
+      isAllDay: true,
+      guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
+      link: "http://google.com",
+      description: "An event to remember",
+      guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+      location: "New York",
+    },
+    {
+      title: "A test event",
       date: "2022-06-01T00:00:00.000Z",
       isAllDay: false,
+      guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
+      link: "http://google.com",
+      description: "An event to remember",
+      guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+      location: "New York",
+    },
+    {
+      title: "A test event",
+      date: "2022-06-10T00:00:00.000Z",
+      isAllDay: true,
+      guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
+      link: "http://google.com",
+      description: "An event to remember",
+      guestsInvited: ["arunkumar413@gmail.com", "test@gmail.com"],
+      location: "New York",
+    },
+    {
+      title: "A test event",
+      date: "2022-06-10T00:00:00.000Z",
+      isAllDay: true,
       guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
       link: "http://google.com",
       description: "An event to remember",
@@ -446,11 +486,33 @@ export default function App() {
     }
   }
 
+  function getFullDayEvents(year, dayNum, index) {
+    let month = resolveMonth(index).num;
+
+    let date = new Date(`${year}-${month}-${dayNum + 1}`);
+    let currEvents = events.filter(function (item) {
+      let d = new Date(item.date);
+      return (
+        d.getFullYear() === date.getFullYear() &&
+        d.getMonth() === date.getMonth() &&
+        d.getDate() === date.getDate() &&
+        item.isAllDay === true
+      );
+    });
+
+    if (currEvents.length) {
+      currEvents.map(function (item, index) {
+        return <span> {item.title} </span>;
+      });
+    }
+  }
+
   const YearElements3 = completeYear.map(function (item, index) {
     return (
       <span key={index.toString()} className="month-elements">
         <span className={`day-heading ${addDateClass(2022, item, index)}`}>
           {getDay2(2022, item, index)} <br /> {item + 1}{" "}
+          {getFullDayEvents(2022, item, index)}
           <span className="month-super-script">
             {" "}
             {monthStrings[resolveMonth(index)]}{" "}
