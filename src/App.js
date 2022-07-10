@@ -68,7 +68,7 @@ export default function App() {
 
   const [events, setEvents] = useState([
     {
-      title: "A test event",
+      title: "full day event 1",
       date: "2022-01-01T00:00:00.000Z",
       isAllDay: true,
       guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
@@ -78,7 +78,7 @@ export default function App() {
       location: "New York",
     },
     {
-      title: "A test event",
+      title: "full day event 2",
       date: "2022-06-01T00:00:00.000Z",
       isAllDay: true,
       guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
@@ -98,8 +98,8 @@ export default function App() {
       location: "New York",
     },
     {
-      title: "A test event",
-      date: "2022-06-10T00:00:00.000Z",
+      title: "full day event 3",
+      date: "2022-07-10T00:00:00.000Z",
       isAllDay: true,
       guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
       link: "http://google.com",
@@ -108,8 +108,8 @@ export default function App() {
       location: "New York",
     },
     {
-      title: "A test event",
-      date: "2022-06-10T00:00:00.000Z",
+      title: "full day event 4",
+      date: "2022-07-10T00:00:00.000Z",
       isAllDay: true,
       guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
       link: "http://google.com",
@@ -149,7 +149,7 @@ export default function App() {
       location: "New York",
     },
     {
-      title: "A test event",
+      title: "full day event 4",
       date: "2022-06-01T00:00:00.000Z",
       isAllDay: true,
       guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
@@ -162,6 +162,10 @@ export default function App() {
 
   const noAllDayEvents = events.filter(function (item) {
     return item.isAllDay === false;
+  });
+
+  const fullDayEvents = events.filter(function (item) {
+    return item.isAllDay === true;
   });
 
   const viewOptions = [
@@ -490,19 +494,27 @@ export default function App() {
     let month = resolveMonth(index).num;
 
     let date = new Date(`${year}-${month}-${dayNum + 1}`);
-    let currEvents = events.filter(function (item) {
-      let d = new Date(item.date);
-      return (
+    var currEvents = [];
+
+    for (let i = 0; i < fullDayEvents.length; i++) {
+      let d = new Date(fullDayEvents[i].date);
+      if (
         d.getFullYear() === date.getFullYear() &&
         d.getMonth() === date.getMonth() &&
-        d.getDate() === date.getDate() &&
-        item.isAllDay === true
-      );
-    });
+        d.getDate() === date.getDate()
+      ) {
+        currEvents.push(fullDayEvents[i]);
+      }
+    }
 
     if (currEvents.length) {
-      currEvents.map(function (item, index) {
-        return <span> {item.title} </span>;
+      return currEvents.map(function (item, index) {
+        return (
+          <span>
+            {" "}
+            <span className="full-day-event"> {item.title} </span> <br />{" "}
+          </span>
+        );
       });
     }
   }
@@ -511,7 +523,7 @@ export default function App() {
     return (
       <span key={index.toString()} className="month-elements">
         <span className={`day-heading ${addDateClass(2022, item, index)}`}>
-          {getDay2(2022, item, index)} <br /> {item + 1}{" "}
+          {getDay2(2022, item, index)} <br /> {item + 1} <br />
           {getFullDayEvents(2022, item, index)}
           <span className="month-super-script">
             {" "}

@@ -75,6 +75,10 @@ body {
   background-color: #0080000f;
 }
 
+.full-day-event {
+  font-size: 0.6rem;
+}
+
 .hour-item {
   min-height: 60px;
   border-bottom: solid 1px lightgrey;
