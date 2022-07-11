@@ -141,19 +141,37 @@ export const Year = [
 ];
 
 export const monthSelectOptions = [
-  { value: "January", label: "January", monthValue: 0 },
-  { value: "February", label: "February", monthValue: 1 },
-  { value: "March", label: "March", monthValue: 2 },
+  { value: "January", label: "January", monthValue: 0, start: 0, end: 30 },
+  { value: "February", label: "February", monthValue: 1, start: 31, end: 58 },
+  { value: "March", label: "March", monthValue: 2, start: 59, end: 89 },
 
-  { value: "April", label: "April", monthValue: 3 },
-  { value: "May", label: "May", monthValue: 4 },
-  { value: "June", label: "June", monthValue: 5 },
-  { value: "July", label: "July", monthValue: 6 },
-  { value: "August", label: "August", monthValue: 7 },
-  { value: "September", label: "September", monthValue: 8 },
-  { value: "October", label: "October", monthValue: 9 },
-  { value: "November", label: "November", monthValue: 10 },
-  { value: "December", label: "December", monthValue: 11 },
+  { value: "April", label: "April", monthValue: 3, start: 90, end: 119 },
+  { value: "May", label: "May", monthValue: 4, start: 120, end: 150 },
+  { value: "June", label: "June", monthValue: 5, start: 151, end: 180 },
+  { value: "July", label: "July", monthValue: 6, start: 181, end: 211 },
+  { value: "August", label: "August", monthValue: 7, start: 212, end: 242 },
+  {
+    value: "September",
+    label: "September",
+    monthValue: 8,
+    start: 243,
+    end: 272,
+  },
+  { value: "October", label: "October", monthValue: 9, start: 273, end: 303 },
+  {
+    value: "November",
+    label: "November",
+    monthValue: 10,
+    start: 304,
+    end: 333,
+  },
+  {
+    value: "December",
+    label: "December",
+    monthValue: 11,
+    start: 334,
+    end: 364,
+  },
 ];
 
 export const noAllDayEvents = events.filter(function (item) {

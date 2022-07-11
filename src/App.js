@@ -183,6 +183,8 @@ export default function App() {
     });
   }
 
+  //all efffecs here
+
   useEffect(function () {
     var m = new Date().getMonth();
 
@@ -195,15 +197,25 @@ export default function App() {
       label: option[0].label,
       value: option[0].value,
       monthValue: option[0].monthValue,
+      start: option.start,
+      end: option.end,
     });
-  }, []);
 
-  useEffect(function () {
-    localStorage.setItem(
-      "event",
-      JSON.stringify({ title: "null", date: "null", isAllDay: null })
+    let date = new Date();
+    let dayNumber = Math.floor(
+      (date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24
     );
-  }, []);
+
+    let ele = [];
+
+    for (let i = 0; i < weekIndexes.length; i++) {
+      if (weekIndexes[i] >= dayNumber - 1) {
+        ele.push(weekIndexes[i]);
+      }
+    }
+    let item = ele[0];
+    setSelectedWeekEndIndex(item);
+  }, []); //all effects end here
 
   function handleMonthChange(item) {
     setSlectedMonth({
@@ -211,22 +223,15 @@ export default function App() {
       label: item.label,
       value: item.value,
       monthValue: item.monthValue,
+      start: item.start,
+      end: item.end,
     });
     setSelected(0);
+
+    setSelectedWeekEndIndex(item.start + 7);
   }
 
   function handleWeekIncrement() {
-    // if (selected + 7 <= YearElements[selectedMonth.monthValue].length) {
-    //   setSelected(selected + 7);
-    // } else if (selected === 28) {
-    //   let currMonth = selectedMonth.monthValue + 1;
-    //   setSlectedMonth({
-    //     ...selectedMonth,
-    //     label: monthSelectOptions[currMonth].label,
-    //     value: monthSelectOptions[currMonth].value,
-    //     monthValue: monthSelectOptions[currMonth].monthValue,
-    //   });
-
     if (selectedWeekEndIndex >= 7) {
       setSelectedWeekEndIndex(selectedWeekEndIndex + 7);
     }
@@ -239,25 +244,6 @@ export default function App() {
     [selectedWeekEndIndex]
   );
 
-  useEffect(function () {
-    let date = new Date();
-    let index = Math.floor(
-      (date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24
-    );
-
-    let e = Array.from(Array(365).keys());
-
-    let ele = [];
-
-    for (let i = 0; i <= 365; i += 7) {
-      if (i >= index) {
-        ele.push(i);
-      }
-    }
-    let item = ele[0];
-    setSelectedWeekEndIndex(item);
-  }, []);
-
   useEffect(
     function () {
       let month1 = getStartMonth(selectedWeekStartIndex);
@@ -265,27 +251,24 @@ export default function App() {
 
       if (month1 === month2) {
         setMonthRange(month1);
+        setSlectedMonth({
+          label: month1,
+          value: month1,
+          monthValue: 0,
+        });
       } else {
         setMonthRange(month1 + "-" + month2);
+        setSlectedMonth({
+          label: month1 + "-" + month2,
+          value: month1 + "-" + month2,
+          monthValue: 0,
+        });
       }
     },
     [selectedWeekEndIndex, selectedWeekStartIndex]
   );
 
   function handleWeekDecrement() {
-    // if (selected !== 0) {
-    //   setSelected(selected - 7);
-    // } else if (selected === 0) {
-    //   let currMonth = selectedMonth.monthValue - 1;
-    //   setSlectedMonth({
-    //     ...selectedMonth,
-    //     label: monthSelectOptions[currMonth].label,
-    //     value: monthSelectOptions[currMonth].value,
-    //     monthValue: monthSelectOptions[currMonth].monthValue,
-    //   });
-    //   setSelected(28);
-    // }
-
     if (selectedWeekEndIndex > 7) {
       setSelectedWeekEndIndex(selectedWeekEndIndex - 7);
     }
@@ -384,16 +367,12 @@ export default function App() {
 
   const toolbarElements = (
     <div className="toolbar">
-      {view.value === 2 ? (
-        <Select
-          className="select-month"
-          value={selectedMonth}
-          onChange={handleMonthChange}
-          options={monthSelectOptions}
-        />
-      ) : (
-        <div className="select-month month-range ">{monthRange}</div>
-      )}
+      <Select
+        className="select-month"
+        value={selectedMonth}
+        onChange={handleMonthChange}
+        options={monthSelectOptions}
+      />
 
       <Select
         className="select-view"
