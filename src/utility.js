@@ -85,7 +85,7 @@ export const monthIndexes = {
   dec: { start: 334, end: 364 },
 };
 
-export function getStartMonth(start, end) {
+export function getStartMonth(start) {
   return resolveMonth(start).string;
 }
 

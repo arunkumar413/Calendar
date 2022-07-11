@@ -206,15 +206,17 @@ export default function App() {
       (date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24
     );
 
-    let ele = [];
+    var possibleRange = [];
 
-    for (let i = 0; i < weekIndexes.length; i++) {
-      if (weekIndexes[i] >= dayNumber - 1) {
-        ele.push(weekIndexes[i]);
+    let dayIndex = dayNumber - 1;
+
+    for (let i = option[0].start; i < option[0].end; i += 7) {
+      if (dayIndex <= i) {
+        possibleRange.push(i);
       }
     }
-    let item = ele[0];
-    setSelectedWeekEndIndex(item);
+
+    setSelectedWeekEndIndex(possibleRange[0]);
   }, []); //all effects end here
 
   function handleMonthChange(item) {
@@ -247,7 +249,7 @@ export default function App() {
   useEffect(
     function () {
       let month1 = getStartMonth(selectedWeekStartIndex);
-      let month2 = getStartMonth(selectedWeekEndIndex);
+      let month2 = getStartMonth(selectedWeekEndIndex - 1);
 
       if (month1 === month2) {
         setMonthRange(month1);
@@ -489,7 +491,7 @@ export default function App() {
     if (currEvents.length) {
       return currEvents.map(function (item, index) {
         return (
-          <span>
+          <span key={index.toString()}>
             {" "}
             <span className="full-day-event"> {item.title} </span> <br />{" "}
           </span>

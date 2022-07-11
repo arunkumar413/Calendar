@@ -87,8 +87,6 @@ export function EditEventModal(props) {
 
   function handleSaveEvent() {
     // call to backed to save the event
-    console.log(event);
-    console.log("saved event");
     props.onCloseEditModal();
   }
 
