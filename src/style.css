@@ -77,9 +77,13 @@ body {
 }
 
 .full-day-event {
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   color: #005ce6;
   cursor: pointer;
+}
+
+.full-day-event:hover {
+  background-color: aliceblue;
 }
 
 .hour-item {

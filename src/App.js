@@ -234,8 +234,10 @@ export default function App() {
   }
 
   function handleWeekIncrement() {
-    if (selectedWeekEndIndex >= 7) {
+    if (selectedWeekEndIndex >= 7 && selectedWeekEndIndex < 362) {
       setSelectedWeekEndIndex(selectedWeekEndIndex + 7);
+    } else if (selectedWeekEndIndex === 362) {
+      setSelectedWeekEndIndex(selectedWeekEndIndex + 3);
     }
   }
 
@@ -400,6 +402,11 @@ export default function App() {
     </div>
   );
 
+  function handleFullDayEventClick(evt, item) {
+    setClickedEvent(item);
+    setAddModalClass("opened");
+  }
+
   function getEvents(year, month, date, hour) {
     let realDate = date + 1;
     let realMonth = month + 1;
@@ -493,7 +500,14 @@ export default function App() {
         return (
           <span key={index.toString()}>
             {" "}
-            <span className="full-day-event"> {item.title} </span> <br />{" "}
+            <span
+              onClick={(evt) => handleFullDayEventClick(evt, item)}
+              className="full-day-event"
+            >
+              {" "}
+              {item.title}{" "}
+            </span>{" "}
+            <br />{" "}
           </span>
         );
       });
