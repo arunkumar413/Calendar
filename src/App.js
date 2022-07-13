@@ -574,7 +574,12 @@ export default function App() {
   const monthElements = completeYear.map(function (item, index) {
     return (
       <span key={index.toString()} className="month-item">
-        <span className={`day-heading ${addDateClass(2022, item, index)}`}>
+        <span
+          className={`month-view-day-heading ${addDateClass(
+            2022,
+            item,
+            index
+          )}`}>
           {getDay2(2022, item, index)} <br /> {item + 1} <br />
           {getFullDayEvents(2022, item, index)}
         </span>{" "}

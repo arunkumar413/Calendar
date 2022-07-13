@@ -81,6 +81,18 @@ body {
   color: #0908097d;
 }
 
+.month-view-day-heading {
+  font-size: medium;
+  height: 150px;
+  text-align: center;
+  font-weight: bolder;
+  display: block;
+  border-bottom: solid 0.5px lightgrey;
+  border-left: solid 0.5px lightgrey;
+  border-right: solid 0.5px lightgrey;
+  color: #0908097d;
+}
+
 .today {
   color: green;
   background-color: #0080000f;
