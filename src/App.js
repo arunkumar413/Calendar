@@ -37,7 +37,7 @@ export default function App() {
   const [selectedWeekEndIndex, setSelectedWeekEndIndex] = useState(7);
   const [selectedWeekStartIndex, setSelectedWeekStartIndex] = useState(0);
   const [monthRange, setMonthRange] = useState("");
-  const [selectedMonth, setSlectedMonth] = useState({
+  const [selectedMonth, setSelectedMonth] = useState({
     label: "",
     value: "",
     monthValue: 0,
@@ -181,7 +181,6 @@ export default function App() {
       ...view,
       label: item.label,
       value: item.value,
-      monthValue: item.monthValue,
     });
   }
 
@@ -194,7 +193,7 @@ export default function App() {
       return item.monthValue === m;
     });
 
-    setSlectedMonth({
+    setSelectedMonth({
       ...selectedMonth,
       label: option[0].label,
       value: option[0].value,
@@ -222,7 +221,7 @@ export default function App() {
   }, []); //all effects end here
 
   function handleMonthChange(item) {
-    setSlectedMonth({
+    setSelectedMonth({
       ...selectedMonth,
       label: item.label,
       value: item.value,
@@ -236,10 +235,24 @@ export default function App() {
   }
 
   function handleWeekIncrement() {
-    if (selectedWeekEndIndex >= 7 && selectedWeekEndIndex < 362) {
-      setSelectedWeekEndIndex(selectedWeekEndIndex + 7);
-    } else if (selectedWeekEndIndex === 362) {
-      setSelectedWeekEndIndex(selectedWeekEndIndex + 3);
+    if (view.label === "Week") {
+      if (selectedWeekEndIndex >= 7 && selectedWeekEndIndex < 362) {
+        setSelectedWeekEndIndex(selectedWeekEndIndex + 7);
+      } else if (selectedWeekEndIndex === 362) {
+        setSelectedWeekEndIndex(selectedWeekEndIndex + 3);
+      }
+    } else if (view.label === "Month") {
+      let nextMonth = monthSelectOptions.filter(function (item) {
+        return item.monthValue === selectedMonth.monthValue + 1;
+      });
+      setSelectedMonth({
+        ...selectedMonth,
+        label: nextMonth[0].label,
+        value: nextMonth[0].value,
+        monthValue: nextMonth[0].monthValue,
+        start: nextMonth[0].start,
+        end: nextMonth[0].end,
+      });
     }
   }
 
@@ -263,20 +276,24 @@ export default function App() {
         return item.label === month1;
       });
 
-      if (month1Object.label === month2Object.label) {
+      if (month1Object[0].label === month2Object[0].label) {
         setMonthRange(month1);
-        setSlectedMonth({
+        setSelectedMonth({
           ...selectedMonth,
-          label: month1Object.label,
-          value: month1Object.value,
-          monthValue: month1Object.monthValue,
+          label: month1Object[0].label,
+          value: month1Object[0].value,
+          monthValue: month1Object[0].monthValue,
+          start: month1Object[0].start,
+          end: month1Object[0].end,
         });
       } else {
         setMonthRange(month1 + "-" + month2);
-        setSlectedMonth({
-          label: month1Object.label + "-" + month2Object.label,
-          value: month1Object.value + "-" + month2Object.value,
-          monthValue: month1Object.monthValue
+        setSelectedMonth({
+          label: month1Object[0].label + "-" + month2Object[0].label,
+          value: month1Object[0].value + "-" + month2Object[0].value,
+          monthValue: month1Object[0].monthValue,
+          start: month1Object[0].start,
+          end: month1Object[0].end,
         });
       }
     },
@@ -284,8 +301,22 @@ export default function App() {
   );
 
   function handleWeekDecrement() {
-    if (selectedWeekEndIndex > 7) {
-      setSelectedWeekEndIndex(selectedWeekEndIndex - 7);
+    if (view.label === "Week") {
+      if (selectedWeekEndIndex > 7) {
+        setSelectedWeekEndIndex(selectedWeekEndIndex - 7);
+      }
+    } else if (view.label === "Month") {
+      let prevMonth = monthSelectOptions.filter(function (item) {
+        return item.monthValue === selectedMonth.monthValue - 1;
+      });
+      setSelectedMonth({
+        ...selectedMonth,
+        label: prevMonth[0].label,
+        value: prevMonth[0].value,
+        monthValue: prevMonth[0].monthValue,
+        start: prevMonth[0].start,
+        end: prevMonth[0].end,
+      });
     }
   }
 
@@ -346,7 +377,6 @@ export default function App() {
         {get12HourFormat(item)}
       </span>
     );
-    too;
   });
 
   const weekStrip = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
@@ -359,10 +389,10 @@ export default function App() {
     }
   );
 
-  let selectedElements = YearElements[selectedMonth.monthValue].slice(
-    selected,
-    selected + 7
-  );
+  // let selectedElements = YearElements[selectedMonth.monthValue].slice(
+  //   selected,
+  //   selected + 7
+  // );
 
   function handleClickOnEvent(evt, item) {
     setClickedEvent({
@@ -439,8 +469,7 @@ export default function App() {
           <span
             onClick={(evt) => handleClickOnEvent(evt, item)}
             key={index.toString()}
-            className="event"
-          >
+            className="event">
             {item.title}
           </span>
         );
@@ -483,9 +512,9 @@ export default function App() {
       today.getMonth() === date.getMonth() &&
       today.getDate() === date.getDate()
     ) {
-      return date.toISOString() + " today";
+      return date.toLocaleDateString() + " today";
     } else {
-      return date.toISOString();
+      return date.toLocaleDateString();
     }
   }
 
@@ -513,8 +542,7 @@ export default function App() {
             {" "}
             <span
               onClick={(evt) => handleFullDayEventClick(evt, item)}
-              className="full-day-event"
-            >
+              className="full-day-event">
               {" "}
               {item.title}{" "}
             </span>{" "}
@@ -528,7 +556,9 @@ export default function App() {
   const YearElements3 = completeYear.map(function (item, index) {
     return (
       <span key={index.toString()} className="month-elements">
-        <span className={`day-heading ${addDateClass(2022, item, index)}`}>
+        <span
+          id={`${addDateClass(2022, item, index)}`}
+          className={`day-heading ${addDateClass(2022, item, index)}`}>
           {getDay2(2022, item, index)} <br /> {item + 1} <br />
           {getFullDayEvents(2022, item, index)}
           <span className="month-super-script">
@@ -576,18 +606,17 @@ export default function App() {
   function displayElements() {
     if (view.label === "Month") {
       return (
-        <div className="calendar-elements-container">
-          {/* {getSevenElements()}{" "} */}
-          {YearElements3.slice(selectedWeekStartIndex, selectedWeekEndIndex)}
+        <div className="calendar-months-container">
+          {monthElements.slice(selectedMonth.start, selectedMonth.end + 1)}
         </div>
       );
-    } else if (view.label === "week")
+    } else if (view.label === "Week") {
       return (
         <div className="calendar-elements-container">
-          {/* {getSevenElements()}{" "} */}
           {YearElements3.slice(selectedWeekStartIndex, selectedWeekEndIndex)}
         </div>
       );
+    }
   }
 
   return (
@@ -604,16 +633,18 @@ export default function App() {
       <div>
         <div className="container">
           <div className="tool-bar-container">{toolbarElements} </div>
-          <div className="hour-strip-container"> {hourElements} </div>
-          <div className="calendar-elements-container">
-            {/* {getSevenElements()}{" "} */}
-            {view.label === "Week"
+          {view.label === "Week" && (
+            <div className="hour-strip-container"> {hourElements} </div>
+          )}
+          {/* <div className="calendar-elements-container"> */}
+          {/* {view.label === "Week"
               ? YearElements3.slice(
                   selectedWeekStartIndex,
                   selectedWeekEndIndex
                 )
-              : monthElements.slice(selectedMonth.start, selectedMonth.end)}
-          </div>
+              : monthElements.slice(selectedMonth.start, selectedMonth.end)} */}
+          {displayElements()}
+          {/* </div> */}
         </div>
         <EventModal
           event={clickedEvent}

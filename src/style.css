@@ -60,13 +60,23 @@ body {
   grid-template-columns: repeat(7, 1fr);
 }
 
+.calendar-months-container {
+  grid-column: 2 / 9;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 .day-heading {
-  font-size: larger;
+  font-size: medium;
   height: 100px;
   text-align: center;
   font-weight: bolder;
   display: block;
   border-bottom: solid 0.5px lightgrey;
+  border-left: solid 0.5px lightgrey;
   border-right: solid 0.5px lightgrey;
   color: #0908097d;
 }
