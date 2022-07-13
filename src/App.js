@@ -41,6 +41,8 @@ export default function App() {
     label: "",
     value: "",
     monthValue: 0,
+    start: 0,
+    end: 30,
   });
 
   const [isNexIconClickable, setNextIconClickable] = useState(true);
@@ -253,19 +255,28 @@ export default function App() {
       let month1 = getStartMonth(selectedWeekStartIndex);
       let month2 = getStartMonth(selectedWeekEndIndex - 1);
 
-      if (month1 === month2) {
+      let month1Object = monthSelectOptions.filter(function (item) {
+        return item.label === month1;
+      });
+
+      let month2Object = monthSelectOptions.filter(function (item) {
+        return item.label === month1;
+      });
+
+      if (month1Object.label === month2Object.label) {
         setMonthRange(month1);
         setSlectedMonth({
-          label: month1,
-          value: month1,
-          monthValue: 0,
+          ...selectedMonth,
+          label: month1Object.label,
+          value: month1Object.value,
+          monthValue: month1Object.monthValue,
         });
       } else {
         setMonthRange(month1 + "-" + month2);
         setSlectedMonth({
-          label: month1 + "-" + month2,
-          value: month1 + "-" + month2,
-          monthValue: 0,
+          label: month1Object.label + "-" + month2Object.label,
+          value: month1Object.value + "-" + month2Object.value,
+          monthValue: month1Object.monthValue
         });
       }
     },
@@ -530,6 +541,18 @@ export default function App() {
     );
   });
 
+  const monthElements = completeYear.map(function (item, index) {
+    return (
+      <span key={index.toString()} className="month-item">
+        <span className={`day-heading ${addDateClass(2022, item, index)}`}>
+          {getDay2(2022, item, index)} <br /> {item + 1} <br />
+          {getFullDayEvents(2022, item, index)}
+        </span>{" "}
+        {/* {getEvents(2022, month, item, hour)} */}
+      </span>
+    );
+  });
+
   function getSevenElements() {
     return YearElements.slice(0, 6);
   }
@@ -550,6 +573,23 @@ export default function App() {
     setAddModalClass("closed");
   }
 
+  function displayElements() {
+    if (view.label === "Month") {
+      return (
+        <div className="calendar-elements-container">
+          {/* {getSevenElements()}{" "} */}
+          {YearElements3.slice(selectedWeekStartIndex, selectedWeekEndIndex)}
+        </div>
+      );
+    } else if (view.label === "week")
+      return (
+        <div className="calendar-elements-container">
+          {/* {getSevenElements()}{" "} */}
+          {YearElements3.slice(selectedWeekStartIndex, selectedWeekEndIndex)}
+        </div>
+      );
+  }
+
   return (
     <RecoilRoot>
       {/* <div>
@@ -567,7 +607,12 @@ export default function App() {
           <div className="hour-strip-container"> {hourElements} </div>
           <div className="calendar-elements-container">
             {/* {getSevenElements()}{" "} */}
-            {YearElements3.slice(selectedWeekStartIndex, selectedWeekEndIndex)}
+            {view.label === "Week"
+              ? YearElements3.slice(
+                  selectedWeekStartIndex,
+                  selectedWeekEndIndex
+                )
+              : monthElements.slice(selectedMonth.start, selectedMonth.end)}
           </div>
         </div>
         <EventModal
