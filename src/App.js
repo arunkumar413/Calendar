@@ -171,7 +171,6 @@ export default function App() {
   });
 
   const viewOptions = [
-    { label: "Day", value: 0 },
     { label: "Week", value: 1 },
     { label: "Month", value: 2 },
   ];
@@ -584,7 +583,9 @@ export default function App() {
             index
           )}`}>
           {getDay2(2022, item, index)} <br />{" "}
-          <span style={{ fontSize: "2.2rem", color: "#000000a1" }}>
+          <span
+            style={{ fontSize: "2.2rem" }}
+            className={addDateClass(2022, item, index)}>
             {" "}
             {item + 1}{" "}
           </span>{" "}

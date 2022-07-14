@@ -95,11 +95,11 @@ body {
   border-bottom: solid 0.5px lightgrey;
   border-right: solid 0.5px lightgrey;
   color: #0908097d;
+  padding-top: 0.5rem;
 }
 
 .today {
   color: green;
-  background-color: #0080000f;
 }
 
 .full-day-event {
