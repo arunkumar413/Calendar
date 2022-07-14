@@ -52,7 +52,6 @@ body {
 .hour-heading {
   min-height: 60px;
   border-bottom: solid 1px lightgrey;
-  border-right: solid 1px lightgrey;
   color: #0908097d;
 }
 
@@ -63,6 +62,7 @@ body {
 .calendar-elements-container {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  border-left: solid 0.5px lightgrey;
 }
 
 .calendar-months-container {
@@ -72,6 +72,7 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
+  border-left: solid 0.5px lightgrey;
 }
 
 .day-heading {
@@ -85,10 +86,6 @@ body {
   color: #0908097d;
 }
 
-.day-heading:first-child {
-  border-left: solid 0.5px lightgrey;
-}
-
 .month-view-day-heading {
   font-size: medium;
   height: 150px;
@@ -98,9 +95,6 @@ body {
   border-bottom: solid 0.5px lightgrey;
   border-right: solid 0.5px lightgrey;
   color: #0908097d;
-}
-.month-view-day-heading:first-child {
-  border-left: solid 0.5px lightgrey;
 }
 
 .today {
