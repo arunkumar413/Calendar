@@ -81,9 +81,12 @@ body {
   font-weight: bolder;
   display: block;
   border-bottom: solid 0.5px lightgrey;
-  /* border-left: solid 0.5px lightgrey; */
   border-right: solid 0.5px lightgrey;
   color: #0908097d;
+}
+
+.day-heading:first-child {
+  border-left: solid 0.5px lightgrey;
 }
 
 .month-view-day-heading {
@@ -93,9 +96,11 @@ body {
   font-weight: bolder;
   display: block;
   border-bottom: solid 0.5px lightgrey;
-  /* border-left: solid 0.5px lightgrey; */
   border-right: solid 0.5px lightgrey;
   color: #0908097d;
+}
+.month-view-day-heading:first-child {
+  border-left: solid 0.5px lightgrey;
 }
 
 .today {
