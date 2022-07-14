@@ -580,7 +580,12 @@ export default function App() {
             item,
             index
           )}`}>
-          {getDay2(2022, item, index)} <br /> {item + 1} <br />
+          {getDay2(2022, item, index)} <br />{" "}
+          <span style={{ fontSize: "2.5rem", color: "#000000a1" }}>
+            {" "}
+            {item + 1}{" "}
+          </span>{" "}
+          <br />
           {getFullDayEvents(2022, item, index)}
         </span>{" "}
         {/* {getEvents(2022, month, item, hour)} */}
@@ -636,7 +641,8 @@ export default function App() {
       </div> */}
 
       <div>
-        <div className="container">
+        <div
+          className={view.label === "Week" ? "container" : "month-container"}>
           <div className="tool-bar-container">{toolbarElements} </div>
           {view.label === "Week" && (
             <div className="hour-strip-container"> {hourElements} </div>

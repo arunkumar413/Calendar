@@ -8,6 +8,11 @@ body {
   grid-template-rows: repeat(26, 60px);
 }
 
+.month-container {
+  display: grid;
+  grid-template-columns: 4rem repeat(7, 1fr);
+}
+
 /* .week-strip-container {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -76,7 +81,7 @@ body {
   font-weight: bolder;
   display: block;
   border-bottom: solid 0.5px lightgrey;
-  border-left: solid 0.5px lightgrey;
+  /* border-left: solid 0.5px lightgrey; */
   border-right: solid 0.5px lightgrey;
   color: #0908097d;
 }
@@ -88,7 +93,7 @@ body {
   font-weight: bolder;
   display: block;
   border-bottom: solid 0.5px lightgrey;
-  border-left: solid 0.5px lightgrey;
+  /* border-left: solid 0.5px lightgrey; */
   border-right: solid 0.5px lightgrey;
   color: #0908097d;
 }
