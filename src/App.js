@@ -37,10 +37,12 @@ export default function App() {
   const [selectedWeekEndIndex, setSelectedWeekEndIndex] = useState(7);
   const [selectedWeekStartIndex, setSelectedWeekStartIndex] = useState(0);
   const [monthRange, setMonthRange] = useState("");
-  const [selectedMonth, setSlectedMonth] = useState({
+  const [selectedMonth, setSelectedMonth] = useState({
     label: "",
     value: "",
     monthValue: 0,
+    start: 0,
+    end: 30,
   });
 
   const [isNexIconClickable, setNextIconClickable] = useState(true);
@@ -169,7 +171,6 @@ export default function App() {
   });
 
   const viewOptions = [
-    { label: "Day", value: 0 },
     { label: "Week", value: 1 },
     { label: "Month", value: 2 },
   ];
@@ -179,7 +180,6 @@ export default function App() {
       ...view,
       label: item.label,
       value: item.value,
-      monthValue: item.monthValue,
     });
   }
 
@@ -192,7 +192,7 @@ export default function App() {
       return item.monthValue === m;
     });
 
-    setSlectedMonth({
+    setSelectedMonth({
       ...selectedMonth,
       label: option[0].label,
       value: option[0].value,
@@ -220,7 +220,7 @@ export default function App() {
   }, []); //all effects end here
 
   function handleMonthChange(item) {
-    setSlectedMonth({
+    setSelectedMonth({
       ...selectedMonth,
       label: item.label,
       value: item.value,
@@ -234,10 +234,24 @@ export default function App() {
   }
 
   function handleWeekIncrement() {
-    if (selectedWeekEndIndex >= 7 && selectedWeekEndIndex < 362) {
-      setSelectedWeekEndIndex(selectedWeekEndIndex + 7);
-    } else if (selectedWeekEndIndex === 362) {
-      setSelectedWeekEndIndex(selectedWeekEndIndex + 3);
+    if (view.label === "Week") {
+      if (selectedWeekEndIndex >= 7 && selectedWeekEndIndex < 362) {
+        setSelectedWeekEndIndex(selectedWeekEndIndex + 7);
+      } else if (selectedWeekEndIndex === 362) {
+        setSelectedWeekEndIndex(selectedWeekEndIndex + 3);
+      }
+    } else if (view.label === "Month") {
+      let nextMonth = monthSelectOptions.filter(function (item) {
+        return item.monthValue === selectedMonth.monthValue + 1;
+      });
+      setSelectedMonth({
+        ...selectedMonth,
+        label: nextMonth[0].label,
+        value: nextMonth[0].value,
+        monthValue: nextMonth[0].monthValue,
+        start: nextMonth[0].start,
+        end: nextMonth[0].end,
+      });
     }
   }
 
@@ -253,19 +267,31 @@ export default function App() {
       let month1 = getStartMonth(selectedWeekStartIndex);
       let month2 = getStartMonth(selectedWeekEndIndex - 1);
 
-      if (month1 === month2) {
+      let month1Object = monthSelectOptions.filter(function (item) {
+        return item.label === month1;
+      });
+
+      let month2Object = monthSelectOptions.filter(function (item) {
+        return item.label === month2;
+      });
+      if (month1Object[0].label === month2Object[0].label) {
         setMonthRange(month1);
-        setSlectedMonth({
-          label: month1,
-          value: month1,
-          monthValue: 0,
+        setSelectedMonth({
+          ...selectedMonth,
+          label: month1Object[0].label,
+          value: month1Object[0].value,
+          monthValue: month1Object[0].monthValue,
+          start: month1Object[0].start,
+          end: month1Object[0].end,
         });
       } else {
         setMonthRange(month1 + "-" + month2);
-        setSlectedMonth({
-          label: month1 + "-" + month2,
-          value: month1 + "-" + month2,
-          monthValue: 0,
+        setSelectedMonth({
+          label: month1Object[0].label + "-" + month2Object[0].label,
+          value: month1Object[0].value + "-" + month2Object[0].value,
+          monthValue: month1Object[0].monthValue,
+          start: month1Object[0].start,
+          end: month1Object[0].end,
         });
       }
     },
@@ -273,8 +299,22 @@ export default function App() {
   );
 
   function handleWeekDecrement() {
-    if (selectedWeekEndIndex > 7) {
-      setSelectedWeekEndIndex(selectedWeekEndIndex - 7);
+    if (view.label === "Week") {
+      if (selectedWeekEndIndex > 7) {
+        setSelectedWeekEndIndex(selectedWeekEndIndex - 7);
+      }
+    } else if (view.label === "Month") {
+      let prevMonth = monthSelectOptions.filter(function (item) {
+        return item.monthValue === selectedMonth.monthValue - 1;
+      });
+      setSelectedMonth({
+        ...selectedMonth,
+        label: prevMonth[0].label,
+        value: prevMonth[0].value,
+        monthValue: prevMonth[0].monthValue,
+        start: prevMonth[0].start,
+        end: prevMonth[0].end,
+      });
     }
   }
 
@@ -335,7 +375,6 @@ export default function App() {
         {get12HourFormat(item)}
       </span>
     );
-    too;
   });
 
   const weekStrip = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
@@ -348,10 +387,10 @@ export default function App() {
     }
   );
 
-  let selectedElements = YearElements[selectedMonth.monthValue].slice(
-    selected,
-    selected + 7
-  );
+  // let selectedElements = YearElements[selectedMonth.monthValue].slice(
+  //   selected,
+  //   selected + 7
+  // );
 
   function handleClickOnEvent(evt, item) {
     setClickedEvent({
@@ -385,14 +424,18 @@ export default function App() {
         options={viewOptions}
       />
 
-      <div className="previous-icon">
+      {/* <div className="previous-icon">
         <PreviousIcon
           className="decrement-icon"
           onClick={handleWeekDecrement}
         />
-      </div>
+      </div> */}
 
-      <div className="next-icon">
+      <div className="prev-next-icons">
+        <PreviousIcon
+          className="decrement-icon"
+          onClick={handleWeekDecrement}
+        />
         <NextIcon className="increment-icon" onClick={handleWeekIncrement} />
       </div>
 
@@ -428,8 +471,7 @@ export default function App() {
           <span
             onClick={(evt) => handleClickOnEvent(evt, item)}
             key={index.toString()}
-            className="event"
-          >
+            className="event">
             {item.title}
           </span>
         );
@@ -472,9 +514,9 @@ export default function App() {
       today.getMonth() === date.getMonth() &&
       today.getDate() === date.getDate()
     ) {
-      return date.toISOString() + " today";
+      return date.toLocaleDateString() + " today";
     } else {
-      return date.toISOString();
+      return date.toLocaleDateString();
     }
   }
 
@@ -502,8 +544,7 @@ export default function App() {
             {" "}
             <span
               onClick={(evt) => handleFullDayEventClick(evt, item)}
-              className="full-day-event"
-            >
+              className="full-day-event">
               {" "}
               {item.title}{" "}
             </span>{" "}
@@ -517,7 +558,9 @@ export default function App() {
   const YearElements3 = completeYear.map(function (item, index) {
     return (
       <span key={index.toString()} className="month-elements">
-        <span className={`day-heading ${addDateClass(2022, item, index)}`}>
+        <span
+          id={`${addDateClass(2022, item, index)}`}
+          className={`day-heading ${addDateClass(2022, item, index)}`}>
           {getDay2(2022, item, index)} <br /> {item + 1} <br />
           {getFullDayEvents(2022, item, index)}
           <span className="month-super-script">
@@ -526,6 +569,30 @@ export default function App() {
           </span>
         </span>{" "}
         {generateHourElements2(2022, item, index)}
+      </span>
+    );
+  });
+
+  const monthElements = completeYear.map(function (item, index) {
+    return (
+      <span key={index.toString()} className="month-item">
+        <span
+          className={`month-view-day-heading ${addDateClass(
+            2022,
+            item,
+            index
+          )}`}>
+          {getDay2(2022, item, index)} <br />{" "}
+          <span
+            style={{ fontSize: "2.2rem" }}
+            className={addDateClass(2022, item, index)}>
+            {" "}
+            {item + 1}{" "}
+          </span>{" "}
+          <br />
+          {getFullDayEvents(2022, item, index)}
+        </span>{" "}
+        {/* {getEvents(2022, month, item, hour)} */}
       </span>
     );
   });
@@ -550,6 +617,22 @@ export default function App() {
     setAddModalClass("closed");
   }
 
+  function displayElements() {
+    if (view.label === "Month") {
+      return (
+        <div className="calendar-months-container">
+          {monthElements.slice(selectedMonth.start, selectedMonth.end + 1)}
+        </div>
+      );
+    } else if (view.label === "Week") {
+      return (
+        <div className="calendar-elements-container">
+          {YearElements3.slice(selectedWeekStartIndex, selectedWeekEndIndex)}
+        </div>
+      );
+    }
+  }
+
   return (
     <RecoilRoot>
       {/* <div>
@@ -562,13 +645,21 @@ export default function App() {
       </div> */}
 
       <div>
-        <div className="container">
+        <div
+          className={view.label === "Week" ? "container" : "month-container"}>
           <div className="tool-bar-container">{toolbarElements} </div>
-          <div className="hour-strip-container"> {hourElements} </div>
-          <div className="calendar-elements-container">
-            {/* {getSevenElements()}{" "} */}
-            {YearElements3.slice(selectedWeekStartIndex, selectedWeekEndIndex)}
-          </div>
+          {view.label === "Week" && (
+            <div className="hour-strip-container"> {hourElements} </div>
+          )}
+          {/* <div className="calendar-elements-container"> */}
+          {/* {view.label === "Week"
+              ? YearElements3.slice(
+                  selectedWeekStartIndex,
+                  selectedWeekEndIndex
+                )
+              : monthElements.slice(selectedMonth.start, selectedMonth.end)} */}
+          {displayElements()}
+          {/* </div> */}
         </div>
         <EventModal
           event={clickedEvent}

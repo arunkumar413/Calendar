@@ -8,6 +8,11 @@ body {
   grid-template-rows: repeat(26, 60px);
 }
 
+.month-container {
+  display: grid;
+  grid-template-columns: 4rem repeat(7, 1fr);
+}
+
 /* .week-strip-container {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -37,7 +42,7 @@ body {
 
 .calendar-elements-container {
   grid-column: 2 / 9;
-  grid-row: 2/27;
+  grid-row: 2/28;
 }
 
 .week-heading {
@@ -47,7 +52,6 @@ body {
 .hour-heading {
   min-height: 60px;
   border-bottom: solid 1px lightgrey;
-  border-right: solid 1px lightgrey;
   color: #0908097d;
 }
 
@@ -58,10 +62,21 @@ body {
 .calendar-elements-container {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  border-left: solid 0.5px lightgrey;
+}
+
+.calendar-months-container {
+  grid-column: 2 / 9;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-left: solid 0.5px lightgrey;
 }
 
 .day-heading {
-  font-size: larger;
+  font-size: medium;
   height: 100px;
   text-align: center;
   font-weight: bolder;
@@ -71,9 +86,20 @@ body {
   color: #0908097d;
 }
 
+.month-view-day-heading {
+  font-size: medium;
+  height: 150px;
+  text-align: center;
+  font-weight: bolder;
+  display: block;
+  border-bottom: solid 0.5px lightgrey;
+  border-right: solid 0.5px lightgrey;
+  color: #0908097d;
+  padding-top: 0.5rem;
+}
+
 .today {
   color: green;
-  background-color: #0080000f;
 }
 
 .full-day-event {
@@ -100,23 +126,26 @@ body {
 }
 
 .select-month {
-  grid-column: 4/5;
+  grid-column: 5/6;
 }
 
 .select-view {
-  grid-column: 5/6;
+  grid-column: 6/7;
   text-align: center;
 }
 
-.previous-icon {
+/* .previous-icon {
   grid-column: 6/7;
   text-align: center;
   cursor: pointer;
-}
+} */
 
-.next-icon {
+.prev-next-icons {
   grid-column: 7/8;
   text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 .add-new-event {
   grid-column: 8/9;
@@ -157,12 +186,14 @@ body {
   justify-content: flex-end;
   align-items: center;
   text-align: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .tool-bar-container {
   grid-column: 1/9;
   width: 100%;
-  border-bottom: solid 0.5px gray;
+  border-bottom: solid 0.5px lightgrey;
 }
 
 /* .events-container {
