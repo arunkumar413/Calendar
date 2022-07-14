@@ -425,14 +425,18 @@ export default function App() {
         options={viewOptions}
       />
 
-      <div className="previous-icon">
+      {/* <div className="previous-icon">
         <PreviousIcon
           className="decrement-icon"
           onClick={handleWeekDecrement}
         />
-      </div>
+      </div> */}
 
-      <div className="next-icon">
+      <div className="prev-next-icons">
+        <PreviousIcon
+          className="decrement-icon"
+          onClick={handleWeekDecrement}
+        />
         <NextIcon className="increment-icon" onClick={handleWeekIncrement} />
       </div>
 
@@ -580,7 +584,7 @@ export default function App() {
             index
           )}`}>
           {getDay2(2022, item, index)} <br />{" "}
-          <span style={{ fontSize: "2.5rem", color: "#000000a1" }}>
+          <span style={{ fontSize: "2.2rem", color: "#000000a1" }}>
             {" "}
             {item + 1}{" "}
           </span>{" "}
