@@ -273,9 +273,8 @@ export default function App() {
       });
 
       let month2Object = monthSelectOptions.filter(function (item) {
-        return item.label === month1;
+        return item.label === month2;
       });
-
       if (month1Object[0].label === month2Object[0].label) {
         setMonthRange(month1);
         setSelectedMonth({
