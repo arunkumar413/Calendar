@@ -240,9 +240,9 @@ export default function App() {
       selectedWeekEndIndex < 362
     ) {
       setSelectedWeekEndIndex(selectedWeekEndIndex + 7);
-    } else if (selectedWeekEndIndex === 362) {
+    } else if (view.label === "Week" && selectedWeekEndIndex === 362) {
       setSelectedWeekEndIndex(selectedWeekEndIndex + 3);
-    } else if (view.label === "Month") {
+    } else if (view.label === "Month" && selectedMonth.value !== "December") {
       let nextMonth = monthSelectOptions.filter(function (item) {
         return item.monthValue === selectedMonth.monthValue + 1;
       });
@@ -255,11 +255,17 @@ export default function App() {
         end: nextMonth[0].end,
       });
     } else if (view.label === "Week" && selectedWeekEndIndex === 365) {
-      debugger;
       setCurrentYear(currentYear + 1);
     } else if (view.label === "Month" && selectedMonth.value === "December") {
-      debugger;
       setCurrentYear(currentYear + 1);
+      setSelectedMonth({
+        ...selectedMonth,
+        label: "January",
+        value: "January",
+        monthValue: 0,
+        start: 0,
+        end: 30,
+      });
     }
   }
 
@@ -323,9 +329,25 @@ export default function App() {
       });
     } else if (view.label === "Month" && selectedMonth.value === "January") {
       setCurrentYear(currentYear - 1);
+      setSelectedMonth({
+        ...selectedMonth,
+        label: "December",
+        value: "December",
+        monthValue: 11,
+        start: 334,
+        end: 364,
+      });
     } else if (view.label === "Week" && selectedWeekStartIndex < 7) {
-      debugger;
       setCurrentYear(currentYear - 1);
+      setSelectedMonth({
+        ...selectedMonth,
+        label: "December",
+        value: "December",
+        monthValue: 11,
+        start: 334,
+        end: 364,
+      });
+      setSelectedWeekEndIndex(365);
     }
   }
 
