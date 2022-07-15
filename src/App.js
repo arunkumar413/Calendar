@@ -234,12 +234,14 @@ export default function App() {
   }
 
   function handleWeekIncrement() {
-    if (view.label === "Week") {
-      if (selectedWeekEndIndex >= 7 && selectedWeekEndIndex < 362) {
-        setSelectedWeekEndIndex(selectedWeekEndIndex + 7);
-      } else if (selectedWeekEndIndex === 362) {
-        setSelectedWeekEndIndex(selectedWeekEndIndex + 3);
-      }
+    if (
+      view.label === "Week" &&
+      selectedWeekEndIndex >= 7 &&
+      selectedWeekEndIndex < 362
+    ) {
+      setSelectedWeekEndIndex(selectedWeekEndIndex + 7);
+    } else if (selectedWeekEndIndex === 362) {
+      setSelectedWeekEndIndex(selectedWeekEndIndex + 3);
     } else if (view.label === "Month") {
       let nextMonth = monthSelectOptions.filter(function (item) {
         return item.monthValue === selectedMonth.monthValue + 1;
@@ -252,6 +254,12 @@ export default function App() {
         start: nextMonth[0].start,
         end: nextMonth[0].end,
       });
+    } else if (view.label === "Week" && selectedWeekEndIndex === 365) {
+      debugger;
+      setCurrentYear(currentYear + 1);
+    } else if (view.label === "Month" && selectedMonth.value === "December") {
+      debugger;
+      setCurrentYear(currentYear + 1);
     }
   }
 
@@ -299,12 +307,9 @@ export default function App() {
   );
 
   function handleWeekDecrement() {
-    if (view.label === "Week") {
-      if (selectedWeekEndIndex > 7) {
-        debugger;
-        setSelectedWeekEndIndex(selectedWeekEndIndex - 7);
-      }
-    } else if (view.label === "Month") {
+    if (view.label === "Week" && selectedWeekStartIndex > 7) {
+      setSelectedWeekEndIndex(selectedWeekEndIndex - 7);
+    } else if (view.label === "Month" && selectedMonth.value != "January") {
       let prevMonth = monthSelectOptions.filter(function (item) {
         return item.monthValue === selectedMonth.monthValue - 1;
       });
@@ -316,6 +321,11 @@ export default function App() {
         start: prevMonth[0].start,
         end: prevMonth[0].end,
       });
+    } else if (view.label === "Month" && selectedMonth.value === "January") {
+      setCurrentYear(currentYear - 1);
+    } else if (view.label === "Week" && selectedWeekStartIndex < 7) {
+      debugger;
+      setCurrentYear(currentYear - 1);
     }
   }
 
@@ -411,6 +421,7 @@ export default function App() {
 
   const toolbarElements = (
     <div className="toolbar">
+      <div className="current-year">{currentYear}</div>
       <Select
         className="select-month"
         value={selectedMonth}
@@ -579,19 +590,19 @@ export default function App() {
       <span key={index.toString()} className="month-item">
         <span
           className={`month-view-day-heading ${addDateClass(
-            2022,
+            currentYear,
             item,
             index
           )}`}>
-          {getDay2(2022, item, index)} <br />{" "}
+          {getDay2(currentYear, item, index)} <br />{" "}
           <span
             style={{ fontSize: "2.2rem" }}
-            className={addDateClass(2022, item, index)}>
+            className={addDateClass(currentYear, item, index)}>
             {" "}
             {item + 1}{" "}
           </span>{" "}
           <br />
-          {getFullDayEvents(2022, item, index)}
+          {getFullDayEvents(currentYear, item, index)}
         </span>{" "}
         {/* {getEvents(2022, month, item, hour)} */}
       </span>
@@ -636,15 +647,6 @@ export default function App() {
 
   return (
     <RecoilRoot>
-      {/* <div>
-        <div className="container">
-          <div className="tool-bar-container">{toolbarElements} </div>
-          <div className="hour-strip-container"> {hourElements} </div>
-          <div className="calendar-elements-container">{selectedElements} </div>
-        </div>
-        <EventModal />
-      </div> */}
-
       <div>
         <div
           className={view.label === "Week" ? "container" : "month-container"}>

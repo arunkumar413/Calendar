@@ -125,6 +125,11 @@ body {
   font-size: 32px;
 }
 
+.current-year {
+  grid-column: 4/5;
+  font-weight: bolder;
+}
+
 .select-month {
   grid-column: 5/6;
 }
