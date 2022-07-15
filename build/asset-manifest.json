@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Calendar/static/css/main.82db9f5c.css",
-    "main.js": "/Calendar/static/js/main.a9c66b0e.js",
+    "main.js": "/Calendar/static/js/main.e3f792b3.js",
     "index.html": "/Calendar/index.html",
     "static/media/event_FILL0_wght400_GRAD-25_opsz24.svg": "/Calendar/static/media/event_FILL0_wght400_GRAD-25_opsz24.3b772fcba90dffbd374258f787222586.svg",
     "static/media/arrow_forward_ios_black_24dp.svg": "/Calendar/static/media/arrow_forward_ios_black_24dp.0af3fae61a26558bb93a598159faaf54.svg",
@@ -9,10 +9,10 @@
     "static/media/add_black_24dp.svg": "/Calendar/static/media/add_black_24dp.9b100c6b3141c8f0c6a5b0d5ecfb544a.svg",
     "static/media/close_FILL0_wght400_GRAD0_opsz48.svg": "/Calendar/static/media/close_FILL0_wght400_GRAD0_opsz48.08233535a9321b39bf5f4a13e34fede0.svg",
     "main.82db9f5c.css.map": "/Calendar/static/css/main.82db9f5c.css.map",
-    "main.a9c66b0e.js.map": "/Calendar/static/js/main.a9c66b0e.js.map"
+    "main.e3f792b3.js.map": "/Calendar/static/js/main.e3f792b3.js.map"
   },
   "entrypoints": [
     "static/css/main.82db9f5c.css",
-    "static/js/main.a9c66b0e.js"
+    "static/js/main.e3f792b3.js"
   ]
 }
