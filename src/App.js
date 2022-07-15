@@ -11,7 +11,6 @@ import { ReactComponent as AddEventIcon } from "../src/icons/add_black_24dp.svg"
 import { ReactComponent as NextIcon } from "../src/icons/arrow_forward_ios_black_24dp.svg";
 import { ReactComponent as PreviousIcon } from "../src/icons/arrow_back_ios_black_24dp.svg";
 import {
-  currentYear,
   janElements,
   monthIndexes,
   testElements,
@@ -67,6 +66,7 @@ export default function App() {
     231, 238, 245, 252, 259, 266, 273, 280, 287, 294, 301, 308, 315, 322, 329,
     336, 343, 350, 357, 364,
   ]);
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
   const [events, setEvents] = useState([
     {
@@ -301,6 +301,7 @@ export default function App() {
   function handleWeekDecrement() {
     if (view.label === "Week") {
       if (selectedWeekEndIndex > 7) {
+        debugger;
         setSelectedWeekEndIndex(selectedWeekEndIndex - 7);
       }
     } else if (view.label === "Month") {
@@ -559,16 +560,16 @@ export default function App() {
     return (
       <span key={index.toString()} className="month-elements">
         <span
-          id={`${addDateClass(2022, item, index)}`}
-          className={`day-heading ${addDateClass(2022, item, index)}`}>
-          {getDay2(2022, item, index)} <br /> {item + 1} <br />
-          {getFullDayEvents(2022, item, index)}
+          id={`${addDateClass(currentYear, item, index)}`}
+          className={`day-heading ${addDateClass(currentYear, item, index)}`}>
+          {getDay2(currentYear, item, index)} <br /> {item + 1} <br />
+          {getFullDayEvents(currentYear, item, index)}
           <span className="month-super-script">
             {" "}
             {monthStrings[resolveMonth(index)]}{" "}
           </span>
         </span>{" "}
-        {generateHourElements2(2022, item, index)}
+        {generateHourElements2(currentYear, item, index)}
       </span>
     );
   });
