@@ -459,10 +459,11 @@ export default function App() {
     <div className="toolbar">
       <div className="current-year">
         <input
-          type="number"
+          type="text"
           value={yearText}
           onChange={handleYearChange}
           maxLength={4}
+          minLength={4}
         />
       </div>
       <Select
