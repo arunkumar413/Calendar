@@ -208,7 +208,7 @@ export default function App() {
 
     var possibleRange = [];
 
-    let dayIndex = dayNumber - 1;
+    let dayIndex = dayNumber;
 
     for (let i = option[0].start; i < option[0].end; i += 7) {
       if (dayIndex <= i) {
