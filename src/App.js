@@ -60,6 +60,7 @@ export default function App() {
   const [editModalClass, setEditModalClass] = useState("closed");
   const [addModalClass, setAddModalClass] = useState("closed");
   const [todayIndex, setTodayIndex] = useState(100);
+  const [yearText, setYearText] = useState("2022");
   const [weekIndexes, setWeekIndexes] = useState([
     0, 7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84, 91, 98, 105, 112, 119,
     126, 133, 140, 147, 154, 161, 168, 175, 182, 189, 196, 203, 210, 217, 224,
@@ -441,9 +442,29 @@ export default function App() {
     setAddModalClass("opened");
   }
 
+  function handleYearChange(evt) {
+    setYearText(evt.target.value);
+  }
+
+  useEffect(
+    function () {
+      if (yearText.length === 4) {
+        setCurrentYear(parseInt(yearText));
+      }
+    },
+    [yearText]
+  );
+
   const toolbarElements = (
     <div className="toolbar">
-      <div className="current-year">{currentYear}</div>
+      <div className="current-year">
+        <input
+          type="number"
+          value={yearText}
+          onChange={handleYearChange}
+          maxLength={4}
+        />
+      </div>
       <Select
         className="select-month"
         value={selectedMonth}
