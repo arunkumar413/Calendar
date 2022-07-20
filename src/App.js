@@ -256,9 +256,16 @@ export default function App() {
         end: nextMonth[0].end,
       });
     } else if (view.label === "Week" && selectedWeekEndIndex === 365) {
-      setCurrentYear(currentYear + 1);
+      let yearInt = parseInt(yearText);
+      let incYear = yearInt + 1;
+      setYearText(incYear.toString());
+
+      // setCurrentYear(currentYear + 1);
     } else if (view.label === "Month" && selectedMonth.value === "December") {
-      setCurrentYear(currentYear + 1);
+      let yearInt = parseInt(yearText);
+      let incYear = yearInt + 1;
+      setYearText(incYear.toString());
+      // setCurrentYear(currentYear + 1);
       setSelectedMonth({
         ...selectedMonth,
         label: "January",
