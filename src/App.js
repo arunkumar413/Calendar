@@ -243,6 +243,12 @@ export default function App() {
       setSelectedWeekEndIndex(selectedWeekEndIndex + 7);
     } else if (view.label === "Week" && selectedWeekEndIndex === 362) {
       setSelectedWeekEndIndex(selectedWeekEndIndex + 3);
+    } else if (
+      view.label === "Week" &&
+      selectedWeekEndIndex > 358 &&
+      selectedWeekEndIndex < 365
+    ) {
+      setSelectedWeekEndIndex(365);
     } else if (view.label === "Month" && selectedMonth.value !== "December") {
       let nextMonth = monthSelectOptions.filter(function (item) {
         return item.monthValue === selectedMonth.monthValue + 1;
@@ -260,6 +266,16 @@ export default function App() {
       let incYear = yearInt + 1;
       setYearText(incYear.toString());
 
+      setSelectedMonth({
+        ...selectedMonth,
+        label: monthSelectOptions[0].label,
+        value: monthSelectOptions[0].value,
+        monthValue: monthSelectOptions[0].monthValue,
+        start: monthSelectOptions[0].start,
+        end: monthSelectOptions[0].end,
+      });
+
+      setSelectedWeekEndIndex(7);
       // setCurrentYear(currentYear + 1);
     } else if (view.label === "Month" && selectedMonth.value === "December") {
       let yearInt = parseInt(yearText);
