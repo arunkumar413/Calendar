@@ -125,6 +125,11 @@ body {
   font-size: 32px;
 }
 
+.input-year-label {
+  grid-column: 3/4;
+  text-align: right;
+}
+
 .current-year {
   grid-column: 4/5;
   font-weight: bolder;
@@ -458,6 +463,15 @@ input:focus {
   border-bottom: solid 2px blue;
   outline: none;
   background-color: aliceblue;
+}
+
+.current-year-input {
+  border: solid 0.5px lightgrey;
+  border-radius: 5px;
+}
+
+.current-year-input:focus {
+  border: solid 2px blue;
 }
 
 .event-date-time > input {

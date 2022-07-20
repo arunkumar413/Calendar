@@ -455,20 +455,28 @@ export default function App() {
     [yearText]
   );
 
-  function handleYearBlue(evt) {
+  function handleYearBlur(evt) {
     setYearText(evt.target.value);
   }
 
   const toolbarElements = (
     <div className="toolbar">
+      <label className="input-year-label" htmlFor="year-input">
+        {" "}
+        Current Year
+      </label>
       <div className="current-year">
         <input
-          onBlur={handleYearBlue}
+          name="year-input"
+          id="year-input"
+          className="current-year-input"
+          onBlur={handleYearBlur}
           onChange={handleYearChange}
           required
           type="text"
           inputMode="numeric"
           value={yearText}
+          maxLength={4}
         />
       </div>
       <Select
