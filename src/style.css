@@ -174,18 +174,23 @@ body {
 }
 
 .decrement-icon,
-.increment-icon {
+.increment-icon,
+.add-new-event-icon {
   cursor: pointer;
+  border-radius: 50%;
+  padding: 0.5rem;
 }
 
 .decrement-icon:hover,
-.increment-icon:hover {
+.increment-icon:hover,
+.add-new-event-icon:hover {
   cursor: pointer;
   fill: blue;
+  background-color: aliceblue;
+  transform: scale(1.2);
 }
 
 .add-new-event:hover {
-  background-color: aliceblue;
   border-radius: 24px;
   cursor: pointer;
 }

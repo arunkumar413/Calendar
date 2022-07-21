@@ -532,7 +532,7 @@ export default function App() {
       </div>
 
       <div className="add-new-event">
-        <AddEventIcon onClick={addNewEvent} />
+        <AddEventIcon className="add-new-event-icon" onClick={addNewEvent} />
       </div>
     </div>
   );
