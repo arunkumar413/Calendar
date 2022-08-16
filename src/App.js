@@ -352,7 +352,11 @@ export default function App() {
         end: prevMonth[0].end,
       });
     } else if (view.label === "Month" && selectedMonth.value === "January") {
-      setCurrentYear(currentYear - 1);
+      let yearInt = parseInt(yearText);
+      let incYear = yearInt - 1;
+      setYearText(incYear.toString());
+
+      // setCurrentYear(currentYear - 1);
       setSelectedMonth({
         ...selectedMonth,
         label: "December",
@@ -362,7 +366,11 @@ export default function App() {
         end: 364,
       });
     } else if (view.label === "Week" && selectedWeekStartIndex < 7) {
-      setCurrentYear(currentYear - 1);
+      let yearInt = parseInt(yearText);
+      let incYear = yearInt - 1;
+      setYearText(incYear.toString());
+
+      // setCurrentYear(currentYear - 1);
       setSelectedMonth({
         ...selectedMonth,
         label: "December",
@@ -563,7 +571,8 @@ export default function App() {
           <span
             onClick={(evt) => handleClickOnEvent(evt, item)}
             key={index.toString()}
-            className="event">
+            className="event"
+          >
             {item.title}
           </span>
         );
@@ -636,7 +645,8 @@ export default function App() {
             {" "}
             <span
               onClick={(evt) => handleFullDayEventClick(evt, item)}
-              className="full-day-event">
+              className="full-day-event"
+            >
               {" "}
               {item.title}{" "}
             </span>{" "}
@@ -652,7 +662,8 @@ export default function App() {
       <span key={index.toString()} className="month-elements">
         <span
           id={`${addDateClass(currentYear, item, index)}`}
-          className={`day-heading ${addDateClass(currentYear, item, index)}`}>
+          className={`day-heading ${addDateClass(currentYear, item, index)}`}
+        >
           {getDay2(currentYear, item, index)} <br /> {item + 1} <br />
           {getFullDayEvents(currentYear, item, index)}
           <span className="month-super-script">
@@ -673,11 +684,13 @@ export default function App() {
             currentYear,
             item,
             index
-          )}`}>
+          )}`}
+        >
           {getDay2(currentYear, item, index)} <br />{" "}
           <span
             style={{ fontSize: "2.2rem" }}
-            className={addDateClass(currentYear, item, index)}>
+            className={addDateClass(currentYear, item, index)}
+          >
             {" "}
             {item + 1}{" "}
           </span>{" "}
@@ -729,7 +742,8 @@ export default function App() {
     <RecoilRoot>
       <div>
         <div
-          className={view.label === "Week" ? "container" : "month-container"}>
+          className={view.label === "Week" ? "container" : "month-container"}
+        >
           <div className="tool-bar-container">{toolbarElements} </div>
           {view.label === "Week" && (
             <div className="hour-strip-container"> {hourElements} </div>
