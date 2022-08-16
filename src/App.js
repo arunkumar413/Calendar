@@ -30,6 +30,7 @@ import Select from "react-select";
 import { EventModal } from "./components/EventModal";
 import { EditEventModal } from "./components/EditEventModal";
 import { AddNewEvent } from "./components/AddNewEvent";
+import { MoreModal } from "./components/MoreModal";
 
 export default function App() {
   const [selected, setSelected] = useState(0);
@@ -68,11 +69,17 @@ export default function App() {
     336, 343, 350, 357, 364,
   ]);
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [moreModalInfo, setMoreModalInfo] = useState({
+    isDisplayOn: false,
+    left: 0,
+    top: 0,
+    events: [],
+  });
 
   const [events, setEvents] = useState([
     {
       title: "full day event 1",
-      date: "2022-07-11T00:00:00.000Z",
+      date: "2022-08-17T00:00:00.000Z",
       isAllDay: true,
       guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
       link: "http://google.com",
@@ -82,7 +89,7 @@ export default function App() {
     },
     {
       title: "full day event 2",
-      date: "2022-06-01T00:00:00.000Z",
+      date: "2022-08-17T00:00:00.000Z",
       isAllDay: true,
       guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
       link: "http://google.com",
@@ -92,7 +99,7 @@ export default function App() {
     },
     {
       title: "A test event",
-      date: "2022-06-01T00:00:00.000Z",
+      date: "2022-08-17T00:00:00.000Z",
       isAllDay: false,
       guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
       link: "http://google.com",
@@ -102,7 +109,7 @@ export default function App() {
     },
     {
       title: "full day event 3",
-      date: "2022-07-10T00:00:00.000Z",
+      date: "2022-08-17T00:00:00.000Z",
       isAllDay: true,
       guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
       link: "http://google.com",
@@ -112,7 +119,7 @@ export default function App() {
     },
     {
       title: "full day event 4",
-      date: "2022-07-10T00:00:00.000Z",
+      date: "2022-08-17T00:00:00.000Z",
       isAllDay: true,
       guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
       link: "http://google.com",
@@ -621,6 +628,18 @@ export default function App() {
     }
   }
 
+  function handleClickMore(evt, currEvents) {
+    setMoreModalInfo(function (prevState) {
+      return {
+        ...prevState,
+        isDisplayOn: true,
+        left: evt.target.getBoundingClientRect().left,
+        top: evt.target.getBoundingClientRect().top,
+        events: currEvents.slice(3),
+      };
+    });
+  }
+
   function getFullDayEvents(year, dayNum, index) {
     let month = resolveMonth(index).num;
 
@@ -638,7 +657,7 @@ export default function App() {
       }
     }
 
-    if (currEvents.length) {
+    if (currEvents.length && currEvents.length <= 3) {
       return currEvents.map(function (item, index) {
         return (
           <span key={index.toString()}>
@@ -654,6 +673,37 @@ export default function App() {
           </span>
         );
       });
+    } else if (currEvents.length && currEvents.length > 3) {
+      let slicedEvents = currEvents.slice(0, 3);
+      let eventElements = slicedEvents.map(function (item, index) {
+        return (
+          <span key={index.toString()}>
+            {" "}
+            <span
+              onClick={(evt) => handleFullDayEventClick(evt, item)}
+              className="full-day-event"
+            >
+              {" "}
+              {item.title}{" "}
+            </span>{" "}
+            <br />{" "}
+          </span>
+        );
+      });
+      eventElements.push(
+        <span>
+          {" "}
+          <span
+            onClick={(evt) => handleClickMore(evt, currEvents)}
+            className="more-events"
+          >
+            {" "}
+            +{currEvents.length - 3}{" "}
+          </span>{" "}
+          <br />{" "}
+        </span>
+      );
+      return eventElements;
     }
   }
 
@@ -780,6 +830,7 @@ export default function App() {
           onCloseEditModal={handleCloseNewEventModal}
           event={clickedEvent}
         />
+        <MoreModal setInfo={setMoreModalInfo} info={moreModalInfo} />
       </div>
     </RecoilRoot>
   );
