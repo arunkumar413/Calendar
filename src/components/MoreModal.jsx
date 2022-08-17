@@ -14,7 +14,6 @@ export function MoreModal(props) {
   }
 
   function handleShowEventModal(evt, item) {
-    console.log("clicked");
     props.setClickedEvent(item);
     props.onOpenEditModal();
     setModalState(function (prevState) {
@@ -26,12 +25,7 @@ export function MoreModal(props) {
     });
   }
 
-  useEffect(
-    function () {
-      console.log(modalInfo);
-    },
-    [modalInfo]
-  );
+  useEffect(function () {}, [modalInfo]);
 
   const eventElements = props.info.events.map(function (item, index) {
     return (
