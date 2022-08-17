@@ -1,5 +1,7 @@
 import react, { useState, useEffect } from "react";
 import "animate.css";
+import { modalState } from "../StateManagement/atoms";
+import { useRecoilState } from "recoil";
 
 export function AddNewEvent(props) {
   const [event, setEvent] = useState({
@@ -15,6 +17,7 @@ export function AddNewEvent(props) {
   const [guestInput, setGuestInput] = useState("");
 
   const [dateLocal, setDateLocal] = useState("");
+  const [modalInfo, setModalState] = useRecoilState(modalState);
 
   useEffect(
     function () {

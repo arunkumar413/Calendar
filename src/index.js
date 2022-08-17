@@ -1,13 +1,22 @@
-import React, { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import React, { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
 
-import App from './App';
+import App from "./App";
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 
 root.render(
   <StrictMode>
-    <App />
+    <RecoilRoot>
+      <App />
+    </RecoilRoot>
   </StrictMode>
 );

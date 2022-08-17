@@ -830,7 +830,18 @@ export default function App() {
           onCloseEditModal={handleCloseNewEventModal}
           event={clickedEvent}
         />
-        <MoreModal setInfo={setMoreModalInfo} info={moreModalInfo} />
+        <MoreModal
+          setClickedEvent={setClickedEvent}
+          setEvents={setEvents}
+          events={events}
+          value={addModalClass}
+          displayEditModal={addModalClass}
+          onOpenEditModal={handleAddNewModal}
+          onCloseEditModal={handleCloseNewEventModal}
+          event={clickedEvent}
+          setInfo={setMoreModalInfo}
+          info={moreModalInfo}
+        />
       </div>
     </RecoilRoot>
   );

@@ -1,18 +1,42 @@
 import React from "react";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { count, modalState } from "../StateManagement/atoms";
 
 export function MoreModal(props) {
+  const [counter, setCount] = useRecoilState(count);
+  const [modalInfo, setModalState] = useRecoilState(modalState);
+
   function handleClose() {
     props.setInfo(function (prevState) {
       return { ...prevState, isDisplayOn: false };
     });
   }
 
-  function handleShowEventModal() {}
+  function handleShowEventModal(evt, item) {
+    console.log("clicked");
+    props.setClickedEvent(item);
+    props.onOpenEditModal();
+    setModalState(function (prevState) {
+      return {
+        ...prevState,
+        isDisplay: true,
+        clickedEvent: item,
+      };
+    });
+  }
+
+  useEffect(
+    function () {
+      console.log(modalInfo);
+    },
+    [modalInfo]
+  );
 
   const eventElements = props.info.events.map(function (item, index) {
     return (
       <span
-        onClick={handleShowEventModal}
+        onClick={(evt) => handleShowEventModal(evt, item)}
         key={index.toString()}
         className="full-day-event more-event"
       >
@@ -20,6 +44,10 @@ export function MoreModal(props) {
       </span>
     );
   });
+
+  function incrementCount() {
+    setCount(counter + 1);
+  }
 
   return (
     <div
@@ -33,7 +61,7 @@ export function MoreModal(props) {
     >
       <div className="more-modal-header">
         <span></span>
-        <span onClick={handleClose} class="material-symbols-outlined">
+        <span onClick={handleClose} className="material-symbols-outlined">
           expand_less
         </span>{" "}
         <span></span>
