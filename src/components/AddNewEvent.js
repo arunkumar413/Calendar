@@ -13,7 +13,7 @@ export function AddNewEvent(props) {
     guestsInvited: ["arunkumar413@gmail.com"],
     guestsAttending: ["arunkumar413@gmail.com", "test@gmail.com"],
   });
-  const [isEditModeOn, setEditMode] = useState(true);
+  const [isEditModeOn, setEditMode] = useState(false);
   const [guestInput, setGuestInput] = useState("");
 
   const [dateLocal, setDateLocal] = useState("");
