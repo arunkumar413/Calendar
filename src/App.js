@@ -218,11 +218,13 @@ export default function App() {
 
     let dayIndex = dayNumber;
 
-    for (let i = option[0].start; i < option[0].end; i += 7) {
+    for (let i = option[0].start; i <=option[0].end; i += 7) {
       if (dayIndex <= i) {
         possibleRange.push(i);
       }
     }
+
+    debugger;
 
     setSelectedWeekEndIndex(possibleRange[0]);
   }, []); //all effects end here
@@ -309,6 +311,7 @@ export default function App() {
 
   useEffect(
     function () {
+      debugger;
       let month1 = getStartMonth(selectedWeekStartIndex);
       let month2 = getStartMonth(selectedWeekEndIndex - 1);
 
