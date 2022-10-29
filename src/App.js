@@ -25,6 +25,7 @@ import {
   resolveMonth,
   monthStrings,
   getStartMonth,
+  getMonthRange,
 } from "./utility";
 import Select from "react-select";
 import { EventModal } from "./components/EventModal";
@@ -194,11 +195,11 @@ export default function App() {
   //all efffecs here
 
   useEffect(function () {
-    var m = new Date().getMonth();
+    var m = new Date().getMonth(); // get current month
 
     let option = monthSelectOptions.filter(function (item) {
       return item.monthValue === m;
-    });
+    }); //get month details as option
 
     setSelectedMonth({
       ...selectedMonth,
@@ -207,26 +208,29 @@ export default function App() {
       monthValue: option[0].monthValue,
       start: option.start,
       end: option.end,
-    });
+    }); // set selected month using options
 
     let date = new Date();
     let dayNumber = Math.floor(
       (date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24
-    );
+    ); // get today's day number
 
     var possibleRange = [];
 
-    let dayIndex = dayNumber;
+    var dayIndex = dayNumber;
 
-    for (let i = option[0].start; i <=option[0].end; i += 7) {
-      if (dayIndex <= i) {
+    for (let i = option[0].start; i <= option[0].end; i += 7) {
+      debugger;
+      // if (dayIndex <= i) {
+      if (i <= dayIndex) {
         possibleRange.push(i);
       }
     }
 
-    debugger;
-
-    setSelectedWeekEndIndex(possibleRange[0]);
+    let r = possibleRange.length - 1;
+    let item = possibleRange[r];
+    // setSelectedWeekEndIndex(possibleRange[0]);
+    setSelectedWeekEndIndex(item);
   }, []); //all effects end here
 
   function handleMonthChange(item) {
@@ -311,9 +315,8 @@ export default function App() {
 
   useEffect(
     function () {
-      debugger;
-      let month1 = getStartMonth(selectedWeekStartIndex);
-      let month2 = getStartMonth(selectedWeekEndIndex - 1);
+      let month1 = getMonthRange(selectedWeekStartIndex); // month start range
+      let month2 = getMonthRange(selectedWeekEndIndex - 1); // month end range
 
       let month1Object = monthSelectOptions.filter(function (item) {
         return item.label === month1;
