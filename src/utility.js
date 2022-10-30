@@ -85,35 +85,38 @@ export const monthIndexes = {
   dec: { start: 334, end: 364 },
 };
 
-export function getStartMonth(start) {
-  return resolveMonth(start).string;
+export function getMonthRange(start) {
+  let res = resolveMonth(start);
+  // return resolveMonth(start).name;
+  let monthName = res.name;
+  return monthName;
 }
 
 export function resolveMonth(item) {
   if (item >= 0 && item <= 30) {
-    return { num: 1, string: "January" };
+    return { num: 1, name: "January" };
   } else if (item >= 31 && item <= 58) {
-    return { num: 2, string: "February" };
+    return { num: 2, name: "February" };
   } else if (item >= 59 && item <= 89) {
-    return { num: 3, string: "March" };
+    return { num: 3, name: "March" };
   } else if (item >= 90 && item <= 119) {
-    return { num: 4, string: "April" };
+    return { num: 4, name: "April" };
   } else if (item >= 120 && item <= 150) {
-    return { num: 5, string: "May" };
+    return { num: 5, name: "May" };
   } else if (item >= 151 && item <= 180) {
-    return { num: 6, string: "June" };
+    return { num: 6, name: "June" };
   } else if (item >= 181 && item <= 211) {
-    return { num: 7, string: "July" };
+    return { num: 7, name: "July" };
   } else if (item >= 212 && item <= 242) {
-    return { num: 8, string: "August" };
+    return { num: 8, name: "August" };
   } else if (item >= 243 && item <= 272) {
-    return { num: 9, string: "September" };
+    return { num: 9, name: "September" };
   } else if (item >= 273 && item <= 303) {
-    return { num: 10, string: "October" };
+    return { num: 10, name: "October" };
   } else if (item >= 304 && item <= 333) {
-    return { num: 11, string: "November" };
+    return { num: 11, name: "November" };
   } else if (item >= 334 && item <= 364) {
-    return { num: 12, string: "December" };
+    return { num: 12, name: "December" };
   }
 }
 
