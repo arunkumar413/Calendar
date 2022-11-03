@@ -217,20 +217,15 @@ export default function App() {
 
     var possibleRange = [];
 
-    var dayIndex = dayNumber;
+    var dayIndex = dayNumber - 1;
 
     for (let i = option[0].start; i <= option[0].end; i += 7) {
-      debugger;
-      // if (dayIndex <= i) {
-      if (i <= dayIndex) {
+      if (i >= option[0].start && i >= dayIndex) {
         possibleRange.push(i);
       }
     }
 
-    let r = possibleRange.length - 1;
-    let item = possibleRange[r];
-    // setSelectedWeekEndIndex(possibleRange[0]);
-    setSelectedWeekEndIndex(item);
+    setSelectedWeekEndIndex(possibleRange[0]);
   }, []); //all effects end here
 
   function handleMonthChange(item) {
