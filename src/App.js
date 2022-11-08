@@ -219,11 +219,13 @@ export default function App() {
 
     var dayIndex = dayNumber - 1;
 
-    for (let i = option[0].start; i <= option[0].end; i += 7) {
-      if (i >= option[0].start && i >= dayIndex) {
-        possibleRange.push(i);
-      }
-    }
+    // for (let i = option[0].start; i <= option[0].end; i += 7) {
+    //   // for (let i = 0; i <= 365; i += 7) {
+    //   if (i <= dayIndex) {
+    //     possibleRange.push(i);
+    //   }
+    // }
+    possibleRange[0] = dayNumber + (dayNumber % 7);
 
     setSelectedWeekEndIndex(possibleRange[0]);
   }, []); //all effects end here
