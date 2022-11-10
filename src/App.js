@@ -225,7 +225,13 @@ export default function App() {
     //     possibleRange.push(i);
     //   }
     // }
-    possibleRange[0] = dayNumber + (dayNumber % 7);
+
+    let currentWeek = Math.floor((dayIndex / 7) * 7);
+    console.log("######## current week #############33");
+    console.log(currentWeek);
+
+    // possibleRange[0] = dayNumber + (dayNumber % 7);
+    possibleRange[0] = currentWeek + 7;
 
     setSelectedWeekEndIndex(possibleRange[0]);
   }, []); //all effects end here
