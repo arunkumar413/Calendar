@@ -227,10 +227,8 @@ export default function App() {
     // }
 
     let currentWeek = Math.floor((dayIndex / 7) * 7);
-    console.log("######## current week #############33");
-    console.log(currentWeek);
 
-    // possibleRange[0] = dayNumber + (dayNumber % 7);
+    // possibleRange[0] = dayNumber + (dayNumber % 7) + 7;
     possibleRange[0] = currentWeek + 7;
 
     setSelectedWeekEndIndex(possibleRange[0]);
@@ -510,10 +508,11 @@ export default function App() {
     <div className="toolbar">
       <label className="input-year-label" htmlFor="year-input">
         {" "}
-        Current Year
+        Year
       </label>
       <div className="current-year">
         <input
+          // size={4}
           name="year-input"
           id="year-input"
           className="current-year-input"
