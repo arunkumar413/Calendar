@@ -225,13 +225,20 @@ export default function App() {
     //     possibleRange.push(i);
     //   }
     // }
+    let range = [];
+    for (let i = 0; i <= 364; i += 7) {
+      if (i >= dayIndex) {
+        range.push(i);
+      }
+    }
 
     let currentWeek = Math.floor((dayIndex / 7) * 7);
 
     // possibleRange[0] = dayNumber + (dayNumber % 7) + 7;
     possibleRange[0] = currentWeek + 7;
 
-    setSelectedWeekEndIndex(possibleRange[0]);
+    // setSelectedWeekEndIndex(possibleRange[0]);
+    setSelectedWeekEndIndex(range[0]);
   }, []); //all effects end here
 
   function handleMonthChange(item) {
