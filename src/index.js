@@ -9,6 +9,7 @@ import {
 } from "recoil";
 
 import App from "./App";
+import { CalendarExp } from "./experiment/Calendar";
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
@@ -16,7 +17,8 @@ const root = createRoot(rootElement);
 root.render(
   <StrictMode>
     <RecoilRoot>
-      <App />
+      {/* <App /> */}
+      <CalendarExp />
     </RecoilRoot>
   </StrictMode>
 );

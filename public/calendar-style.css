@@ -1,0 +1,52 @@
+.calendar-layout {
+  display: grid;
+  grid-template-columns: 100px 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.heading-strip-container {
+  display: grid;
+  grid-column: 2/9;
+  grid-template-columns: repeat(7, 1fr);
+  justify-content: center;
+  align-items: center;
+}
+
+.hour-strip {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  align-items: center;
+  grid-column: 1/2;
+  padding-top: 1rem;
+}
+
+.hour-strip-element {
+  /* padding: 1rem; */
+  border-bottom: solid 0.5px lightgrey;
+  border-left: solid 0.5px lightgrey;
+}
+
+.heading-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  /* padding: 1rem; */
+  padding-top: 1rem;
+  text-align: center;
+  border-right: solid 0.5px lightgrey;
+  /* border-bottom: solid 0.5px lightgrey; */
+  border-top: solid 0.5px lightgrey;
+}
+
+.week-day-item {
+  display: grid;
+  grid-column: 2/9;
+  grid-template-columns: repeat(7, 1fr);
+  justify-content: center;
+  align-items: center;
+}
+
+.week-day-hour-item {
+  border-bottom: solid 0.5px lightgrey;
+}
