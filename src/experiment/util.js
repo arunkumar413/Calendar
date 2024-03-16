@@ -1,3 +1,12 @@
+import {
+  addDays,
+  getDate,
+  getMonth,
+  getYear,
+  getDay,
+  format,
+  formatISO,
+} from "date-fns";
 let currentYear = new Date().getFullYear();
 let isCurrentLeapYear =
   new Date(currentYear, 1, 29).getDate() === 29 ? true : false;
@@ -80,9 +89,98 @@ export function resolveDay(day) {
   return { dayNum: day, dayStr: dayStr };
 }
 
-export function getDay(currentYear, item, index) {
-  let month = resolveMonth(index).val;
-  let day = new Date(`${currentYear}-${month}-${item + 1}`).getDay();
-  let dayObj = resolveDay(day);
-  return dayObj.dayStr;
+// export function getDay(currentYear, item, index) {
+//   let month = resolveMonth(index).val;
+//   let day = new Date(`${currentYear}-${month}-${item + 1}`).getDay();
+//   let dayObj = resolveDay(day);
+//   return dayObj.dayStr;
+// }
+
+export function getDateInfoFromDayNumber(dayNumber) {
+  // Assuming we start from January 1st of the current year
+  const startDate = new Date(new Date().getFullYear(), 0, 1);
+  const targetDate = addDays(startDate, dayNumber - 1); // Subtract 1 because day number starts from 1
+
+  const date = getDate(targetDate);
+  const month = getMonth(targetDate) + 1; // Months are zero-based in JavaScript
+  const year = getYear(targetDate);
+  const day = getDay(targetDate);
+  const dayStr = format(targetDate, "EEE");
+  const monthStr = format(targetDate, "MMM");
+
+  const dateInISOFormat = formatISO(targetDate);
+
+  return {
+    date,
+    month,
+    year,
+    day,
+    dayStr,
+    dateInISOFormat,
+    monthStr,
+  };
+}
+
+export function getFullDayEvents(events, isoDate) {
+  let dateObj = new Date(isoDate);
+  let year = dateObj.getFullYear();
+  let month = dateObj.getMonth();
+  let date = dateObj.getDate();
+
+  let elements = events.filter(function (item, index) {
+    let evtDateObj = new Date(item.startISOString);
+    let evtYear = evtDateObj.getFullYear();
+    let evtMonth = evtDateObj.getMonth();
+    let evtDate = evtDateObj.getDate();
+
+    return (
+      evtYear === year &&
+      evtMonth === month &&
+      evtDate === date &&
+      item.isFullDayEvent
+    );
+  });
+  return elements;
+}
+
+export function buildHourElementsAndEvents(isoDate, events) {
+  let dateObj = new Date(isoDate);
+  let year = dateObj.getFullYear();
+  let month = dateObj.getMonth();
+  let date = dateObj.getDate();
+  let hour = dateObj.getHours();
+
+  let dateElements = events.filter(function (item, index) {
+    let evtDateObj = new Date(item.startISOString);
+    let evtYear = evtDateObj.getFullYear();
+    let evtMonth = evtDateObj.getMonth();
+    let evtDate = evtDateObj.getDate();
+    let evtHour = evtDateObj.getHours();
+
+    return (
+      evtYear === year &&
+      evtMonth === month &&
+      evtDate === date &&
+      // evtHour === hour &&
+      !item.isFullDayEvent
+    );
+  });
+
+  // return elements;
+
+  // let hourArray = Array.from(Array(24).keys());
+
+  const results = [];
+  for (let i = 0; i < 24; i++) {
+    const matchingEvents = dateElements.filter(function (evt, index) {
+      let dObj = new Date(evt.startISOString);
+      let dHours = dObj.getHours();
+
+      return dHours === i;
+    });
+
+    results.push({ hour: i, hourEvents: matchingEvents });
+  }
+
+  return results;
 }
