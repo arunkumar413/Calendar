@@ -6,6 +6,8 @@ import {
   getFullDayEvents,
 } from "../experiment/util";
 import { FebDays } from "./util";
+import { LeftIcon } from "../Icons/LeftIcon";
+import { RightIcon } from "../Icons/RightIcon";
 
 export function CalendarExp() {
   const [selectedWeekEnd, setSelectedWeekEnd] = useState(7);
@@ -60,7 +62,11 @@ export function CalendarExp() {
         <div key={index.toString()} className="heading-item">
           {/* {item + 1} */}
           <span> {item.dateObj.dayStr}</span> <br />
-          {item.dateItem},{item.dateObj.monthStr}
+          <span>
+            {" "}
+            <strong> {item.dateItem} </strong>
+            {item.dateObj.monthStr}
+          </span>
           {generateFullDayEvents(item)}
         </div>
       );
@@ -86,7 +92,6 @@ export function CalendarExp() {
 
   function generateHourEvents(hourEvents) {
     return hourEvents.map(function (item, index) {
-      debugger;
       return (
         <span className="cal-hour-event" key={index.toString()}>
           {item.title}
@@ -127,9 +132,30 @@ export function CalendarExp() {
 
   console.log(test);
 
+  function handleNextButtonClick() {
+    setSelectedWeekEnd(selectedWeekEnd + 7);
+    setSelectedWeekStart(selectedWeekStart + 7);
+  }
+
+  function handlePrevButtonClick() {
+    if (selectedWeekEnd !== 7 && selectedWeekStart !== 0) {
+      setSelectedWeekEnd(selectedWeekEnd - 7);
+      setSelectedWeekStart(selectedWeekStart - 7);
+    }
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <div> Toolbar </div>
+      <div className="cal-toolbar">
+        <div className="cal-nav-buttons">
+          <div className="cal-icon-container" onClick={handlePrevButtonClick}>
+            <LeftIcon />
+          </div>
+          <div className="cal-icon-container" onClick={handleNextButtonClick}>
+            <RightIcon />{" "}
+          </div>
+        </div>
+      </div>
       <div className="calendar-layout">
         <div className="heading-strip-container">
           {selectedWeekStripElements}
