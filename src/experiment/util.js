@@ -176,7 +176,7 @@ export function buildHourElementsAndEvents(isoDate, events) {
       let dObj = new Date(evt.startISOString);
       let dHours = dObj.getHours();
 
-      return dHours === i;
+      return dHours === i + 1;
     });
 
     results.push({ hour: i, hourEvents: matchingEvents });
