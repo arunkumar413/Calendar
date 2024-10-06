@@ -6,6 +6,8 @@ import {
   getDay,
   format,
   formatISO,
+  startOfWeek,
+  isToday,
 } from "date-fns";
 let currentYear = new Date().getFullYear();
 let isCurrentLeapYear =
@@ -183,4 +185,26 @@ export function buildHourElementsAndEvents(isoDate, events) {
   }
 
   return results;
+}
+
+export function getTodayDateIndex(wholeYearDataStructure) {
+  let weekStart = startOfWeek(new Date());
+
+  let startOfWeekYear = weekStart.getFullYear();
+  let startOfWeekMonth = weekStart.getMonth() + 1;
+  let startOfWeekDate = weekStart.getDate();
+
+  let filStartOfWeek = wholeYearDataStructure.filter(function (item, index) {
+    return (
+      item.dateObj.date === startOfWeekDate &&
+      item.dateObj.month === startOfWeekMonth &&
+      item.dateObj.year === startOfWeekYear
+    );
+  });
+
+  return filStartOfWeek[0].index;
+}
+
+export function isGivenDateToday(date) {
+  return isToday(date);
 }

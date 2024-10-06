@@ -4,38 +4,21 @@ import {
   completeYear,
   getDateInfoFromDayNumber,
   getFullDayEvents,
+  getTodayDateIndex,
+  isGivenDateToday,
 } from "../experiment/util";
 import { FebDays } from "./util";
 import { LeftIcon } from "../Icons/LeftIcon";
 import { RightIcon } from "../Icons/RightIcon";
+import { isToday } from "date-fns";
+import { TEST_EVENTS } from "./testEvents";
 
 export function CalendarExp() {
   const [selectedWeekEnd, setSelectedWeekEnd] = useState(7);
   const [selectedWeekStart, setSelectedWeekStart] = useState(0);
-  const [events, setEvents] = useState([
-    {
-      title: "Test event 1",
-      startISOString: "2024-01-01T08:49:39.382Z",
-      isFullDayEvent: true,
-    },
-    {
-      title: "Test event 2",
-      startISOString: "2024-01-01T00:00:39.382Z",
-      isFullDayEvent: false,
-    },
-    {
-      title: "Test event 3",
-      startISOString: "2024-01-01T00:00:39.382Z",
-      isFullDayEvent: true,
-    },
-    {
-      title: "Test event 4",
-      startISOString: "2024-01-01T00:00:39.382Z",
-      isFullDayEvent: false,
-    },
-  ]);
+  const [events, setEvents] = useState(TEST_EVENTS);
 
-  let test = completeYear.map(function (item, index) {
+  let wholeYearDataStructure = completeYear.map(function (item, index) {
     let isoDate = getDateInfoFromDayNumber(index + 1).dateInISOFormat;
     return {
       index: index,
@@ -57,12 +40,19 @@ export function CalendarExp() {
   }
 
   function generateHeadingStrip() {
-    return test.map(function (item, index) {
+    return wholeYearDataStructure.map(function (item, index) {
       return (
         <div key={index.toString()} className="heading-item">
           {/* {item + 1} */}
-          <span> {item.dateObj.dayStr}</span> <br />
-          <span>
+          <span
+            className={isToday(item.dateObj.dateInISOFormat) ? "today" : null}
+          >
+            {" "}
+            {item.dateObj.dayStr}
+          </span>
+          <span
+            className={isToday(item.dateObj.dateInISOFormat) ? "today" : null}
+          >
             {" "}
             <strong> {item.dateItem} </strong>
             {item.dateObj.monthStr}
@@ -113,7 +103,7 @@ export function CalendarExp() {
   }
 
   function generateWeekDayItems() {
-    return test.map(function (item, index) {
+    return wholeYearDataStructure.map(function (item, index) {
       return (
         <div key={index.toString()} className="heading-item">
           {/* {item + 1} */}
@@ -130,7 +120,7 @@ export function CalendarExp() {
     selectedWeekEnd
   );
 
-  console.log(test);
+  console.log(wholeYearDataStructure);
 
   function handleNextButtonClick() {
     setSelectedWeekEnd(selectedWeekEnd + 7);
@@ -143,6 +133,16 @@ export function CalendarExp() {
       setSelectedWeekStart(selectedWeekStart - 7);
     }
   }
+
+  useEffect(
+    function () {
+      let weekStartIndex = getTodayDateIndex(wholeYearDataStructure);
+      console.log(weekStartIndex);
+      setSelectedWeekStart(weekStartIndex);
+      setSelectedWeekEnd(weekStartIndex + 7);
+    },
+    [wholeYearDataStructure.length]
+  );
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
