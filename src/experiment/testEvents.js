@@ -31,7 +31,17 @@ export const TEST_EVENTS = [
     isFullDayEvent: false,
   },
   {
-    title: "Test event 4",
+    title: "Test full day event 1",
+    startISOString: new Date().toISOString(),
+    isFullDayEvent: true,
+  },
+  {
+    title: "Test full day event 2",
+    startISOString: new Date().toISOString(),
+    isFullDayEvent: true,
+  },
+  {
+    title: "Test full day event 3",
     startISOString: new Date().toISOString(),
     isFullDayEvent: true,
   },

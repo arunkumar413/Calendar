@@ -27,3 +27,13 @@ See other apps:
 3. A HMTL based document creator (net yet created)
 
 4. A diagram creator using svg icons (not yet created)
+
+## Contributing to the project:
+
+Currently the new version of development is happening in the branch name `experiment` and new component is located at `src/experiment/Calendar.jsx`
+
+1. Git clone the repo
+2. Run the command npm install to install the packages
+3. Run the command npm run start to start the app.
+
+Feel free to clone the repo and make changes and raise the Merge request.
