@@ -4,6 +4,7 @@ import {
   completeYear,
   getDateInfoFromDayNumber,
   getFullDayEvents,
+  getSelectedMonthWeekStart,
   getTodayDateIndex,
   isGivenDateToday,
 } from "../experiment/util";
@@ -17,6 +18,10 @@ export function CalendarExp() {
   const [selectedWeekEnd, setSelectedWeekEnd] = useState(7);
   const [selectedWeekStart, setSelectedWeekStart] = useState(0);
   const [events, setEvents] = useState(TEST_EVENTS);
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   let wholeYearDataStructure = completeYear.map(function (item, index) {
     let isoDate = getDateInfoFromDayNumber(index + 1).dateInISOFormat;
@@ -137,16 +142,56 @@ export function CalendarExp() {
   useEffect(
     function () {
       let weekStartIndex = getTodayDateIndex(wholeYearDataStructure);
-      console.log(weekStartIndex);
       setSelectedWeekStart(weekStartIndex);
       setSelectedWeekEnd(weekStartIndex + 7);
     },
     [wholeYearDataStructure.length]
   );
 
+  function handleMonthSelection(evt) {
+    let selMonth = parseInt(evt.target.value);
+    setSelectedMonth(selMonth);
+
+    //get week start index of the selected month
+
+    let selMonthWeekStartIndex = getSelectedMonthWeekStart(
+      selectedYear,
+      selMonth,
+      wholeYearDataStructure
+    );
+
+    setSelectedWeekStart(selMonthWeekStartIndex);
+    setSelectedWeekEnd(selMonthWeekStartIndex + 7);
+  }
+
+  useEffect(
+    function () {
+      let selWeekMonth1 =
+        wholeYearDataStructure[selectedWeekStart].dateObj.month - 1;
+      let slWeekMonth2 =
+        wholeYearDataStructure[selectedWeekEnd].dateObj.month - 1;
+      setSelectedMonth(selWeekMonth1);
+    },
+    [selectedWeekStart, selectedWeekEnd]
+  );
+
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div className="cal-toolbar">
+        <select value={selectedMonth} onChange={handleMonthSelection}>
+          <option value={0}>Janurary</option>
+          <option value={1}>February</option>
+          <option value={2}>March</option>
+          <option value={3}>April</option>
+          <option value={4}>May</option>
+          <option value={5}>June</option>
+          <option value={6}>July</option>
+          <option value={7}>August</option>
+          <option value={8}>September</option>
+          <option value={9}>October</option>
+          <option value={10}>November</option>
+          <option value={11}>December</option>
+        </select>
         <div className="cal-nav-buttons">
           <div className="cal-icon-container" onClick={handlePrevButtonClick}>
             <LeftIcon />

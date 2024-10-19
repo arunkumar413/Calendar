@@ -208,3 +208,21 @@ export function getTodayDateIndex(wholeYearDataStructure) {
 export function isGivenDateToday(date) {
   return isToday(date);
 }
+
+export function getSelectedMonthWeekStart(year, month, wholeYearDataStructure) {
+  let weekStart = startOfWeek(new Date(year, month, 1));
+
+  let startOfWeekYear = weekStart.getFullYear();
+  let startOfWeekMonth = weekStart.getMonth() + 1;
+  let startOfWeekDate = weekStart.getDate();
+
+  let filStartOfWeek = wholeYearDataStructure.filter(function (item, index) {
+    return (
+      item.dateObj.date === startOfWeekDate &&
+      item.dateObj.month === startOfWeekMonth &&
+      item.dateObj.year === startOfWeekYear
+    );
+  });
+
+  return filStartOfWeek[0].index;
+}
